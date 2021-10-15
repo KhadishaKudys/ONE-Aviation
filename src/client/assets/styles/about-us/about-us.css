@@ -1,0 +1,271 @@
+.about-us .about-page{
+    padding-top: 100px;
+}
+
+p{
+    font-size: 14px;
+}
+
+.services{
+    background-image: url("../../../assets/static/backgrounds/about/wave.svg");
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 100%;
+    overflow: hidden;
+    padding-bottom: 50px;
+}
+
+.services .card{
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 50px 20px;
+    margin: 5px;
+    overflow: hidden;
+   display: -webkit-box;
+   word-break: break-word;
+   -webkit-line-clamp: 3; /* number of lines to show */
+   -webkit-box-orient: vertical;
+   cursor: pointer;
+   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.05);
+}
+
+.aircraft h2, .services h2{
+    color: #0076BD;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+#about{
+    text-align: left;
+    padding-bottom: 100px;
+}
+
+#about .col{
+    position: relative;
+    height: 400px;
+    padding-top: 220px;
+}
+
+#about img{
+    position: absolute;
+    left: -350px;
+}
+
+#about h1{
+    font-size: 200px;
+    padding: 0px;
+    left: -180px;
+    position: absolute;
+    color: #0076BD;
+    opacity: 0.1;
+    top: 10px;
+    margin-top: 0px;
+}
+
+#about #pl{
+    position: absolute;
+    left: -390px;
+    top: 500px
+}
+
+.services .col{
+    margin: 0px;
+}
+
+.aircraft .about-seaplane{
+    text-align: left;
+}
+
+.services h1{
+    font-weight: 700;
+    font-size: 46px;
+    color: black;
+    margin-top: 120px;
+    margin-bottom: 50px;
+}
+
+.aircraft h1{
+    font-weight: 700;
+    font-size: 255px;
+    position: absolute;
+    top: 50px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.aircraft h2{
+    color: #E2007A;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+li{
+    font-size: 14px;
+}
+
+.aircraft h3{
+    font-weight: 600;
+    font-size: 16px;
+    color: black;
+}
+
+.aircraft .row{
+    padding: 0px;
+}
+
+.aircraft {
+    margin-bottom: 100px;
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+}
+
+.aircraft #info{
+    background-color: rgba(0, 117, 189, 0.10);
+    padding-top: 100px;
+}
+
+.aircraft #info-2{
+    background-image: url("../../../assets/static/backgrounds/about/wave-2.svg");
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 100%;
+    padding-bottom: 50px;
+}
+
+.aircraft .container{
+    text-align: left;
+}
+
+.aircraft h1{
+    margin-top: 200px;
+}
+
+.aircraft img{
+    position: absolute;
+}
+
+.aircraft .col{
+    position: relative;
+    height: fit-content;
+}
+
+.aircraft #plane{
+    height: 500px;
+}
+
+.aircraft #strengths .card{
+    background-color: white;
+    border: 3px solid rgba(0, 117, 189, 0.10);
+    border-radius: 20px;
+    width: 200px;
+    padding: 30px;
+    height: 200px;
+    margin: 5px;
+    overflow: hidden;
+    text-align: center;
+   display: -webkit-box;
+   word-break: break-word;
+   -webkit-line-clamp: 3; /* number of lines to show */
+   -webkit-box-orient: vertical;
+   cursor: pointer;
+   /* box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.05); */
+
+}
+
+#strengths h2{
+    color: black;
+}
+
+#strengths h3{
+    color: #0076BD;
+    font-size: 18px;
+    padding-top: 90px;
+}
+
+#bubbles .card{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    border: none;
+    border-radius: 100px;
+}
+
+#w{
+    left: 50px;
+    top: 70px;
+}
+
+#h{
+    left: 300px;
+    top: -20px;
+}
+
+#l{
+    right: -290px;
+    top: 210px;
+}
+
+#bubbles{
+    position: absolute;
+    z-index: 100;
+}
+
+#w:hover #wid{
+    visibility: visible;
+    opacity: 1;
+}
+
+#h:hover #hei{
+    visibility: visible;
+    opacity: 1;
+}
+
+#l:hover #len{
+    visibility: visible;
+    opacity: 1;
+}
+
+#w:hover, #h:hover, #l:hover{
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#bubbles .info{
+    visibility: hidden;
+    opacity: 0;
+    background-color: white;
+    border-radius: 10px;
+    min-width: 120px;
+    width: auto;
+    height: fit-content;
+    padding: 10px;
+    position: absolute;
+    left: -140px;
+}
+
+#bubbles h5{
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+#bubbles p{
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#bubbles .row{
+    height: fit-content;
+    text-align: left;
+}
+
+#bubbles h6{
+    font-size: 12px;
+}
+
+#images{
+    text-align: right;
+    position: absolute;
+    left: -300px;
+}

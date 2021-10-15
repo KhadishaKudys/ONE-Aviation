@@ -1,0 +1,105 @@
+.flight .create-flight{
+    padding-top: 150px;
+    text-align: left;
+    padding-bottom: 200px;
+}
+
+.create-flight h1{
+    font-weight: 700;
+    font-size: 46px;
+    color: black;
+    margin-bottom: 50px;
+}
+
+.create-flight .card{
+    background-color: white;
+    border-radius: 20px;
+    padding: 50px;
+    border: none;
+    font-size: 14px;
+    border-bottom: 1px solid #bbbb;
+    box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.05);
+}
+
+.create-flight .enter-input:focus{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #EE7F00;
+    
+}
+
+.create-flight .enter-input::placeholder{
+    font-size: 12px;
+    color: #bbbbbb
+}
+
+  .nice-dates-popover {
+    max-width: 400px;
+  }
+
+.nice-dates-grid_container span{
+    height: 20px;
+}
+
+.nice-dates-day_date{
+    font-size: 12px;
+}
+
+.create-flight h2{
+    font-weight: 600;
+}
+
+.create-flight .enter-btn{
+    border: 3px solid #E2007A;
+    border-radius: 5px;
+    color: #E2007A;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: white;
+    padding: 5px 25px;
+    width: 30%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.create-flight .enter-btn {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .create-flight .enter-btn:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #E2007A;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+  }
+  .create-flight .enter-btn:hover, .create-flight .enter-btn:focus, .create-flight .enter-btn:active {
+    color: white;
+  }
+  .create-flight .enter-btn:hover:before, .create-flight .enter-btn:focus:before, .create-flight .enter-btn:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+  }

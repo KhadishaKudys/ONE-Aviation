@@ -1,0 +1,52 @@
+.clients-comments{
+    background-image: url("../../static/backgrounds/home/decore-1.png");
+    background-repeat: no-repeat;
+    background-position: -40% -15%;
+    background-size: 40%;
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+.clients-comments h5{
+    color: #0076BD;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.clients-comments h1{
+    font-weight: 700;
+    font-size: 46px;
+    color: black;
+}
+
+.clients-comments #card-1{
+    background: #FFFFFF;
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.02), 0px 64.81px 46.85px rgba(0, 0, 0, 0.0152), 0px 38.52px 25.48px rgba(0, 0, 0, 0.0121), 0px 20px 13px rgba(0, 0, 0, 0.01), 0px 8.15px 6.52px rgba(0, 0, 0, 0.0079), 0px 1.85px 3.15px rgba(0, 0, 0, 0.0048);
+    border-radius: 24px;
+    padding: 50px;
+    width: 80%;
+    border: none;
+}
+
+.clients-comments p{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 30px;
+    margin-top: 20px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.clients-comments h3{
+    font-weight: 600;
+    font-size: 14px;    
+}
+
+.clients-comments #client-name{
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.clients-comments .row{
+    margin-top: 30px;
+}

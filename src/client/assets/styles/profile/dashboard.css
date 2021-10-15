@@ -1,0 +1,132 @@
+.dashboard{
+}
+
+.dashboard #sidebar{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    position: sticky;
+    padding-top: 30px;
+    width: fit-content;
+    padding-bottom: 30px;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.dashboard #sidebar h1{
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+
+.dashboard h2{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #444444;
+    margin: 0px;
+}
+
+.dashboard .col{
+    text-align: left;
+}
+
+.dashboard #sidebar .item{
+    cursor: pointer;
+    align-items: center;
+    height: 50px;
+}
+
+.dashboard #sidebar .item:hover, .dashboard #sidebar .item:focus{
+    background: rgba(0, 118, 189, 0.1);
+    border-radius: 10px;
+}
+
+.dashboard #sidebar .item:hover h2{
+    color: #0076BD;
+}
+
+.dashboard .col-md-3{
+    width: fit-content;
+}
+
+
+.dashboard .menu{
+    /* padding: 10px 20px;
+    height: 50px;
+    width: fit-content; */
+}
+
+.dashboard .content{
+    padding-top: 20px;
+}
+
+.dashboard .content .col{
+    text-align: right;
+}
+
+.dashboard .content .row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    color: black
+}
+
+.dashboard .content h2{
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0px;
+    line-height: 21px;
+    color: #444444;
+    width: fit-content;
+    text-decoration: none;
+}
+ .dashboard .menu-last{
+    padding-top: 220px;
+ }
+
+.dashboard .link h2{
+    text-decoration: none;
+}
+
+.dashboard .content h1{
+    font-weight: 700;
+    font-size: 34px;
+}
+
+.dashboard #empty{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.dashboard .nothing{
+    text-align: center;
+}
+
+.dashboard .nothing button{
+    background: #E2007A;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    outline: none;
+    margin-top: 30px;
+}
+
+.dashboard .nothing h3{
+    font-size: 18px;
+    font-weight: 600;
+}

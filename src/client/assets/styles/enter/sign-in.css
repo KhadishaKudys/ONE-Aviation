@@ -1,0 +1,216 @@
+.sign-in{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    min-height: 90vh;
+}
+
+.sign-in h1{
+    color: #EE7F00;
+    font-weight: 600;
+    font-size: 24px;
+    height: 24px;
+}
+
+h2{
+    font-weight: 400;
+    font-size: 18px;
+    color: #444444;
+    margin-bottom: 50px;
+}
+
+.sign-in .card{
+    background: #FFFFFF;
+    box-shadow: 10px 10px 50px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    width: 60%;
+    margin: 0;
+    float: none;
+    min-height: fit-content;
+    height: fit-content;
+    text-align: left;
+    border: none;
+    position: absolute;
+    top: 40px;
+}
+
+#enter-card-right{
+    padding: 50px 50px;
+}
+
+.sign-in #enter-card-left{
+    overflow: hidden;
+}
+
+.enter-input{
+    border: none;
+    border-bottom: 1px solid #bbbb;
+    width: 100%;
+    margin-top: 0px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.sign-in .enter-input:focus{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #EE7F00;
+}
+
+.sign-in .enter-btn{
+    border: 3px solid #EE7F00;
+    border-radius: 5px;
+    color: #EE7F00;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: white;
+    padding: 5px 25px;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.sign-in .enter-btn {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .sign-in .enter-btn:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #EE7F00;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+  }
+  .sign-in .enter-btn:hover, .sign-in .enter-btn:focus, .sign-in .enter-btn:active {
+    color: white;
+  }
+  .sign-in .enter-btn:hover:before, .sign-in .enter-btn:focus:before, .sign-in .enter-btn:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+  }
+
+#overlapping{
+    position: absolute;
+    top: 20px;
+    left: -20px;
+    height: fit-content;
+}
+
+#lrg-txt{
+    font-weight: 700;
+    font-size: 300px;
+    color: rgba(68, 68, 68, 0.3);
+    opacity: 0.1;
+}
+
+.enter-p{
+    color: #444444;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0px;
+}
+
+.pass-a{
+    color: #444444;
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.pass-a:hover{
+    text-decoration: underline;
+    color: #444444;
+}
+
+.sign-in .enter-a{
+    color: #EE7F00;
+    font-weight: 600;
+    margin: 0%;
+    text-decoration: none;
+}
+
+.sign-in .enter-a:hover{
+    text-decoration: underline;
+}
+
+.sign-in p{
+    margin: 0px;
+}
+
+.enter-img{
+    border-radius: 20px 0px 0px 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.sign-in label{
+    font-size: 10px;
+    color: #bbbbbb;
+    height: normal;
+}
+  .row {
+    display: flex;
+  }
+
+.column{
+    width: 50%;
+}
+  
+
+#back{
+    text-align: left;
+    margin: 10px;
+    height: fit-content;
+}
+
+#back button{
+    color: black;
+    font-weight: 600;
+    border: none;
+    background: none;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+#back button:hover, #back button:active{
+    color: #EE7F00;
+}
+
+.alert{
+    z-index: 1000;
+    border: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.alert-heading{
+    font-size: 14px;
+}
