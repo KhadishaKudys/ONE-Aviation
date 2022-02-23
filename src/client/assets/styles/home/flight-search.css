@@ -11,7 +11,7 @@
 .flight-search .flight-search-card{
     height: fit-content;
     padding: 20px;
-    margin-top: 12%;
+    margin-top: 10px;
     width: 100%;
     min-height: 100px;
     text-align: left;
@@ -86,4 +86,42 @@ h3{
     justify-content: center;
     align-items: center;
     /* padding-top: 23px; */
+}
+
+.flight-search #map{
+    z-index: 1000;
+    right: 200px;
+    top: 400px;
+    border: none;
+    filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.02)) drop-shadow(0px 64.8148px 46.8519px rgba(0, 0, 0, 0.0151852)) drop-shadow(0px 38.5185px 25.4815px rgba(0, 0, 0, 0.0121481)) drop-shadow(0px 20px 13px rgba(0, 0, 0, 0.01)) drop-shadow(0px 8.14815px 6.51852px rgba(0, 0, 0, 0.00785185)) drop-shadow(0px 1.85185px 3.14815px rgba(0, 0, 0, 0.00481481));
+    border-radius: 20px;
+    padding: 50px;
+    left: 200px;
+    height: fit-content;
+    position: absolute;
+}
+
+.flight-search #map .row{
+    margin-top: 20px
+}
+
+.map-bck{
+    background:rgba(0,0,0,.4);
+    cursor:pointer;
+    /* display:none; */
+    height:fit-content;
+    position:fixed;
+    text-align:center;
+    top:0;
+    left: 0;
+    width:100vw;
+    z-index:10000;
+}
+
+#flightInfo{
+    min-height: 580px;
+}
+
+#options{
+    margin-top: 10%;
 }

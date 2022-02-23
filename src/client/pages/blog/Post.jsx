@@ -1,14 +1,8 @@
 import React from "react";
-import {Card, Col, Row, Container, Nav} from "react-bootstrap"
+import {Container} from "react-bootstrap"
 import "../../assets/styles/blog/post.css"
-import like from "../../assets/static/icons/home/like.svg"
-import share from "../../assets/static/icons/home/share.svg"
-import save from "../../assets/static/icons/home/save.svg"
 import blog_2 from "../../assets/static/backgrounds/home/blog_3.jpg"
-import blog_1 from "../../assets/static/backgrounds/home/blog_1.png"
 import Loading from "../../components/reused/Loading"
-import Header from "../../components/main/Header"
-import Footer from "../../components/main/Footer"
 
 class Post extends React.Component{
 

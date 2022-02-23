@@ -4,25 +4,54 @@ import Loading from "../../components/reused/Loading"
 import {Card, Col, Row, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import from_to from "../../assets/static/icons/home/from_to.svg"
+import ticket_plane from "../../assets/static/flights/ticket-plane.svg"
+
 
 class DiscoverFlights extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true
+            isLoading: true,
+            order_by: '',
+            order_key: 1,
+            limit: 20,
+            page: 1,
+            available_flights: this.props.history.location.state.available_flights.flights
         }
     }
 
     componentDidMount() {
+        console.log('ele', this.props)
         const timer = setTimeout(() => {
             this.setState({
                 isLoading: false
             })
           }, 2000);
-          return() => clearTimeout(timer)
+          return() => clearTimeout(timer);
     }
 
+    async flightInfo(id) {
+        await fetch(`https://one-aviation.herokuapp.com/api/v1/order/sharing/${id}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        }).then(async(res) => {
+            const data = await res.json();
+            console.log(data);
+            this.setState({flight_info:data})
+            if( res.ok ) {
+                console.log('OK');
+                this.props.history.push({
+                    pathname: `/about-flight/${id}`,
+                    state: this.state.flight_info
+                });
+            }
+        })
+            .catch(err => console.log(err));
+    }
 
     render(){
         return(
@@ -68,15 +97,50 @@ class DiscoverFlights extends React.Component{
                         <Col md="3">
                         </Col>
                         <Col>
+                        {this.state.available_flights.map(flight =>
                             <Card className="ticket">
                                 <Row>
-                                    <Col>
-                                        <h2>06:50</h2>
-                                        <h3>FLR</h3>
+                                    <Col md='10'>
+                                <Row>
+                                    <Col md="2" id='from'>
+                                        <h2>{Date(flight.departure_time)}</h2>
                                     </Col>
-                                    
+                                    <Col md="8">
+                                        <p id="time">1h 50m</p>
+                                    </Col>
+                                    <Col md="2">
+                                        <h2>{Date(flight.arrival_time)}</h2>
+                                    </Col>
+                                    </Row>
+                                    <Row id="ticket-plane">
+                                        <Col md="2">
+                                        </Col>
+                                        <Col md="8">
+                                            <img src={ticket_plane} alt="ticket-plane"/>
+                                        </Col>
+                                        <Col md="2">
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                    <Col md="2" id="from">
+                                        <h3>{flight.from.name}</h3>
+                                    </Col>
+                                    <Col md="8">
+                                        <p id="way">Direct</p>
+                                    </Col>
+                                    <Col md="2">
+                                        <h3>{flight.to.name}</h3>
+                                    </Col>
+                                </Row>
+                                
+                                </Col>
+                                <Col md="2" id="price">
+                                    <h2 id="cost">€ {parseInt(flight.price)}</h2>
+                                    <button id="nav-btn" onClick={() => this.flightInfo(flight.id)}>Select</button>
+                                </Col>
                                 </Row>
                             </Card>
+                        )}
                         </Col>
                     </Row>
                 </Container>

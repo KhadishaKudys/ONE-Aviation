@@ -3,7 +3,6 @@ import '../../assets/styles/about-us/about-us.css'
 import {Container, Row, Col, Card} from 'react-bootstrap'
 import aircraft from '../../assets/data/aircraft'
 import AOS from 'aos'
-import interior from "../../assets/static/backgrounds/about/interior.svg"
 import seaplane from "../../assets/static/backgrounds/about/seaplane.png"
 
 class Aircraft extends React.Component{

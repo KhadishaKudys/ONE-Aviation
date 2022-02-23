@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import "../../assets/styles/profile/dashboard.css"
 import Loading from "../../components/reused/Loading"
 import avatar from '../../assets/static/backgrounds/home/avatar-1.svg'
@@ -8,10 +8,9 @@ import orders from '../../assets/static/icons/profile/orders-icon.svg'
 import settings from '../../assets/static/icons/profile/settings-icon.svg'
 import notification from '../../assets/static/icons/profile/notification-icon.svg'
 import logout from '../../assets/static/icons/profile/logout.svg'
-import empty from '../../assets/static/backgrounds/profile/empty-cart.png'
+import Orders from './Orders'
+import {Link, Switch, Route} from "react-router-dom";
 
-import {Link} from "react-router-dom";
-import { ScalingSquaresSpinner } from "react-epic-spinners";
 
 class Dashboard extends React.Component{
 
@@ -84,14 +83,16 @@ class Dashboard extends React.Component{
                                 </Link>
                             </div>
                             <div className="menu">
-                            <Row className="item">
+                            <Link to='/user/profile/orders'>
+                                <Row className="item">
                                 <Col md={3}>
                                     <img src={orders} alt="home-icon" width="18px"></img>
                                 </Col>
                                 <Col>
                                     <h2>Orders</h2>
                                 </Col>
-                            </Row>
+                                </Row>
+                            </Link>
                             </div>
                             <div className="menu">
                             <Row className="item">
@@ -138,14 +139,14 @@ class Dashboard extends React.Component{
                             </Col>
                         </Row>
                         <div>
-                            <h1>My Orders</h1>
-                            <div className="nothing">
-                            <div id="empty">
-                            <img src={empty} alt="empty-cart" width="30%"/>
-                            </div>
-                            <h3>You don't have any orders!</h3>
-                            <button>Search flights</button>
-                            </div>
+                        <Switch>
+                                                    <Route path="/user/profile/orders">
+                                                        <Orders/>
+                                                    </Route>
+                                                    {/* <Route path="/profile/history">
+                                                        <History userId={state.user.userId}/>
+                                                    </Route> */}
+                                                </Switch>
                         </div>
                         </Container>
                     </Col>

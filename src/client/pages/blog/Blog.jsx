@@ -7,7 +7,6 @@ import save from "../../assets/static/icons/home/save.svg"
 import blog_2 from "../../assets/static/backgrounds/home/blog_2.png"
 import blog_1 from "../../assets/static/backgrounds/home/blog_1.png"
 import Loading from "../../components/reused/Loading"
-import Header from "../../components/main/Header"
 import {Link} from "react-router-dom"
 
 class Blog extends React.Component{
@@ -78,7 +77,7 @@ class Blog extends React.Component{
                             <Col className="post-col" >
                                 <Link to="/post">
                             <Card className="blog_prev">
-                                <img src={blog_2} width="100%"></img>
+                                <img src={blog_2} width="100%" alt="blog2"></img>
                                 <h2>{pos.title}</h2>
                                 <Row>
                                     <Col md={2}>
@@ -108,7 +107,7 @@ class Blog extends React.Component{
                         {this.state.blogs.map(pos => 
                             <Col className="post-col" >
                             <Card className="blog_prev">
-                                <img src={blog_1} width="100%"></img>
+                                <img src={blog_1} width="100%" alt="blog1"></img>
                                 <h2>{pos.title}</h2>
                                 <Row>
                                     <Col md={2}>

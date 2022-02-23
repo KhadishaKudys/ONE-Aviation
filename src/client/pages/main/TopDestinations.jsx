@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Container, Row, Col} from "react-bootstrap"
+import {Container} from "react-bootstrap"
 import "../../assets/styles/home/top-destinations.css"
 
 

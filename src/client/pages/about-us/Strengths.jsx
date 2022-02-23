@@ -1,13 +1,8 @@
 import React from "react";
-import Header from "../../components/main/Header"
-import Footer from "../../components/main/Footer"
 import '../../assets/styles/about-us/about-us.css'
 import {Container, Row, Col, Card} from 'react-bootstrap'
-import summary from '../../assets/data/executive-summary'
 import services from '../../assets/data/services'
 import AOS from 'aos'
-import italy from "../../assets/static/backgrounds/about/italy.svg"
-import rec from "../../assets/static/backgrounds/about/rec-2.svg"
 
 class Strengths extends React.Component{
 

@@ -90,7 +90,115 @@ h3{
     box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     border: none;
-    height: 200px;
+    height:fit-content;
     padding: 20px;
 
 }
+
+.ticket h2{
+    margin-bottom: 5px;
+    font-weight: 500;
+font-size: 16px;
+line-height: 45px;
+color: black;
+margin-bottom: 0px;
+padding-bottom: 0px;
+}
+
+.ticket h3{
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px; 
+    color: black;
+}
+
+#price{
+    border-left: 3px dashed #E1E1E1;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.ticket p{
+    font-weight: 400;
+font-size: 12px;
+line-height: 21px;
+}
+
+#way{
+    color:#E2007A
+}
+
+#time{
+    color: #0076BD;
+}
+
+#ticket-plane{
+    text-align: center;
+}
+
+.col-md-8{
+    text-align: center;
+}
+
+#from{
+    text-align: right;
+}
+
+#cost{
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 36px;
+}
+
+#nav-btn{
+    border: 2px solid #0076BD;
+    background: none;
+    padding: 0px 15px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0076BD;
+    border-radius: 5px;
+}
+
+#price #nav-btn {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  #price #nav-btn:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0076BD;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+  }
+  #price #nav-btn:hover, #price  button:focus, #price button:active {
+    color: white;
+  }
+  #price #nav-btn:hover:before, #price button:focus:before, #price button:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+  }

@@ -48,7 +48,7 @@ class BlogPreview extends React.Component{
                         {this.state.posts.map(post => 
                             <Col className="post-col" data-aos="fade-right" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-delay="200">
                             <Card className="blog_prev">
-                                <img src={blog_1} width="100%"></img>
+                                <img src={blog_1} width="100%" alt="blog1"></img>
                                 <h2>{post.title}</h2>
                                 <Row>
                                     <Col md={2}>

@@ -1,11 +1,10 @@
 import React from "react";
-import {Card, Container, Row, Col} from "react-bootstrap"
+import {Container, Row, Col} from "react-bootstrap"
 import "../../assets/styles/home/information.css"
 import AOS from 'aos'
 import info1 from "../../assets/static/backgrounds/home/info-1-back.svg"
 import info2 from "../../assets/static/backgrounds/home/info-2-back.svg"
 import info3 from "../../assets/static/backgrounds/home/info-3-back.svg"
-import line from "../../assets/static/icons/home/line.svg"
 
 class Information extends React.Component{
 
@@ -28,7 +27,7 @@ class Information extends React.Component{
                             <p data-aos-delay="200" data-aos="fade-right" data-aos-easing="ease-in-sine">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fringilla, urna eget porta dictum, leo ex ornare lacus, at sodales lectus tortor sed orci. Donec egestas nulla ac egestas auctor. Aenean tristique ultrices gravida. Donec pharetra leo massa, ac ultricies sapien mattis in. Nullam imperdiet et nisi sed lacinia. 
                             </p>
-                            <a data-aos-delay="300" data-aos="fade-right" data-aos-easing="ease-in-sine">read more →</a>
+                            <a data-aos-delay="300" data-aos="fade-right" data-aos-easing="ease-in-sine" href="/blog">read more →</a>
                         </Col>
                         <Col className="col-img" data-aos="flip-left" data-aos-offset="500"
      data-aos-duration="500">
@@ -50,7 +49,7 @@ class Information extends React.Component{
                             <p data-aos-delay="300" data-aos="fade-left" data-aos-easing="ease-in-sine">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fringilla, urna eget porta dictum, leo ex ornare lacus, at sodales lectus tortor sed orci. Donec egestas nulla ac egestas auctor. Aenean tristique ultrices gravida. Donec pharetra leo massa, ac ultricies sapien mattis in. Nullam imperdiet et nisi sed lacinia. 
                             </p>
-                            <a data-aos-delay="300" data-aos="fade-left" data-aos-easing="ease-in-sine">read more →</a>
+                            <a data-aos-delay="300" data-aos="fade-left" data-aos-easing="ease-in-sine" href="/blog">read more →</a>
                         </Col>
 
                     </Row>
@@ -64,7 +63,7 @@ class Information extends React.Component{
                             <p data-aos-delay="200" data-aos="fade-right" data-aos-easing="ease-in-sine">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fringilla, urna eget porta dictum, leo ex ornare lacus, at sodales lectus tortor sed orci. Donec egestas nulla ac egestas auctor. Aenean tristique ultrices gravida. Donec pharetra leo massa, ac ultricies sapien mattis in. Nullam imperdiet et nisi sed lacinia. 
                             </p>
-                            <a data-aos-delay="300" data-aos="fade-right" data-aos-easing="ease-in-sine">read more →</a>
+                            <a data-aos-delay="300" data-aos="fade-right" data-aos-easing="ease-in-sine" href="/blog">read more →</a>
                             
                         </Col>
                         <Col className="col-img" data-aos="flip-left" data-aos-offset="500"

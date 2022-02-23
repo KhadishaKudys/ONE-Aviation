@@ -27,21 +27,21 @@ class Footer extends React.Component{
                         </Col>
                         <Col>
                             <h2>Company</h2>
-                            <a>About</a><br></br>
-                            <a>Careers</a><br></br>
-                            <a>Mobile</a>
+                            <a href="/about">About</a><br></br>
+                            <a href="/about">Careers</a><br></br>
+                            <a href="/about">Mobile</a>
                         </Col>
                         <Col>
                             <h2>Contact</h2>
-                            <a>Help/FAQ</a><br></br>
-                            <a>Press</a><br></br>
-                            <a>Affilates</a>
+                            <a href="/about">Help/FAQ</a><br></br>
+                            <a href="/about">Press</a><br></br>
+                            <a href="/about">Affilates</a>
                         </Col>
                         <Col>
                             <h2>More</h2>
-                            <a>Privacy policy</a><br></br>
-                            <a>Terms of use</a><br></br>
-                            <a>Low fare tips</a>
+                            <a href="/about">Privacy policy</a><br></br>
+                            <a href="/about">Terms of use</a><br></br>
+                            <a href="/about">Low fare tips</a>
                         </Col>
                         <Col>
                             <img className="icon-footer" src={fb} alt="icon-fb"></img>

@@ -1,8 +1,7 @@
 import React from "react";
-import {Card, Col, Container, Row} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
 import "../../assets/styles/enter/sign-up.css"
 import Loading from "../../components/reused/Loading"
-import logo from '../../assets/static/backgrounds/enter/sign-up-back.jpg'
 
 
 class CreateAccount extends React.Component{

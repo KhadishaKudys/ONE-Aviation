@@ -1,11 +1,7 @@
-import React from "react";
-import Header from "../../components/main/Header"
-import Footer from "../../components/main/Footer"
-import '../../assets/styles/about-us/about-us.css'
+import React from "react";import '../../assets/styles/about-us/about-us.css'
 import Aircraft from "./Aircraft"
 import Services from "./Services"
 import Loading from "../../components/reused/Loading"
-import Strengths from "./Strengths"
 
 class AboutUs extends React.Component{
 
