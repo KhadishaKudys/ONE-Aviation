@@ -22,7 +22,7 @@ class Header extends React.Component{
         return(
             <Navbar className="nav" bg="none" variant="light">
                 <Container>
-                <Navbar.Brand id="brand" href="/home">ONE Aviation</Navbar.Brand>
+                <Navbar.Brand id="brand" href="/">ONE Aviation</Navbar.Brand>
                 <Nav className="m-auto">
                 <Nav.Link href="/about-us">About</Nav.Link>
                 <Nav.Link href="/blog">Blog</Nav.Link>

@@ -66,12 +66,12 @@ class Dashboard extends React.Component{
                     <Col md={3}>
                         <div id="sidebar">
                             <Row>
-                                <Link to="/home">
+                                <Link to="/">
                                     <h1>ONE Aviation</h1>
                                 </Link>
                             </Row>
                             <div className="menu">
-                                <Link to="/home">
+                                <Link to="/">
                                     <Row className="item">
                                         <Col md={3}>
                                             <img src={home} alt="home-icon" width="18px"></img>
