@@ -11,8 +11,8 @@ class CreateFlightContactInfo extends React.Component{
         super(props);
         this.state = {
             isLoading: true,
-            email: 'sandra@fake.com',
-            phone_number: '77776666223',
+            email: '',
+            phone_number: '',
             flight_info: this.props.history.location.state
         }
     }

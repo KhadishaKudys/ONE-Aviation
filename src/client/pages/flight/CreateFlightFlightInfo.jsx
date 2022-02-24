@@ -24,8 +24,8 @@ class CreateFlightFlightInfo extends React.Component{
             destination_latitude: localStorage.getItem('to_lat'),
             destination_longitude: localStorage.getItem('to_long'),
             shareable: false, 
-            departure_time: '2021-12-22T08:00:00Z',
-            return_time: '2021-12-25T12:00:00Z',
+            departure_time: '',
+            return_time: '',
             map_show: false,
             custom_map_show: false,
             location_dir: 'from',
@@ -83,8 +83,15 @@ class CreateFlightFlightInfo extends React.Component{
     }
 
     onDDateChange(date) {
-        console.log(date)
+        console.log(date._d)
+        let  dateformat = new Date(date._d)
+        this.setState({departure_time: dateformat.toISOString()})
+    }
 
+    onRDateChange(date) {
+        console.log(date._d)
+        let dateformat = new Date(date._d)
+        this.setState({return_time: dateformat.toISOString()})
     }
 
     customDirFrom(){
@@ -195,11 +202,11 @@ class CreateFlightFlightInfo extends React.Component{
                                     <Col>
                             
                             <br/>
-                                <DatePicker className="enter-input" placeholder="Departure date" onChange={() => this.onDDateChange()} />
+                                <DatePicker className="enter-input" placeholder="Departure date" onChange={(e) => this.onDDateChange(e)}/>
                                 </Col>
                                 <Col>
                             <br/>
-                                <DatePicker className="enter-input" placeholder="Return date" />
+                                <DatePicker className="enter-input" placeholder="Return date" onChange={(e) => this.onRDateChange(e)}/>
                                 </Col>
                                 </Row>
                                 {/* <DateRangePicker

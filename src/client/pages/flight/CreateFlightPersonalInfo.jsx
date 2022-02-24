@@ -11,6 +11,7 @@ class CreateFlightPersonalInfo extends React.Component{
         super(props);
         this.state = {
             isLoading: true,
+            order_id: '',
             passengers: [
                 {
                     first_name: '',
@@ -54,6 +55,7 @@ class CreateFlightPersonalInfo extends React.Component{
     }
 
     openPayment(){
+        this.newFlight()
         this.props.history.push({
             pathname: "/create-flight/additional-services",
             state: this.state
@@ -97,7 +99,7 @@ class CreateFlightPersonalInfo extends React.Component{
         this.componentDidMount()
     }
 
-    async newFlight(e) {
+    async newFlight() {
         const flight = {
             email: this.state.flight.email,
             document: {
@@ -117,18 +119,18 @@ class CreateFlightPersonalInfo extends React.Component{
                     phone_number: this.state.flight.phone_number,
                     email: this.state.flight.email
                 },
-                {
-                    direction: this.state.direction_1,
-                    document: {
-                        number: this.state.document_1,
-                        type: this.state.document_type_1
-                    },
-                    first_name: this.state.first_name_1,
-                    middle_name: this.state.middle_name_1,
-                    last_name: this.state.last_name_1,
-                    phone_number: this.state.flight.phone_number,
-                    email: this.state.flight.email
-                }
+                // {
+                //     direction: this.state.direction_1,
+                //     document: {
+                //         number: this.state.document_1,
+                //         type: this.state.document_type_1
+                //     },
+                //     first_name: this.state.first_name_1,
+                //     middle_name: this.state.middle_name_1,
+                //     last_name: this.state.last_name_1,
+                //     phone_number: this.state.flight.phone_number,
+                //     email: this.state.flight.email
+                // }
             ],
             phone_number: this.state.flight.phone_number,
             from: {
@@ -160,9 +162,10 @@ class CreateFlightPersonalInfo extends React.Component{
                 const data = await res.json();
                 console.log(data);
                 if( res.ok ) {
-                    console.log('OK');
+                    this.setState({order_id: data.order_id})
                     this.props.history.push({
-                        pathname: "/create-flight/success"
+                        pathname: "/create-flight/additional-services",
+                        state: this.state
                     });
                 }
             })
@@ -229,7 +232,7 @@ class CreateFlightPersonalInfo extends React.Component{
      </Row>
  </div>
 <br/>
- <div className="passengers-info">
+ {/* <div className="passengers-info">
              <Row id="passenger">
                  <Col>
                      <h5>Passenger #2</h5>
@@ -265,8 +268,8 @@ class CreateFlightPersonalInfo extends React.Component{
              </select><br/><br/>
          </Col>
      </Row>
- </div>
-                        <button className="enter-btn" onClick={() => this.openPayment()}>Create new flight</button>
+ </div> */}
+                        <button className="enter-btn" onClick={() => this.newFlight()}>Create new flight</button>
                     </Card>
                 </Container>
             </div>

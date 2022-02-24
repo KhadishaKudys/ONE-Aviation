@@ -23,11 +23,11 @@ function Map(){
 
     function selectPort(port){
         let location = localStorage.getItem('location_dir')
-        if(location == 'from'){
+        if(location === 'from'){
             localStorage.setItem('from_lat', port.latitude)
             localStorage.setItem('from_long', port.longitude);
             localStorage.setItem('departure_port', port.name);
-        } else if(location == 'to') {
+        } else if(location === 'to') {
             localStorage.setItem('to_lat', port.latitude)
             localStorage.setItem('to_long', port.longitude);
             localStorage.setItem('destination_port', port.name);

@@ -43,13 +43,17 @@ class CreateFlightPayment extends React.Component{
         super(props);
         this.state = {
             isLoading: true,
-            
+            creditcard_number: '',
+            cvv: '',
+            month: '',
+            year: '',
             flight: this.props.history.location.state
         }
     }
     
 
     componentDidMount() {
+        console.log(this.state)
         const timer = setTimeout(() => {
             this.setState({
                 isLoading: false
@@ -77,58 +81,20 @@ class CreateFlightPayment extends React.Component{
         return false;
       }
 
-    async newFlight(e) {
+    async payForFlight(e) {
         const flight = {
-            email: this.state.flight.email,
-            document: {
-                number: this.state.document,
-                type: this.state.document_type
+            credit_card_info: {
+                cvv: this.state.cvv,
+                month: this.state.month,
+                number: this.state.creditcard_number,
+                year: this.state.year
             },
-            passengers: [
-                {
-                    direction: this.state.direction,
-                    document: {
-                        number: this.state.document,
-                        type: this.state.document_type
-                    },
-                    first_name: this.state.first_name,
-                    middle_name: this.state.middle_name,
-                    last_name: this.state.last_name,
-                    phone_number: this.state.flight.phone_number,
-                    email: this.state.flight.email
-                },
-                {
-                    direction: this.state.direction_1,
-                    document: {
-                        number: this.state.document_1,
-                        type: this.state.document_type_1
-                    },
-                    first_name: this.state.first_name_1,
-                    middle_name: this.state.middle_name_1,
-                    last_name: this.state.last_name_1,
-                    phone_number: this.state.flight.phone_number,
-                    email: this.state.flight.email
-                }
-            ],
-            phone_number: this.state.flight.phone_number,
-            from: {
-                name: this.state.flight.flight_info.departure_port,
-                latitude: parseFloat(this.state.flight.flight_info.departure_latitude),
-                longitude: parseFloat(this.state.flight.flight_info.departure_longitude)
-            },
-            to: {
-                name: this.state.flight.flight_info.destination_port,
-                latitude: parseFloat(this.state.flight.flight_info.destination_latitude),
-                longitude: parseFloat(this.state.flight.flight_info.destination_longitude)
-            },
-            departure_time: this.state.flight.flight_info.departure_time,
-            return_time: this.state.flight.flight_info.return_time,
-            shareable: this.state.flight.flight_info.shareable,
+            order_id: this.state.flight.flight.order_id
         }
         
         console.log(flight)
         const token = localStorage.getItem('access_token')
-            await fetch('https://one-aviation.herokuapp.com/api/v1/order', {
+            await fetch('https://one-aviation.herokuapp.com/api/v1/payments/pay', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -186,7 +152,7 @@ class CreateFlightPayment extends React.Component{
                                         <h3>Card Number</h3>
                                         <label>Enter the 16-digit card number</label>
                                         <br></br>
-                                        <input type='text' onkeypress='return formats(this,event)' onkeyup="return numberValidation(event)"  className="creditcard" id="number"></input>
+                                        <input type='text' onkeypress='return formats(this,event)' onkeyup="return numberValidation(event)"  className="creditcard" id="number"  onChange={e => this.setState({creditcard_number: e.target.value})}></input>
                                     </div>
                                     <div className="details">
                                         <Row>
@@ -195,7 +161,7 @@ class CreateFlightPayment extends React.Component{
                                                 <label>Enter the 3-digit card number</label>
                                             </Col>
                                             <Col>
-                                            <input className="creditcard" id="cvv"></input>
+                                            <input className="creditcard" id="cvv"  onChange={e => this.setState({cvv: e.target.value})}></input>
                                             </Col>
                                         </Row>
                                     </div>
@@ -208,21 +174,21 @@ class CreateFlightPayment extends React.Component{
                                             <Col>
                                                 <Row>
                                                     <Col md="5">
-                                                        <input className="creditcard" id="cvv">
+                                                        <input className="creditcard" id="cvv"  onChange={e => this.setState({month: e.target.value})}>
                                                         </input>
                                                     </Col>
                                                     <Col md='2'>
                                                         <h3>/</h3> 
                                                     </Col>
                                                     <Col md='5'>
-                                                        <input className="creditcard" id="cvv">
+                                                        <input className="creditcard" id="cvv"  onChange={e => this.setState({year: e.target.value})}>
                                                         </input>
                                                     </Col>
                                                 </Row>
                                             </Col>
                                         </Row>
                                     </div>
-                                    <button className="pay-btn" onClick={() => this.newFlight()}>Pay Now</button>
+                                    <button className="pay-btn" onClick={() => this.payForFlight()}>Pay Now</button>
                                 </Col>
                                 <Col md="1">
                                 </Col>
