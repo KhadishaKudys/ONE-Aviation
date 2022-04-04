@@ -6,9 +6,11 @@ import avatar from '../../assets/static/backgrounds/home/avatar-1.svg'
 import home from '../../assets/static/icons/profile/home-icon.svg'
 import orders from '../../assets/static/icons/profile/orders-icon.svg'
 import settings from '../../assets/static/icons/profile/settings-icon.svg'
-import notification from '../../assets/static/icons/profile/notification-icon.svg'
+import likedPosts from '../../assets/static/icons/home/isliked.svg'
 import logout from '../../assets/static/icons/profile/logout.svg'
 import Orders from './Orders'
+import LikedPosts from './LikedPosts';
+import Settings from './Settings';
 import {Link, Switch, Route} from "react-router-dom";
 
 
@@ -67,7 +69,7 @@ class Dashboard extends React.Component{
                         <div id="sidebar">
                             <Row>
                                 <Link to="/">
-                                    <h1>ONE Aviation</h1>
+                                    <h1>THE Airline</h1>
                                 </Link>
                             </Row>
                             <div className="menu">
@@ -95,16 +97,19 @@ class Dashboard extends React.Component{
                             </Link>
                             </div>
                             <div className="menu">
+                            <Link to='/user/profile/liked-posts'>
                             <Row className="item">
                                 <Col md={3}>
-                                    <img src={notification} alt="home-icon" width="18px"></img>
+                                    <img src={likedPosts} alt="home-icon" width="18px"></img>
                                 </Col>
                                 <Col>
-                                    <h2>Price alerts</h2>
+                                    <h2>Liked posts</h2>
                                 </Col>
                             </Row>
+                            </Link>
                             </div>
                             <div className="menu">
+                            <Link to='/user/profile/settings'>
                             <Row className="item">
                                 <Col md={3}>
                                     <img src={settings} alt="home-icon" width="18px"></img>
@@ -113,6 +118,7 @@ class Dashboard extends React.Component{
                                     <h2>Settings</h2>
                                 </Col>
                             </Row>
+                            </Link>
                             </div>
                             <div className="menu-last">
                             <Row className="item">
@@ -143,9 +149,12 @@ class Dashboard extends React.Component{
                                                     <Route path="/user/profile/orders">
                                                         <Orders/>
                                                     </Route>
-                                                    {/* <Route path="/profile/history">
-                                                        <History userId={state.user.userId}/>
-                                                    </Route> */}
+                                                    <Route path="/user/profile/liked-posts">
+                                                        <LikedPosts/>
+                                                    </Route>
+                                                    <Route path="/user/profile/settings">
+                                                        <Settings/>
+                                                    </Route>
                                                 </Switch>
                         </div>
                         </Container>

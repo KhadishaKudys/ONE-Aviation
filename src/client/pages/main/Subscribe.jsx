@@ -4,6 +4,35 @@ import "../../assets/styles/home/subscribe.css"
 
 
 class Information extends React.Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            token: localStorage.getItem('access_token')
+        }
+    }
+
+    async emailSubscription() {
+        await fetch(`https://one-aviation.herokuapp.com/api/api/v1/subscription/subscribe/${this.state.email}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.state.token
+            },
+        }).then(async(res) => {
+            const data = await res.json();
+            console.log(data);
+            this.setState({flight_info:data})
+            if( res.ok ) {
+                console.log('OK');
+                alert('You subscribed successfully!')
+            }
+        })
+            .catch(err => console.log(err));
+    }
+
     render(){
         return(
             <div className="subscribe">
@@ -31,9 +60,9 @@ class Information extends React.Component{
      data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-sine" data-aos-offset="200" data-aos-delay="100">Subscribe & Send Us A Message</h1>
                             <Card id="card-2" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-delay="200">
                                 <label for="email">Email</label>
-                                <input className="enter-input" id="email"></input>
+                                <input className="enter-input" id="email" onChange={e => this.setState({email: e.target.value})}></input>
                                 <div className="btn-subscribe">
-                                    <button>Subscribe</button>
+                                    <button onClick={()=> this.emailSubscription()}>Subscribe</button>
                                 </div>
                             </Card>
                         </Col>

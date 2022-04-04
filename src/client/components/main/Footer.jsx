@@ -22,7 +22,7 @@ class Footer extends React.Component{
                 <Container>
                     <Row>
                         <Col>
-                            <h1>ONE Aviation</h1>
+                            <h1>THE Airline</h1>
                             <p>Book your trip in minute, get full<br></br>Control for much longer.</p>
                         </Col>
                         <Col>
@@ -52,7 +52,7 @@ class Footer extends React.Component{
                             <img className="icon-footer-1" src={apple_store} alt="icon-as" width="45%"></img>
                         </Col>
                     </Row>
-                    <p>All rights reserved by ONE Aviation</p>
+                    <p>All rights reserved by THE Airline</p>
                 </Container>
             </div>
         );

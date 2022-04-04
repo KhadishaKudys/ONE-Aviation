@@ -97,3 +97,48 @@
     color:#E2007A;
     background: none;
 }
+
+#large-post{
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.blog .post-content {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    margin-top: 50px;
+   -webkit-line-clamp: 4; /* number of lines to show */
+           line-clamp: 4; 
+   -webkit-box-orient: vertical;
+}
+
+.date-post{
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.blog-img{
+    /* width: 30%; */
+}
+
+.blog_prev{
+    width: 22.3%;
+    margin-right: 30px;
+    display: inline-flex;
+    margin-bottom: 50px;
+    height: 250px;
+}
+
+#all-blogs{
+    margin-top: 50px;
+    /* display: inline-block; */
+}
+
+.one-post{
+    width: 25%;
+}

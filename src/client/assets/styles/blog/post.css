@@ -13,19 +13,121 @@
 }
 
 .post-page .cont{
-    /* margin-top: 100px; */
+    margin-top: -100px;
     position: absolute;
     top:40%;
     color: white;
     text-align: center;
     justify-content: center;
     margin-left: 100px;
+    margin-right: 100px;
 }
 
 .post-page .cont h1{
     font-weight: 700;
+    color: white;
 }
 
 .post .post-page p{
     font-size: 16px;
+}
+
+#btm-actions{
+}
+
+#like-action{
+    width: 100%;
+    height: 20px;
+    background-color: white;
+    position: sticky;
+  bottom: 1rem;
+  align-self: flex-end;
+}
+
+#like{
+    background-color: none;
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    background: none;
+    margin-top: 50px;
+}
+
+#btn-div{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+}
+
+.back-btn{
+    color: white;
+    font-weight: 600;
+    border: none;
+    background: none;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+}
+
+.back-btn:hover, .back-btn:active{
+    color: black;
+}
+
+.heart-btn{
+    position: absolute;
+    top: 200%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.post .content{
+    border: 2px solid #E2007A;
+    padding: 5px 20px;
+    border-radius: 5px;
+    display: flex;
+    cursor: pointer;
+    background-color: none;
+}
+
+.content .heart{
+    height: 90px;
+    width: 90px;
+    background: url("../../static/icons/blogs/heart.png") no-repeat;
+    background-position: left;
+    background-size: 2900%;
+    position: absolute;
+    top: 50%;
+    left: 21%;
+    transform: translate(-50%, -50%);
+}
+
+.heart-active{
+    background-position: right;
+    animation: animate .8s steps(28) 1;
+}
+
+@keyframes identifier {
+    0%{
+        background-position: left;
+    }
+    100%{
+        background-position: right;
+    }
+}
+
+.like{
+    margin-left: 30px;
+    font-size: 18px;
+    color: #E2007A;
+    font-weight: 600;
+}
+
+.heart-active{
+    border-color: #E2007A;
+    background: #E2007A;
+}
+
+.heart-active{
+    color: white;
 }

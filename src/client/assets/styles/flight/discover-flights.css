@@ -152,12 +152,12 @@ line-height: 21px;
 }
 
 #nav-btn{
-    border: 2px solid #0076BD;
+    border: 2px solid black;
     background: none;
     padding: 0px 15px;
     font-weight: 600;
     font-size: 14px;
-    color: #0076BD;
+    color: black;
     border-radius: 5px;
 }
 

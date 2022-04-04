@@ -24,6 +24,8 @@ import CreateFlightSuccess from './client/pages/flight/CreateFlightSuccess';
 import BookFlightSuccess from './client/pages/flight/BookFlightSuccess';
 import BookFlightContactInfo from './client/pages/flight/BookFlightContactInfo';
 import BookFlightPersonalInfo from './client/pages/flight/BookFlightPersonalInfo';
+import LikedPosts from './client/pages/profile/LikedPosts';
+import Settings from './client/pages/profile/Settings';
 import './App.css';
 
 function App() {
@@ -52,7 +54,10 @@ function App() {
           <Route path="/password-reset" component={PasswordReset} />
           <Route path="/otp-verification" component={EnterOtp} />
           <Route path="/new-password" component={NewPassword} />
-          <Route path="/user/profile" component={Dashboard} />
+          <Route path="/user/profile" component={Dashboard}>
+            </Route>
+          <Route path="/user/profile/liked-posts" component={LikedPosts} />
+          <Route path="/user/profile/settings" component={Settings} />
           <Route path="/about-flight/:flight_id" component={AboutFlight} />
           <Route path="/book-flight/:flight_id/contact-information" component={BookFlightContactInfo} />
           <Route path="/book-flight/:flight_id/personal-information" component={BookFlightPersonalInfo} />
@@ -67,13 +72,12 @@ function App() {
                 </Route>
             </Switch>
           </Route> */}
-
+          <Route path="/post/:id" component={Post} />
           <Route>
             <Header/>
             <div className="App-content">
               <Switch>
                 <Route path="/blog" component={Blog} />
-                <Route path="/post" component={Post} />
                 <Route path="/create-flight/flight-information" component={CreateFlightFlightInfo}/>
                 <Route path="/create-flight/contact-information" component={CreateFlightContactInfo}/>
                 <Route path="/create-flight/personal-information" component={CreateFlightPersonalInfo}/>
