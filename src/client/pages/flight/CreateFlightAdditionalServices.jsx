@@ -134,7 +134,7 @@ class CreateFlightAdditionalServices extends React.Component{
         }
         
         console.log(flight)
-        const token = localStorage.getItem('access_token')
+        const token = sessionStorage.getItem('access_token')
             await fetch('https://one-aviation.herokuapp.com/api/v1/order', {
                 method: 'POST',
                 headers: {

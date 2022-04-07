@@ -1,16 +1,15 @@
 import React from "react";
-import {Card, Col, Row, Container} from "react-bootstrap"
+import {Card, Row, Container} from "react-bootstrap"
+import {Link} from "react-router-dom"
+import blog_2 from "../../assets/static/backgrounds/home/blog_2.png"
 import "../../assets/styles/home/blog-preview.css"
-import like from "../../assets/static/icons/home/like.svg"
-import share from "../../assets/static/icons/home/share.svg"
-import save from "../../assets/static/icons/home/save.svg"
-import blog_1 from "../../assets/static/backgrounds/home/blog_1.png"
 
 class BlogPreview extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
+            all_blogs: [],
             posts: [
                 {
                     title: "How traveling affects your life",
@@ -36,6 +35,39 @@ class BlogPreview extends React.Component{
         }
     }
 
+    componentDidMount(){
+        this.allBlogs();
+    }
+
+    async allBlogs() {
+        await fetch('https://one-aviation.herokuapp.com/api/v1/blog', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(async(res) => {
+            const data = await res.json(); 
+            this.setState({
+                all_blogs:data.blogs.slice(0, 4)
+            });
+            this.changeDate();
+            console.log(this.state.all_posts)
+        })
+            .catch(err => this.setState({all_blogs: []}));
+    }
+
+    async changeDate() {
+        // var dates = [];
+        for (var post in this.state.all_blogs){
+            var created = new Date(this.state.all_blogs[post].created_at).toISOString().split('T')[0];
+            var updated = new Date(this.state.all_blogs[post].updated_at).toISOString().split('T')[0];
+            this.state.all_blogs[post].created_at = created;
+            this.state.all_blogs[post].updated_at = updated;
+        }
+        console.log(this.state.all_blogs)
+    }
+
     render(){
         return(
             <div className="blog-preview">
@@ -45,32 +77,22 @@ class BlogPreview extends React.Component{
                     <h1 data-aos="fade-up"
      data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-sine" data-aos-offset="200" data-aos-delay="100">Blog</h1>
                     <Row>
-                        {this.state.posts.map(post => 
-                            <Col className="post-col" data-aos="fade-right" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-delay="200">
+                    <div id="all-blogs" data-aos="fade-left"
+     data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-sine" data-aos-offset="200" data-aos-delay="100">
+                        {this.state.all_blogs.map(pos => 
                             <Card className="blog_prev">
-                                <img src={blog_1} width="100%" alt="blog1"></img>
-                                <h2>{post.title}</h2>
-                                <Row>
-                                    <Col md={2}>
-                                        <img src={like} alt="like"></img>
-                                    </Col>
-                                    <Col md={2}>
-                                        <img src={share} alt="share"></img>
-                                    </Col>
-                                    <Col md={2}>
-                                        <img src={save} alt="save"></img>
-                                    </Col>
-                                    <Col md={6} id="col-date">
-                                        <p>{post.date}</p>
-                                    </Col>
-                                </Row>
+                                <Link to={`/post/${pos.id}`}>
+                                    <img src={blog_2} width="100%" alt="blog2" className="blog-img"></img>
+                                </Link>
+                                {/* <p class="date-post">{pos.created_at}</p> */}
+                                <Link>
+                                    <h2>{pos.title}</h2>
+                                </Link>
                             </Card>
-                            </Col>
                         )}
-                        <Col id="see-all-col" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine" data-aos-delay="200">
                         <a href="/blog">see all →
                             </a>
-                        </Col>
+                        </div>
                     </Row>
                 </Container>
             </div>

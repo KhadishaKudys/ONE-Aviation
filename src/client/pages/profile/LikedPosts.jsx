@@ -15,7 +15,7 @@ class LikedPosts extends React.Component{
         this.state = {
             show: false,
             isLoading: true,
-            access_token: localStorage.getItem("access_token"),
+            access_token: sessionStorage.getItem("access_token"),
             order_history: [],
             liked_posts: []
         }

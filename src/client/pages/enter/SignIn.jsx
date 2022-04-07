@@ -5,18 +5,6 @@ import Loading from "../../components/reused/Loading"
 import AOS from 'aos'
 import logo from '../../assets/static/backgrounds/enter/sign-in-back.jpg'
 
-// const AlertDismissible = ({show}) => {
-//     if (show === true) {
-//       return (
-//         <Alert variant="danger" onClose={() => this.setState({show: false})>
-//           <Alert.Heading>You got an error!</Alert.Heading>
-//           <p>
-//             Either email or password is incorrect!
-//           </p>
-//         </Alert>
-//       );
-//     } return null;
-// }
 
 class SignIn extends React.Component{
 
@@ -66,9 +54,9 @@ class SignIn extends React.Component{
             const data = await res.json();
             console.log(data);
             if( res.ok ) {
-                localStorage.setItem("access_token", data.access_token);
-                localStorage.setItem("refresh_token", data.refresh_token);
-                localStorage.setItem("isLoggedIn", true);
+                sessionStorage.setItem("access_token", data.access_token);
+                sessionStorage.setItem("refresh_token", data.refresh_token);
+                sessionStorage.setItem("isLoggedIn", true);
                 this.props.history.push({
                     pathname: '/user/profile',
                     state: data
@@ -99,32 +87,6 @@ class SignIn extends React.Component{
                         <Col className="column" id="enter-card-right">
                             <h1>Welcome,</h1>
                             <h2>Sign in to continue!</h2>
-                            {/* <Form.Group as={Col} controlId="signUpEmailValidation" >
-                            <label for="email">Email</label>
-                                        <Form.Control 
-                                            required
-                                            type="email"
-                                            id="email"
-                                            className="enter-a"
-                                            onChange={e => this.setState({email: e.target.value})}
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            Please enter an email
-                                        </Form.Control.Feedback>
-                                    </Form.Group>
-                                    <label for="password">Password</label>
-                                    <Form.Group as={Col} controlId="signUpPasswordValidation">
-                                        <Form.Control
-                                            required
-                                            type="password"
-                                            id="password"
-                                            className="enter-a"
-                                            onChange={e => this.setState({password: e.target.value})}
-                                        />
-                                        <Form.Control.Feedback type="invalid">
-                                            Please enter a password
-                                        </Form.Control.Feedback>
-                                    </Form.Group> */}
                             <label for="email">Email</label>
                             <input className="enter-input" id="email" onChange={e => this.setState({email: e.target.value})}></input>
                             <label for="password">Password</label>

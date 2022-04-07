@@ -19,7 +19,7 @@ class ClientsComments extends React.Component{
                         <Col md={1}>
                             </Col>
                         <Col md={6} className="col-info">
-                            <Card id="card-1" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-delay="200">
+                            <Card id="card-1" data-aos="fade-left" data-aos-easing="ease-in-sine" data-aos-offset="300" data-aos-delay="200">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fringilla, urna eget porta dictum, leo ex ornare lacus, at sodales lectus tortor sed orci. Donec egestas nulla ac egestas auctor. Aenean tristique ultrices gravida. Donec pharetra leo massa, ac ultricies sapien mattis in. Nullam imperdiet et nisi sed lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fringilla.</p>
                                 <Row>
                                     <Col md={2}>

@@ -122,10 +122,6 @@
     margin-bottom: 0px;
 }
 
-.blog-img{
-    /* width: 30%; */
-}
-
 .blog_prev{
     width: 22.3%;
     margin-right: 30px;
@@ -136,6 +132,7 @@
 
 #all-blogs{
     margin-top: 50px;
+    margin-bottom: 50px;
     /* display: inline-block; */
 }
 

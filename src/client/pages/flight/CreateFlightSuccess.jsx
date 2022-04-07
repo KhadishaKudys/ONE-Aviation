@@ -14,7 +14,7 @@ class CreateFlightSuccess extends React.Component{
     }
 
     componentDidMount() {
-        console.log(localStorage)
+        console.log(sessionStorage)
         const timer = setTimeout(() => {
             this.setState({
                 isLoading: false

@@ -1,10 +1,8 @@
 import React from "react";
-import {Container, Card} from "react-bootstrap"
+import {Container, Form, Modal} from "react-bootstrap"
 import "../../assets/styles/blog/post.css"
 import blog_2 from "../../assets/static/backgrounds/home/blog_3.jpg"
 import Loading from "../../components/reused/Loading"
-import liked from "../../assets/static/icons/home/like.svg"
-import like from "../../assets/static/icons/blogs/liked.svg"
 
 class Post extends React.Component{
 
@@ -13,8 +11,11 @@ class Post extends React.Component{
         this.state = {
             isLoading: true,
             post_info: {},
-            liked: false,
-            token: localStorage.getItem('access_token'),
+            liked: null,
+            token: sessionStorage.getItem('access_token'),
+            show_login: false,
+            password: '',
+            email: ''
         }
         this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
 
@@ -31,38 +32,51 @@ class Post extends React.Component{
     }
 
     async clickLike(id) {
-        if(this.state.liked == false){
+        if(this.state.post_info.liked === false){
+            this.state.post_info.liked = true
         this.setState({
-            liked: true
+            post_info: this.state.post_info
         })
         this.likeThePost(id);
     }else{
+        this.state.post_info.liked = false
         this.setState({
-            liked: false
+            post_info: this.state.post_info
         })
         this.unlikeThePost(id);
     }
     }
 
+    async checkLoggedIn(id) {
+        if (this.state.session === null) {
+            this.setState({
+                show_login: true
+            })
+        }
+        else {
+            this.clickLike(id);
+        }
+    }
+
     async likeThePost(id) {
-        console.log(id);
-        await fetch(`https://one-aviation.herokuapp.com/api/v1/blog/like/${id}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+ this.state.token
-            }
-        }).then(async(res) => {
-            const data = await res.json();
-            let items = [...this.state.all_blogs];
-            let item = {...items[1]};
-            item.liked = true;
-            items[1] = item;
-            this.setState({items})
-            console.log(data)
-        })
-            .catch(err => this.setState({posts: []}));
+            console.log(id);
+            await fetch(`https://one-aviation.herokuapp.com/api/v1/blog/like/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+ this.state.token
+                }
+            }).then(async(res) => {
+                const data = await res.json();
+                let items = [...this.state.all_blogs];
+                let item = {...items[1]};
+                item.liked = true;
+                items[1] = item;
+                this.setState({items})
+                console.log(data)
+            })
+                .catch(err => this.setState({posts: []}));
     }
 
     async unlikeThePost(id) {
@@ -83,8 +97,7 @@ class Post extends React.Component{
     }
 
     goBack(){
-        this.setState({map_show: false})
-        this.forceUpdateHandler()
+        window.history.back();
     }
 
     forceUpdateHandler(){
@@ -93,14 +106,23 @@ class Post extends React.Component{
 
 
     async getPost(id) {
+        var fetch_header = {}
+        if (this.state.token === null) {
+            fetch_header = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        } else {
+            fetch_header = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.state.token
+            }
+        }
         console.log(id);
         await fetch(`https://one-aviation.herokuapp.com/api/v1/blog/${id}`, {
             method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+ this.state.token
-            }
+            headers: fetch_header
         }).then(async(res) => {
             const data = await res.json();
             this.setState({
@@ -109,6 +131,42 @@ class Post extends React.Component{
             console.log(data)
         })
             .catch(err => this.setState({posts: []}));
+    }
+
+    handleClose = () => {
+        this.setState({
+            show_login: false
+        })
+    }
+
+    async signIn() {
+        const user = {
+            password: this.state.password, 
+            email: this.state.email
+        }
+        await fetch('https://one-aviation.herokuapp.com/api/v1/auth/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user),
+        }).then(async(res) => {
+            const data = await res.json();
+            console.log(data);
+            if( res.ok ) {
+                sessionStorage.setItem("access_token", data.access_token);
+                sessionStorage.setItem("refresh_token", data.refresh_token);
+                sessionStorage.setItem("isLoggedIn", true);
+                this.setState({
+                    show_login:false
+                })
+            } 
+        })
+            .catch(err => 
+                console.log(err),
+                
+            )
     }
 
     render(){
@@ -123,18 +181,12 @@ class Post extends React.Component{
                 </div>
                 <div className="cont">
                     <h1>{this.state.post_info.title}</h1>
-                    <div className="heart-btn" onClick={() => this.clickLike(this.state.post_info.id)}>
-                        <div className={`content ${this.state.liked ? "heart-active":""}`}>
-                            <span className={`heart ${this.state.liked ? "heart-active":""}`}></span>
-                            <span className={`like ${this.state.liked ? "heart-active":""}`}>Like</span>
+                    <div className="heart-btn" onClick={() => this.checkLoggedIn(this.state.post_info.id)}>
+                        <div className={`content ${this.state.post_info.liked ? "heart-active":""}`}>
+                            <span className={`heart ${this.state.post_info.liked ? "heart-active":""}`}></span>
+                            <span className={`like ${this.state.post_info.liked ? "heart-active":""}`}>Like</span>
                         </div>
                     </div>
-                    {/* {
-                        this.state.post_info.liked ?
-                        <button id="like"><img alt="liked" src={liked} onClick={e => this.unlikeThePost(this.state.post_info.id)}></img></button>
-                        :
-                        <button id="like"><img alt="like" src={like} onClick={e => this.likeThePost(this.state.post_info.id)}></img></button>
-                    } */}
                 </div>
                 <Container>
                 <p>{this.state.post_info.content}</p>
@@ -142,6 +194,30 @@ class Post extends React.Component{
                 
             </div>
             }
+            <Modal show={this.state.show_login} onHide={this.handleClose} id="auth-modal">
+                <Modal.Header closeButton>
+                <Modal.Title>Sign In</Modal.Title>
+                </Modal.Header>
+                                                        
+                <Modal.Body id="auth-modal-body">
+                <Form className="login-form">
+                <Form.Group className="mb-3" controlId="formBasicEmail" onChange={e => this.setState({email: e.target.value})}>
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email"/>
+                </Form.Group>
+            
+                <Form.Group className="mb-3" controlId="formBasicPassword" onChange={e => this.setState({password: e.target.value})}>
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                </Form.Group>
+                <button variant="primary" type="submit" className="enter-btn" onClick={() => this.signIn()}>
+                Sign in
+                </button>
+                </Form>
+            </Modal.Body>
+            </Modal>
             </div>
         );
     }

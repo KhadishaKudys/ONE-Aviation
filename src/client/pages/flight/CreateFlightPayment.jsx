@@ -93,7 +93,7 @@ class CreateFlightPayment extends React.Component{
         }
         
         console.log(flight)
-        const token = localStorage.getItem('access_token')
+        const token = sessionStorage.getItem('access_token')
             await fetch('https://one-aviation.herokuapp.com/api/v1/payments/pay', {
                 method: 'POST',
                 headers: {

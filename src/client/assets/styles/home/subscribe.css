@@ -86,3 +86,19 @@
     color: #FFFFFF;
     margin-top: 10px;
 }
+
+.alert{
+    z-index: 1000;
+    border: none;
+    position: relative;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.alert-heading{
+    font-size: 14px;
+}
+

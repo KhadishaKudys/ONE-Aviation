@@ -67,3 +67,20 @@
     justify-content: center;
     align-items: center;
 }
+
+.blog-preview .one-post{
+    width: 10%;
+}
+
+.blog-preview .blog_prev{
+    width: 21%;
+    margin-right: 30px;
+    display: inline-flex;
+    margin-bottom: 50px;
+    height: 100px;
+}
+
+.blog-preview .date-post{
+    margin-top: 10px;
+    margin-bottom: 0px;
+}

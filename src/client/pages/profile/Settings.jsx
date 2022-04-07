@@ -13,7 +13,7 @@ class Settings extends React.Component{
         this.state = {
             show: false,
             isLoading: true,
-            token: localStorage.getItem("access_token"),
+            token: sessionStorage.getItem("access_token"),
             order_history: [],
             email: 'sandra@fake.com',
             is_subscribed: true

@@ -10,12 +10,12 @@ class Header extends React.Component{
         super(props);
         this.state = {
             show: false,
-            token: localStorage.hasOwnProperty('access_token')
+            token: sessionStorage.hasOwnProperty('access_token')
         }
     }
 
     componentDidMount(){
-        console.log(localStorage)
+        console.log(sessionStorage)
     }
 
     render(){
@@ -24,9 +24,9 @@ class Header extends React.Component{
                 <Container>
                 <Navbar.Brand id="brand" href="/">THE Airline</Navbar.Brand>
                 <Nav className="m-auto">
-                <Nav.Link href="/about-us">About</Nav.Link>
+                <Nav.Link href="/">Main</Nav.Link>
+                <Nav.Link href="/about-us">About us</Nav.Link>
                 <Nav.Link href="/blog">Blog</Nav.Link>
-                <Nav.Link href="#pricing">Services</Nav.Link>
                 </Nav>
                 {this.state.token === false ?
                 <Nav className="le-auto">

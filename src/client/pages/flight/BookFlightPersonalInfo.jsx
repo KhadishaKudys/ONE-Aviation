@@ -36,7 +36,7 @@ class BookFlightPersonalInfo extends React.Component{
     }
 
     async bookFlight(e) {
-        const token = localStorage.getItem('access_token')
+        const token = sessionStorage.getItem('access_token')
         const booking = {
             document: {
                 number: this.state.document,

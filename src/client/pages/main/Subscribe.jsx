@@ -1,37 +1,62 @@
 import React from "react";
-import {Card, Container, Row, Col} from "react-bootstrap"
+import {Card, Container, Row, Col, Alert} from "react-bootstrap"
 import "../../assets/styles/home/subscribe.css"
 
 
-class Information extends React.Component{
+class Subscribe extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            token: localStorage.getItem('access_token')
+            is_authorized: false,
+            show_danger: false, 
+            show_success: false,
+            token: sessionStorage.getItem('access_token')
         }
     }
 
     async emailSubscription() {
-        await fetch(`https://one-aviation.herokuapp.com/api/api/v1/subscription/subscribe/${this.state.email}`, {
-            method: 'PUT',
-            headers: {
+        var fetch_header = {}
+        if (this.state.is_authorized === true) {
+            fetch_header = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + this.state.token
-            },
+            }
+        } else {
+            fetch_header = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+        await fetch(`https://one-aviation.herokuapp.com/api/api/v1/subscription/subscribe/${this.state.email}`, {
+            method: 'PUT',
+            headers: fetch_header,
         }).then(async(res) => {
             const data = await res.json();
             console.log(data);
             this.setState({flight_info:data})
             if( res.ok ) {
                 console.log('OK');
-                alert('You subscribed successfully!')
+                this.setState({
+                    show_success : true
+                })
             }
         })
-            .catch(err => console.log(err));
+            .catch(err => this.setState({
+                show_danger : true
+            }));
     }
+
+    alertDisable(){
+        setTimeout(() => {
+            this.setState({
+                show_success: false
+            })
+          }, 3000);
+    }
+
 
     render(){
         return(
@@ -68,6 +93,20 @@ class Information extends React.Component{
                         </Col>
 
                     </Row>
+                    {this.state.show_danger === true ?
+                    <Alert variant={'danger'} onChange={this.alertDisable()}>
+                        <Alert.Heading>You got an error!</Alert.Heading>
+                        Email is incorrect!
+                    </Alert>
+                    : <p></p>
+                    }
+                    {this.state.show_success === true ?
+                    <Alert variant={'success'} onChange={this.alertDisable()}>
+                        <Alert.Heading>Success!</Alert.Heading>
+                        Your email is subscribed to our news and notifications!
+                    </Alert>
+                    : <p></p>
+                    }
                 </Container>
                     
             </div>
@@ -75,4 +114,4 @@ class Information extends React.Component{
     }
 }
 
-export default (Information)
+export default (Subscribe)

@@ -21,8 +21,8 @@ class Dashboard extends React.Component{
         this.state = {
             show: false,
             isLoading: true,
-            access_token: localStorage.getItem("access_token"),
-            refresh_token: localStorage.getItem("refresh_token"),
+            access_token: sessionStorage.getItem("access_token"),
+            refresh_token: sessionStorage.getItem("refresh_token"),
             user_info: {}
         }
     }
@@ -38,8 +38,8 @@ class Dashboard extends React.Component{
     }
 
     async signOut(e) {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
+        sessionStorage.removeItem("access_token");
+        sessionStorage.removeItem("refresh_token");
         window.location.href = "/sign-in";
     }
 
