@@ -138,7 +138,7 @@
 }
 
 #auth-modal{
-    margin-top: 10%;
+    margin-top: 5%;
     width: fit-content;
     min-width: 400px;
 
@@ -147,7 +147,7 @@
 #auth-modal-body{
     padding: 20px;
     background-color: white;
-    height: 300px;
+    height: 390px;
 }
 
 .mb-3{
