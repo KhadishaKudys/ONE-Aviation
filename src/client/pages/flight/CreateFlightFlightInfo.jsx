@@ -26,6 +26,8 @@ class CreateFlightFlightInfo extends React.Component{
             shareable: false, 
             departure_time: '',
             return_time: '',
+            departure_date: '',
+            return_date: '',
             map_show: false,
             custom_map_show: false,
             location_dir: 'from',
@@ -38,6 +40,7 @@ class CreateFlightFlightInfo extends React.Component{
 
     componentDidMount() {
         console.log(localStorage)
+        window.scrollTo(0,0);
         const timer = setTimeout(() => {
             this.setState({
                 isLoading: false
@@ -47,11 +50,12 @@ class CreateFlightFlightInfo extends React.Component{
     }
 
     async upd(){
-        this.componentDidMount()
+        this.componentDidMount();
     }
 
     handleDOpenChange = Dopen => {
         this.setState({ Dopen });
+        // console.log(this.state.departure_time)
       };
 
       handleROpenChange = Ropen => {
@@ -84,14 +88,24 @@ class CreateFlightFlightInfo extends React.Component{
 
     onDDateChange(date) {
         console.log(date._d)
-        let  dateformat = new Date(date._d)
-        this.setState({departure_time: dateformat.toISOString()})
+        let dateformat = new Date(date._d);
+        var year = dateformat.getFullYear();
+        var month = dateformat.getMonth();
+        var day = dateformat.getDay();
+        var formatted_date = year+"-"+month+"-"+day;
+        console.log(formatted_date)
+        this.setState({departure_date: formatted_date});
     }
 
     onRDateChange(date) {
         console.log(date._d)
         let dateformat = new Date(date._d)
-        this.setState({return_time: dateformat.toISOString()})
+        var year = dateformat.getFullYear();
+        var month = dateformat.getMonth();
+        var day = dateformat.getDay();
+        day = ("0"+day).slice(-2);
+        var formatted_date = year+"-"+month+"-"+day;
+        this.setState({return_date: formatted_date});
     }
 
     customDirFrom(){
@@ -132,6 +146,28 @@ class CreateFlightFlightInfo extends React.Component{
             pathname: "/create-flight/contact-information",
             state: this.state
         });
+    }
+
+    departureTimeSetting = (time) =>{
+        var t = new Date(time._d);
+        var hr = t.getHours();
+        hr = ("0"+hr).slice(-2);
+        var min = t.getMinutes();
+        min = ("0"+min).slice(-2);
+        var formatted_time = hr+":"+min+":00";
+        var datetime = this.state.departure_date+"T"+formatted_time+"Z";
+        console.log(datetime);
+    }
+
+    returnTimeSetting = (time) =>{
+        var t = new Date(time._d);
+        var hr = t.getHours();
+        hr = ("0"+hr).slice(-2);
+        var min = t.getMinutes();
+        min = ("0"+min).slice(-2);
+        var formatted_time = hr+":"+min+":00";
+        var datetime = this.state.return_date+"T"+formatted_time+"Z";
+        console.log(datetime);
     }
 
     goBack(){
@@ -209,36 +245,6 @@ class CreateFlightFlightInfo extends React.Component{
                                 <DatePicker className="enter-input" placeholder="Return date" onChange={(e) => this.onRDateChange(e)}/>
                                 </Col>
                                 </Row>
-                                {/* <DateRangePicker
-                                        startDate={this.state.departure_time}
-                                        endDate={this.state.return_time}
-                                        onStartDateChange={this.setStartDate}
-                                        onEndDateChange={this.setEndDate}
-                                        minimumDate={new Date()}
-                                        minimumLength={1}
-                                        format='yyyy-MM-dd'
-                                        locale={enGB}
-                                    >
-                                        {({ startDateInputProps, endDateInputProps, focus }) => (
-                                            <div className='row date-range'>
-                                                <Col>
-                                                <input
-                                                    className={'enter-input' + (focus === START_DATE ? ' -focused' : '')}
-                                                    {...startDateInputProps}
-                                                    placeholder='Departure date'
-                                                    onChange={e => this.setState({departure_time: e.target.value})}
-                                                />
-                                                </Col><Col>
-                                                <input
-                                                    className={'enter-input' + (focus === END_DATE ? ' -focused' : '')}
-                                                    {...endDateInputProps}
-                                                    placeholder='Return date'
-                                                    onChange={e => this.setState({return_time: e.target.value})}
-                                                />
-                                                </Col>
-                                            </div>
-                                        )}
-                                </DateRangePicker> */}
                                 <br/>
                                 <label for="password">Time</label>
                                 <br/>
@@ -250,6 +256,9 @@ class CreateFlightFlightInfo extends React.Component{
                                     open={this.state.Dopen}
                                     onOpenChange={this.handleDOpenChange}
                                     format={'HH:mm'}
+                                    onOk={(time) => {
+                                        this.departureTimeSetting(time);
+                                    }}
                                 />
                                 {/* <TimePicker
                                      className="enter-input"

@@ -19,6 +19,7 @@ class CreateFlightContactInfo extends React.Component{
 
     componentDidMount() {
         console.log(this.props)
+        window.scrollTo(0,0);
         const timer = setTimeout(() => {
             this.setState({
                 isLoading: false

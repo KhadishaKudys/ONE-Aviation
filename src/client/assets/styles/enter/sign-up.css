@@ -3,7 +3,6 @@
     justify-content: center;
     display: flex;
     padding: 10px;
-
 }
 
 .create-account h1, .sign-up h1{
@@ -31,6 +30,12 @@ h2{
     border: none;
     position: absolute;
     top: 5px;
+    margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+        position: absolute;               /* 2 */
+        top: 50%;                         /* 3 */
+        transform: translate(0, -50%)   /* 4 */
 }
 
 .sign-up #enter-card-right{
@@ -41,13 +46,19 @@ h2{
     margin: 0px;
 }
 
+#sign-up{
+    position: relative;
+    min-height: 98vh;
+    height: max-content;
+}
+
 .enter-input{
     border: none;
     border-bottom: 1px solid #bbbb;
     width: 100%;
     font-size: 14px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .create-account .enter-input:focus, .sign-up .enter-input:focus{
@@ -109,6 +120,7 @@ label{
     font-size: 12px;
     color: #bbbbbb;
     height: normal;
+    margin-top: 30px;
 }
   .row {
     display: flex;
@@ -142,6 +154,12 @@ label{
     float: none;
     text-align: left;
     border: none;
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px; /* Added */
+    position: absolute;               /* 2 */
+    top: 50%;                         /* 3 */
+    transform: translate(0, -50%)   /* 4 */
 }
 
 .create-account #enter-card-right{
@@ -178,7 +196,7 @@ label{
     margin-bottom: 20px;
 }
 
-.sign-up .enter-btn {
+.sign-up .enter-btn, .create-account .enter-btn {
     display: inline-block;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
@@ -190,7 +208,7 @@ label{
     -webkit-transition-duration: 0.5s;
     transition-duration: 0.5s;
   }
-  .sign-up .enter-btn:before {
+  .sign-up .enter-btn:before, .create-account .enter-btn:before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -210,10 +228,10 @@ label{
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
   }
-  .sign-up .enter-btn:hover, .sign-in .enter-btn:focus, .sign-in .enter-btn:active {
+  .sign-up .enter-btn:hover, .sign-in .enter-btn:focus, .sign-in .enter-btn:active, .create-account .enter-btn:active, .create-account .enter-btn:hover, .create-account .enter-btn:focus {
     color: white;
   }
-  .sign-up .enter-btn:hover:before, .sign-in .enter-btn:focus:before, .sign-in .enter-btn:active:before {
+  .sign-up .enter-btn:hover:before, .sign-in .enter-btn:focus:before, .sign-in .enter-btn:active:before, .create-account .enter-btn:hover:before, .create-account .enter-btn:focus:before, .create-account .enter-btn:active:before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
     -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
@@ -237,4 +255,34 @@ label{
 
 #back button:hover, #back button:active{
     color: black;
+}
+
+.sign-up .alert{
+    z-index: 1000;
+    border: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.create-account .alert{
+    z-index: 1000;
+    border: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.alert-heading{
+    font-size: 14px;
+}
+
+.pass-bar{
+    font-size: 8px;
 }

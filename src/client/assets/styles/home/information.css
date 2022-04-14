@@ -27,7 +27,8 @@
     letter-spacing: 6px;
     text-transform: uppercase;
     color: #EE7F00;
-    margin-bottom: 44px;
+    margin-bottom: 80px;
+    margin-top: 17px;
 }
 
 .information h3{
@@ -86,4 +87,13 @@
 
 .information .col-info{
     margin-top: 100px;
+}
+
+#info-cont p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /* -webkit-line-clamp: 4;
+    line-clamp: 4; */
+    -webkit-box-orient: vertical;
 }

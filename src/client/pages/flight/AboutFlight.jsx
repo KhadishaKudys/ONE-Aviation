@@ -1,7 +1,7 @@
 import React from "react";
 import {Card, Col, Row, Container} from "react-bootstrap"
 import "../../assets/styles/flight/about-flight.css"
-import flight_back from "../../assets/static/flights/flight-bck.png"
+import flight_back from "../../assets/static/backgrounds/home/main-bckgrnd.png"
 import Loading from "../../components/reused/Loading"
 
 class AboutFlight extends React.Component{
@@ -50,71 +50,84 @@ class AboutFlight extends React.Component{
                         </div>
                     </Col>
                     <Col md='8'>
-                    <h1>Flight</h1>
+                    <h1 id="flight-locations">{this.state.flight_info.from.name} ✈ {this.state.flight_info.to.name}</h1>
                     </Col>
                     <Col md='2'>
                     <button onClick={() => this.bookingFlight()}>Book</button>
                     </Col>
                 </Row>
                 <Row id="flight-cards">
-                    <Col>
-                    <Card>
+                    <Col md={9}>
                         <Row>
                             <Col md="4">
-                            <h5>From</h5>
+                            <h5>{this.state.flight_info.from.name}</h5>
                             </Col>
-                            <Col>
-                            <p>{this.state.flight_info.from.name}</p>
+                            <Col md={2}>
+                            <p>✈</p>
+                            </Col>
+                            <Col md="4">
+                            <h5>{this.state.flight_info.to.name}</h5>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col md="4">
-                            <h5>{Date(this.state.flight_info.departure_time)}</h5>
-                            </Col>
-                            <Col>
-                            <p>
-                            
-                            <p>08:40</p>
-                            </p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="4">
-                            <h5>To</h5>
-                            </Col><Col>
-                            <p>{this.state.flight_info.to.name}</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="4">
-                            <h5>Arrival time</h5>
-                            </Col>
-                            <Col>
-                            <p>{Date(this.state.flight_info.arrival_time)}</p>
-                            </Col>
+                        <Card id="flight-data">
+                            <h1 id="title-table">Flight Information</h1>
+                            <hr></hr>
+                            <Row>
+                                <Col>
+                                    <h2>From</h2>
+                                </Col>
+                                <Col>
+                                    <p>{this.state.flight_info.from.name}</p>
+                                </Col>
                             </Row>
                             <Row>
-                                <Col md="4">
-                            <h5>Journey duration</h5>
-                            </Col>
-                            <Col>
-                            <p>1h 50min</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="4">
-                            <h5>Price</h5>
-                            </Col>
-                            <Col>
-                            <p>{this.state.flight_info.price}</p>
-                            </Col>
-                        </Row>
-
-                    </Card>
+                                <Col>
+                                    <h2>To</h2>
+                                </Col>
+                                <Col>
+                                    <p>{this.state.flight_info.to.name}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <h2>Departure date</h2>
+                                </Col>
+                                <Col>
+                                    <p>{this.state.flight_info.departure_time}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <h2>Departure time</h2>
+                                </Col>
+                                <Col>
+                                    <p>{this.state.flight_info.departure_time}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <h2>Arrival date</h2>
+                                </Col>
+                                <Col>
+                                    <p>{this.state.flight_info.arrival_time}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <h2>Arrival time</h2>
+                                </Col>
+                                <Col>
+                                    <p>{this.state.flight_info.arrival_time}</p>
+                                </Col>
+                            </Row>
+                        </Card>
                     </Col>
                     <Col>
-                    <Card>
-
+                    <Card id="price-info">
+                        <Row>
+                            <h2>€ {parseInt(this.state.flight_info.price)}</h2>
+                            <p><b>{this.state.flight_info.available_seats} seats</b> available</p>
+                        </Row>
                     </Card>
                     </Col>
                 </Row>

@@ -114,13 +114,27 @@ class FlightSearch extends React.Component{
             body: JSON.stringify(flight),
         }).then(async(res) => {
             const data = await res.json();
-            this.setState({available_flights: data})
+            this.setState({available_flights: data.flights});
+            // this.dateFormat();
             this.props.history.push({
                 pathname: "/discover-flights",
                 state: this.state
             });
         })
             .catch(err => console.log(err));
+    }
+
+    dateFormat = () => {
+        for (var flight in this.state.available_flights.toString()){
+            var arrival = new Date(this.state.available_flights[flight].arrival_time[0].toString());
+            var arrival_month = arrival.getMonth();
+            var arrival_day = arrival.getDay();
+            var arrival_date = arrival_day+' '+arrival_month;
+            var departure = new Date(this.state.available_flights[flight].departure_time[0].toString());
+            this.state.available_flights[flight].arrival_time = arrival;
+            this.state.available_flights[flight].departure_time = departure;
+            console.log('jj', arrival_date);
+        }
     }
 
 
@@ -181,7 +195,7 @@ class FlightSearch extends React.Component{
                             <Col>
                             <Row>
                                 <label for="destination">To</label>
-                                <input className="flight-input" id="destination" value={this.state.destination_port} id="destination-in" onClick={() => this.toClicked()}></input>
+                                <input className="flight-input" id="destination" value={this.state.destination_port} onClick={() => this.toClicked()}></input>
                             </Row>
                             </Col>
                             

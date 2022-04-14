@@ -19,13 +19,9 @@ p{
     background-color: white;
     border: none;
     border-radius: 5px;
-    padding: 50px 20px;
+    padding: 20px;
     margin: 5px;
-    overflow: hidden;
-   display: -webkit-box;
-   word-break: break-word;
-   -webkit-line-clamp: 3; /* number of lines to show */
-   -webkit-box-orient: vertical;
+    height: 320px;
    cursor: pointer;
    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.05);
 }
@@ -34,6 +30,7 @@ p{
     color: #0076BD;
     font-weight: 600;
     font-size: 18px;
+    margin-bottom: 20px;
 }
 
 #about{
@@ -160,7 +157,7 @@ li{
     border-radius: 20px;
     width: 200px;
     padding: 30px;
-    height: 200px;
+    height: 150px;
     margin: 5px;
     overflow: hidden;
     text-align: center;

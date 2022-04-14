@@ -1,6 +1,6 @@
 import React from "react";
-import {Card, Col, Row, Container} from "react-bootstrap"
-import "../../assets/styles/flight/create-flight.css"
+import {Card, Col, Row, Container, Breadcrumb} from "react-bootstrap"
+import "../../assets/styles/flight/book-flight.css"
 import Loading from "../../components/reused/Loading"
 import 'react-nice-dates/build/style.css'
 
@@ -19,6 +19,7 @@ class BookFlightContactInfo extends React.Component{
 
     componentDidMount() {
         console.log(this.props.match)
+        window.scrollTo(0,0);
         const timer = setTimeout(() => {
             this.setState({
                 isLoading: false
@@ -29,6 +30,10 @@ class BookFlightContactInfo extends React.Component{
 
     async upd(){
         this.componentDidMount()
+    }
+
+    goBack(){
+        window.history.back();
     }
 
     handleChange = (title, data) => {
@@ -66,10 +71,13 @@ class BookFlightContactInfo extends React.Component{
             <div className="flight">
             {this.state.isLoading ? <Loading />
             :
-            <div className="create-flight">
+            <div className="book-flight">
                 <Container>
+                    <div id="back">
+                        <button onClick={() => this.goBack()}>← Back</button>
+                    </div>
                     <h1>Book flight</h1>
-
+                    <br/>
                         <Card>
                     <h2>Contact information</h2>
                                 <Row>

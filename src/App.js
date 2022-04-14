@@ -19,30 +19,16 @@ import CreateFlightFlightInfo from "./client/pages/flight/CreateFlightFlightInfo
 import CreateFlightContactInfo from "./client/pages/flight/CreateFlightContactInfo"
 import CreateFlightPersonalInfo from "./client/pages/flight/CreateFlightPersonalInfo"
 import CreateFlightPayment from "./client/pages/flight/CreateFlightPayment";
-import CreateFlightAdditionalServices from './client/pages/flight/CreateFlightAdditionalServices';
 import CreateFlightSuccess from './client/pages/flight/CreateFlightSuccess';
 import BookFlightSuccess from './client/pages/flight/BookFlightSuccess';
 import BookFlightContactInfo from './client/pages/flight/BookFlightContactInfo';
 import BookFlightPersonalInfo from './client/pages/flight/BookFlightPersonalInfo';
+import BookFlightPayment from './client/pages/flight/BookFlightPayment';
 import LikedPosts from './client/pages/profile/LikedPosts';
 import Settings from './client/pages/profile/Settings';
 import './App.css';
 
 function App() {
-
-  // const dispatch = useDispatch()
-  //   const ports = useSelector(state => state.ports)
-  //   console.log(ports)
-
-  //   const getPorts = () => {
-  //       dispatch({type: "GET_PORTS"})
-  //   }
-
-  //   useEffect(() => {
-  //       const prt = getPorts();
-  //   }, []);
-
-  // useEffect()
   return (
     <div className="App">
       <Router>
@@ -61,17 +47,8 @@ function App() {
           <Route path="/about-flight/:flight_id" component={AboutFlight} />
           <Route path="/book-flight/:flight_id/contact-information" component={BookFlightContactInfo} />
           <Route path="/book-flight/:flight_id/personal-information" component={BookFlightPersonalInfo} />
+          <Route path="/book-flight/:flight_id/payment" component={BookFlightPayment} />
           <Route path="/book-flight/success" component={BookFlightSuccess} />
-          {/* <Route>
-            <Switch>
-              <Route path="/user/profile">
-                {localStorage.hasOwnProperty("access_token") === true ? 
-                <Dashboard/>
-                : <Redirect to="/sign-in"/>
-                }
-                </Route>
-            </Switch>
-          </Route> */}
           <Route path="/post/:id" component={Post} />
           <Route>
             <Header/>
@@ -82,7 +59,6 @@ function App() {
                 <Route path="/create-flight/contact-information" component={CreateFlightContactInfo}/>
                 <Route path="/create-flight/personal-information" component={CreateFlightPersonalInfo}/>
                 <Route path="/create-flight/payment" component={CreateFlightPayment}/>
-                <Route path="/create-flight/additional-services" component={CreateFlightAdditionalServices}/>
                 <Route path="/create-flight/success" component={CreateFlightSuccess}/>
                 <Route path="/discover-flights" component={DiscoverFlights}/>
                 <Route path="/about-us" component={AboutUs}/>

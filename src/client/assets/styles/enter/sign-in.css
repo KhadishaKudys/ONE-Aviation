@@ -42,13 +42,13 @@ h2{
     overflow: hidden;
 }
 
-.enter-input{
+.sign-in .enter-input{
     border: none;
     border-bottom: 1px solid #bbbb;
     width: 100%;
-    margin-top: 0px;
+    margin-top: 10px;
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .sign-in .enter-input:focus{
@@ -171,6 +171,7 @@ h2{
     font-size: 10px;
     color: #bbbbbb;
     height: normal;
+    margin-top: 30px;
 }
   .row {
     display: flex;
@@ -200,7 +201,7 @@ h2{
     color: #EE7F00;
 }
 
-.alert{
+.sign-in .alert{
     z-index: 1000;
     border: none;
     position: absolute;
@@ -215,3 +216,7 @@ h2{
     font-size: 14px;
 }
 
+.form-errors{
+    color: red;
+    font-size: 12px;
+}

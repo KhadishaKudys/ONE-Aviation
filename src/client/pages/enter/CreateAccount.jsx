@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Col, Row} from "react-bootstrap";
+import {Card, Col, Row, Alert} from "react-bootstrap";
 import "../../assets/styles/enter/sign-up.css"
 import Loading from "../../components/reused/Loading"
 
@@ -13,7 +13,11 @@ class CreateAccount extends React.Component{
             middle_name: "",
             last_name: "",
             phone_number: "",
-            isLoading: true
+            isLoading: true,
+            phoneError: "",
+            nameError: "",
+            surnameError: "",
+            show_success: false
         }
     }
 
@@ -26,7 +30,15 @@ class CreateAccount extends React.Component{
           return() => clearTimeout(timer)
     }
 
-    async createAccount(e) {
+    alertDisable(){
+        setTimeout(() => {
+            this.setState({
+                show_success: false
+            })
+          }, 3000);
+    }
+
+    async createAccount() {
         let userPrev = this.props.history.location.state;
         const user = {
             email: userPrev.email,
@@ -46,14 +58,68 @@ class CreateAccount extends React.Component{
         }).then((res) => {
             console.log(res);
             if( res.ok ) {
-                this.props.history.push('/sign-in');
+                this.setState({show_success:true});
+                setTimeout(() => {
+                    this.props.history.push('/sign-in');
+                }, 3000);
             }
         })
             .catch(err => console.log(err));
     }
 
+    validate = () => {
+        let phoneError = "";
+        let nameError = "";
+        let surnameError = "";
+        var reg = /^[a-z]+$/i;
+        var reg2 =  /^\d+$/;
+        if (this.state.phone_number === "") {
+            phoneError = '⚠️ Phone number cannot  be empty';
+        }
+        else {
+            if (this.state.phone_number.length < 10 || !reg2.test(this.state.phone_number)){
+                phoneError = '⚠️ Invalid phone number';
+            }
+        }
+        if (this.state.first_name === "") {
+            nameError = '⚠️ First name cannot be empty';
+        }
+        else {
+            if (!reg.test(this.state.first_name)) {
+                nameError = '⚠️ First name must consist of only letters';
+            }
+        }
+        if (this.state.last_name === "") {
+            surnameError = '⚠️ Last name cannot be empty';
+        }
+        else {
+            if (!reg.test(this.state.last_name)) {
+                surnameError = '⚠️ Last name must consist of only letters';
+            }
+        }
+        if (phoneError || nameError || surnameError) {
+            this.setState({phoneError, nameError, surnameError});
+            return false;
+        }
+        if(!phoneError && !nameError && !surnameError) {
+            phoneError = "";
+            nameError = "";
+            surnameError = "";
+            this.setState({phoneError, nameError, surnameError});
+            return true;
+        }
+    }
+
     goBack(){
         window.history.back();
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        const isValid = this.validate();
+        if (isValid) {
+            this.createAccount();
+        }
     }
 
     render(){
@@ -65,28 +131,37 @@ class CreateAccount extends React.Component{
                 </div>
                 <div id="info">
                 <Card className="card">
+                    <form onSubmit={(e) => this.handleSubmit(e)}>
                     <h1>Congrats,</h1>
                     <h2>Continue by filling the remaining fields!</h2>
                       <Row className="row">
                         <Col className="column" id="enter-card-left">
-                        <label htmlFor="first-name">First name*</label>
+                        <label htmlFor="first-name">First name *</label>
                             <input className="enter-input" id="first-name" onChange={e => this.setState({first_name: e.target.value})}></input>
+                            <div className="form-errors">{this.state.nameError}</div>
                             <label htmlFor="middle-name">Middle name</label>
                             <input className="enter-input" id="middle-name" onChange={e => this.setState({middle_name: e.target.value})}></input>
                         </Col>
                         <Col className="column" id="enter-card-right">
-                        <label htmlFor="last-name">Last name*</label>
+                        <label htmlFor="last-name">Last name *</label>
                             <input className="enter-input" id="last-name" onChange={e => this.setState({last_name: e.target.value})}></input>
-                            <label htmlFor="phone-number">Phone number*</label>
+                            <div className="form-errors">{this.state.surnameError}</div>
+                            <label htmlFor="phone-number">Phone number *</label>
                             <input className="enter-input" id="phone-number" onChange={e => this.setState({phone_number: e.target.value})}></input>
+                            <div className="form-errors">{this.state.phoneError}</div>
                         </Col>
                       </Row>
-                      <button className="enter-btn" onClick={() => this.createAccount()}>Complete</button>
+                      <button className="enter-btn" onClick={(e) => this.handleSubmit(e)}>Complete</button>
+                    </form>
                 </Card>
+                {this.state.show_success === true ?
+                    <Alert variant={'success'} onChange={this.alertDisable()}>
+                        <Alert.Heading>✅ Success!</Alert.Heading>
+                        Account is created!
+                    </Alert>
+                    : <p></p>
+                }
                 </div>
-                {/* <div id="overlapping">
-                    <h1 id="lrg-txt">SIGN IN</h1>
-                </div> */}
             </div>
         );
     }

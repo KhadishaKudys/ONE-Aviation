@@ -31,7 +31,8 @@ class Post extends React.Component{
           return() => clearTimeout(timer)
     }
 
-    async clickLike(id) {
+    async clickLike(id, e) {
+        e.preventDefault();
         if(this.state.post_info.liked === false){
             this.state.post_info.liked = true
         this.setState({
@@ -47,14 +48,15 @@ class Post extends React.Component{
     }
     }
 
-    async checkLoggedIn(id) {
-        if (this.state.session === null) {
+    async checkLoggedIn(id, e) {
+        e.preventDefault();
+        if (this.state.token === null) {
             this.setState({
                 show_login: true
             })
         }
         else {
-            this.clickLike(id);
+            this.clickLike(id, e);
         }
     }
 
@@ -181,7 +183,7 @@ class Post extends React.Component{
                 </div>
                 <div className="cont">
                     <h1>{this.state.post_info.title}</h1>
-                    <div className="heart-btn" onClick={() => this.checkLoggedIn(this.state.post_info.id)}>
+                    <div className="heart-btn" onClick={(e) => this.checkLoggedIn(this.state.post_info.id, e)}>
                         <div className={`content ${this.state.post_info.liked ? "heart-active":""}`}>
                             <span className={`heart ${this.state.post_info.liked ? "heart-active":""}`}></span>
                             <span className={`like ${this.state.post_info.liked ? "heart-active":""}`}>Like</span>

@@ -9,6 +9,8 @@ class Subscribe extends React.Component{
         super(props);
         this.state = {
             email: '',
+            message: '',
+            name: '',
             is_authorized: false,
             show_danger: false, 
             show_success: false,
@@ -30,7 +32,7 @@ class Subscribe extends React.Component{
                 'Content-Type': 'application/json'
             }
         }
-        await fetch(`https://one-aviation.herokuapp.com/api/api/v1/subscription/subscribe/${this.state.email}`, {
+        await fetch(`https://one-aviation.herokuapp.com/api/v1/subscription/subscribe/${this.state.email}`, {
             method: 'PUT',
             headers: fetch_header,
         }).then(async(res) => {
@@ -49,6 +51,35 @@ class Subscribe extends React.Component{
             }));
     }
 
+    async writeMessage() {
+        const message = {
+            email: this.state.email,
+            message: this.state.message,
+            name: this.state.name
+        }
+        await fetch("https://one-aviation.herokuapp.com/api/v1/message", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(message),
+        }).then(async(res) => {
+            const data = await res.json();
+            console.log(data);
+            if( res.ok ) {
+                console.log('OK');
+                this.setState({
+                    show_success : true
+                })
+            }
+        })
+            .catch(err => this.setState({
+                show_danger : true
+            }));
+    }
+
+
     alertDisable(){
         setTimeout(() => {
             this.setState({
@@ -66,13 +97,13 @@ class Subscribe extends React.Component{
                         <Col md={5}>
                             <Card id="card-1" data-aos="fade-right" data-aos-offset="200" data-aos-easing="ease-in-sine">
                                 <label for="email">Name</label>
-                                <input className="enter-input" id="name"></input>
+                                <input className="enter-input" id="name" onChange={e => this.setState({name: e.target.value})}></input>
                                 <label for="email">Email</label>
-                                <input className="enter-input" id="email"></input>
+                                <input className="enter-input" id="email" onChange={e => this.setState({email: e.target.value})}></input>
                                 <label for="password">Message</label>
-                                <textarea className="enter-input" id="message"></textarea>
+                                <textarea className="enter-input" id="message" onChange={e => this.setState({message: e.target.value})}></textarea>
                                 <div className="btn-subscribe">
-                                    <button>Submit</button>
+                                    <button onClick={() => this.writeMessage()}>Submit</button>
                                 </div>
                             </Card>
                         </Col>

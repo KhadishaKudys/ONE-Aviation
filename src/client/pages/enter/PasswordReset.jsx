@@ -1,5 +1,5 @@
 import React from "react";
-import {Card} from "react-bootstrap";
+import {Card, Alert} from "react-bootstrap";
 import Loading from "../../components/reused/Loading"
 import "../../assets/styles/enter/password-reset.css"
 
@@ -11,7 +11,9 @@ class PasswordReset extends React.Component{
         this.state = {
             email: '',
             verification: {},
-            isLoading: true
+            isLoading: true.valueOf,
+            emailError: "",
+            show_error: false
         }
     }
 
@@ -28,7 +30,45 @@ class PasswordReset extends React.Component{
         window.history.back();
     }
 
-    async forgotPass(e) {
+    validate = () => {
+        let emailError = '';
+        if (this.state.email === ""){
+            emailError = '⚠️ Email cannot be empty';
+        }
+        else {
+            if (!this.state.email.includes('@') || !this.state.email.includes('.')){
+                emailError = '⚠️ Invalid email';
+            }
+        }
+        if (emailError) {
+            this.setState({emailError});
+            return false;
+        }
+        if(!emailError) {
+            emailError = "";
+            this.setState({emailError});
+            return true;
+        }
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        const isValid = this.validate();
+        if (isValid) {
+            this.forgotPass();
+        }
+    }
+
+    
+    alertDisable(){
+        setTimeout(() => {
+            this.setState({
+                show_error: false
+            })
+          }, 3000);
+    }
+
+    async forgotPass() {
         const user = {
             email: this.state.email,
         }
@@ -47,9 +87,14 @@ class PasswordReset extends React.Component{
                     pathname: '/otp-verification',
                     state: this.state
                 });
+            } else{
+                this.setState({show_error:true});
             }
         })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+                this.setState({show_error:true});
+            });
     }
 
     render(){
@@ -61,17 +106,23 @@ class PasswordReset extends React.Component{
                 </div>
                 <div id="info">
                 <Card className="card">
+                    <form onSubmit={(e) => this.handleSubmit(e)}>
                             <h1>Forgot your password?</h1>
                             <h2>Enter your email!</h2>
                             <label for="email">Email</label>
                             <input className="enter-input" id="email" onChange={e => this.setState({email: e.target.value})}></input>
-                            <button className="enter-btn" onClick={() => this.forgotPass()}>Send</button>
-                      
+                            <div className="form-errors">{this.state.emailError}</div>
+                            <button className="enter-btn" onClick={(e) => this.handleSubmit(e)}>Send</button>
+                    </form>
                 </Card>
+                {this.state.show_error === true ?
+                    <Alert variant={'danger'} onChange={this.alertDisable()}>
+                        <Alert.Heading>❌ You got an error!</Alert.Heading>
+                        We couldn't find an account with that email address.
+                    </Alert>
+                    : <p></p>
+                }
                 </div>
-                {/* <div id="overlapping">
-                    <h1 id="lrg-txt">SIGN IN</h1>
-                </div> */}
             </div>
         );
     }

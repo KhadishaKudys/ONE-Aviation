@@ -6,38 +6,7 @@ import { Breadcrumb } from 'antd';
 import { useEffect } from 'react';
 
 
-// const useScript = url => {
-//     useEffect(() => {
-//         const script = document.createElement('script');
-
-//     script.src = url;
-//     script.async = true;
-
-//     document.body.appendChild(script);
-
-//     return () => {
-//       document.body.removeChild(script);
-//     }
-//   }, [url]);
-// };
-
-// const Payments = props => {
-//     useScript('../../components/payment/payment.js');
-//     <form novalidate autocomplete="on">
-//     <h2>Card number formatting</h2>
-//     <input type="text" class="cc-number" pattern="\d*" x-autocompletetype="cc-number" placeholder="Card number" required/>
-//     <h2>Expiry formatting</h2>
-//     <input type="text" class="cc-exp" pattern="\d*" x-autocompletetype="cc-exp" placeholder="Expires MM/YY" required maxlength="9"/>
-//     <h2>CVC formatting</h2>
-//     <input type="text" class="cc-cvc" pattern="\d*" x-autocompletetype="cc-csc" placeholder="Security code" required  autocomplete="off"/>
-//     <h2>Restrict Numeric</h2>
-//     <input type="text" data-numeric/>
-//     <h2 class="validation"></h2>
-//     <button type="submit">Submit</button>
-//     </form>
-//   }
-
-class CreateFlightPayment extends React.Component{
+class BookFlightPayment extends React.Component{
 
     constructor(props) {
         super(props);
@@ -109,7 +78,7 @@ class CreateFlightPayment extends React.Component{
                 if( res.ok ) {
                     console.log('OK');
                     this.props.history.push({
-                        pathname: "/create-flight/success"
+                        pathname: "/book-flight/success"
                     });
                 }
             })
@@ -122,11 +91,10 @@ class CreateFlightPayment extends React.Component{
             <div className="flight">
             {this.state.isLoading ? <Loading />
             :
-            <div className="create-flight">
+            <div className="book-flight">
                 <Container>
-                    <h1>New flight</h1>
+                    <h1>Book flight</h1>
                     <Breadcrumb>
-                        <Breadcrumb.Item><a href="/create-flight/flight-information">Flight Information</a></Breadcrumb.Item>
                         <Breadcrumb.Item>
                         <a href="/create-flight/contact-information">Contact Information</a>
                         </Breadcrumb.Item>
@@ -138,7 +106,6 @@ class CreateFlightPayment extends React.Component{
                         </Breadcrumb.Item>
                     </Breadcrumb>
                     <br/>
-                    {/* <Payments/> */}
                     <Card>
                         <div>
                             <h3>
@@ -233,4 +200,4 @@ class CreateFlightPayment extends React.Component{
     }
 }
 
-export default (CreateFlightPayment)
+export default (BookFlightPayment)

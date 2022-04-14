@@ -1,6 +1,6 @@
 import React from "react";
-import {Card, Col, Row, Container} from "react-bootstrap"
-import "../../assets/styles/flight/create-flight.css"
+import {Card, Col, Row, Container, Breadcrumb} from "react-bootstrap"
+import "../../assets/styles/flight/book-flight.css"
 import Loading from "../../components/reused/Loading"
 
 
@@ -17,12 +17,14 @@ class BookFlightPersonalInfo extends React.Component{
             document: '',
             passengers_num: 5,
             flight: this.props.history.location.state,
-            document_type: ''
+            document_type: '',
+            flight_id: this.props.match.params.flight_id
         }
     }
     
 
     componentDidMount() {
+        window.scrollTo(0,0);
         const timer = setTimeout(() => {
             this.setState({
                 isLoading: false
@@ -33,6 +35,10 @@ class BookFlightPersonalInfo extends React.Component{
 
     async upd(){
         this.componentDidMount()
+    }
+
+    goBack(){
+        window.history.back();
     }
 
     async bookFlight(e) {
@@ -75,7 +81,7 @@ class BookFlightPersonalInfo extends React.Component{
             if( res.ok ) {
                 console.log('OK');
                 this.props.history.push({
-                    pathname: "/book-flight/success"
+                    pathname: "/book-flight/payment"
                 });
             }
         })
@@ -111,9 +117,19 @@ class BookFlightPersonalInfo extends React.Component{
             <div className="flight">
             {this.state.isLoading ? <Loading />
             :
-            <div className="create-flight">
+            <div className="book-flight">
                 <Container>
+                    <div id="back">
+                        <button onClick={() => this.goBack()}>← Back</button>
+                    </div>
                     <h1>Book flight</h1>
+                    <Breadcrumb>
+                        <Breadcrumb.Item><a href={`/book-flight/${this.state.flight_id}/contact-information`}>Contact Information</a></Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                        Personal Information
+                        </Breadcrumb.Item>
+                    </Breadcrumb>
+                    <br/>
                     <Card>
                                 <h2>Personal information</h2>
                                 {/* {this.state.blogs.map(pos =>  { */}

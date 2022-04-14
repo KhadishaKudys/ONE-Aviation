@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Col, Row, Container} from "react-bootstrap"
+import {Card, Col, Row, Container, Modal, Form} from "react-bootstrap"
 import "../../assets/styles/flight/create-flight.css"
 import Loading from "../../components/reused/Loading"
 import { Breadcrumb } from 'antd';
@@ -12,6 +12,8 @@ class CreateFlightPersonalInfo extends React.Component{
         this.state = {
             isLoading: true,
             order_id: '',
+            promocode: 'DISCOUNTFORSTUDENTS2022',
+            show_login: false,
             passengers: [
                 {
                     first_name: '',
@@ -46,6 +48,7 @@ class CreateFlightPersonalInfo extends React.Component{
     
 
     componentDidMount() {
+        window.scrollTo(0,0);
         const timer = setTimeout(() => {
             this.setState({
                 isLoading: false
@@ -146,6 +149,7 @@ class CreateFlightPersonalInfo extends React.Component{
             departure_time: this.state.flight.flight_info.departure_time,
             return_time: this.state.flight.flight_info.return_time,
             shareable: this.state.flight.flight_info.shareable,
+            promocode: this.state.promocode
         }
         
         console.log(flight)
@@ -164,12 +168,25 @@ class CreateFlightPersonalInfo extends React.Component{
                 if( res.ok ) {
                     this.setState({order_id: data.order_id})
                     this.props.history.push({
-                        pathname: "/create-flight/additional-services",
+                        pathname: "/create-flight/payment",
                         state: this.state
                     });
+                    this.handleClose();
                 }
             })
                 .catch(err => console.log(err));
+    }
+
+    verifyFlight = () => {
+        this.setState({
+            show_login: true
+        })
+    }
+
+    handleClose = () => {
+        this.setState({
+            show_login: false
+        })
     }
 
     render(){
@@ -274,6 +291,33 @@ class CreateFlightPersonalInfo extends React.Component{
                 </Container>
             </div>
             }
+            <Modal show={this.state.show_login} onHide={this.handleClose} id="auth-modal">
+                <Modal.Header closeButton>
+                <Modal.Title>Flight Verification</Modal.Title>
+                </Modal.Header>
+                                                        
+                <Modal.Body id="auth-modal-body">
+                    Please, enter promocode if you have it and verify your flight.
+                <Form className="login-form">
+                <Form.Group className="mb-3" controlId="formBasicEmail" onChange={e => this.setState({promocode: e.target.value})}>
+                <Form.Label>Promocode</Form.Label>
+                <Form.Control type="text"/>
+                </Form.Group>
+                <Row>
+                    <Col>
+                    <button variant="primary" type="submit" className="enter-btn" onClick={() => this.newFlight()}>
+                        Verify
+                    </button>
+                    </Col>
+                    <Col>
+                    <button variant="primary" type="submit" className="enter-btn" onClick={() => this.handleClose()}>
+                        Cancel
+                    </button>
+                    </Col>
+                </Row>
+                </Form>
+            </Modal.Body>
+            </Modal>
             </div>
         );
     }

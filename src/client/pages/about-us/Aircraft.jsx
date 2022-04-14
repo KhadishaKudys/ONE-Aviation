@@ -105,7 +105,7 @@ class Aircraft extends React.Component{
                     
                         <Row id="strengths">
                             <Col>
-                                <h3>Our strengths</h3>
+                                <h3 data-aos="fade-right" data-aos-offset="200" data-aos-delay="200" data-aos-easing="ease-in-sine">Our strengths</h3>
                             </Col>
                             <Col>
                             <Card  data-aos="fade-up" data-aos-offset="200" data-aos-delay="200" data-aos-easing="ease-in-sine">
