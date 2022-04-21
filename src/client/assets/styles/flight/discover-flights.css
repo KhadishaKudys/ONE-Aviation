@@ -1,344 +1,413 @@
-.discover-flights .flights{
-    padding-top: 0px;
-    text-align: left;
-    padding-bottom: 200px;
+.discover-flights .flights {
+  padding-top: 0px;
+  text-align: left;
+  padding-bottom: 200px;
 }
 
-.discover-flights .flights #searchbar{
-    height: fit-content;
-    padding: 20px;
-    margin-top: 12%;
-    width: 100%;
-    min-height: 100px;
-    text-align: left;
-    background: #FFFFFF;
-    box-shadow: 0px 3px 100px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    border: none;
+.discover-flights .flights #searchbar {
+  height: fit-content;
+  padding: 20px;
+  margin-top: 12%;
+  width: 100%;
+  min-height: 100px;
+  text-align: left;
+  background: #ffffff;
+  box-shadow: 0px 3px 100px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: none;
 }
 
-.discover-flights h1{
-    font-size: 250px;
-    color: rgba(255, 255, 255, 0.7);
-    font-weight: 400;
-    font-family: 'Mrs Sheppards', cursive;
+.discover-flights h1 {
+  font-size: 250px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+  font-family: "Mrs Sheppards", cursive;
 }
 
-h3{
-    font-weight: 500;
-    font-size: 20px;
+h3 {
+  font-weight: 500;
+  font-size: 20px;
 }
 
-.discover-flights .flight-input{
-    background: none;
-    border-radius: 5px;
-    outline: none;
-    width: 90%;
-    margin-left: 10px;
-    margin-right: 10px;
-    border: 1px solid #bbbbbb;
-    padding: 5px 15px;
-    font-size: 14px;
+.discover-flights .flight-input {
+  background: none;
+  border-radius: 5px;
+  outline: none;
+  width: 90%;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid #bbbbbb;
+  padding: 5px 15px;
+  font-size: 14px;
 }
 
-.discover-flights label{
-    font-weight: 500;
-    font-size: 14px;
-    height: 24px;
+.discover-flights label {
+  font-weight: 500;
+  font-size: 14px;
+  height: 24px;
 }
 
-.discover-flights #search-btn{
-    background: #E2007A;
-    border-radius: 5px;
-    color: white;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    padding: 5px 15px;
-    font-weight: 600;
-    border: none;
+.discover-flights #search-btn {
+  background: #e2007a;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 5px 15px;
+  font-weight: 600;
+  border: none;
 }
 
-.discover-flights #from_to_icon_col{
-    text-align: center;
-    vertical-align: middle;
-    margin-top: 25px;
+.discover-flights #from_to_icon_col {
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 25px;
 }
 
-.discover-flights .btn-col{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* padding-top: 23px; */
+.discover-flights .btn-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-top: 23px; */
 }
 
-#prices{
-    background: #444444;
-    width: 100%;
-    height: 200px;
-    position: absolute;
-    top: 180px;
-    z-index: -1000;
+#prices {
+  background: #444444;
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  top: 180px;
+  z-index: -1000;
 }
 
-#tickets{
-    margin-top: 200px;
+#tickets {
+  margin-top: 100px;
 }
 
-.ticket{
-    background: #FFFFFF;
-    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    border: none;
-    height:fit-content;
-    padding: 20px;
-
+.ticket {
+  background: #ffffff;
+  /* box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1); */
+  border-radius: 10px;
+  border: 2px solid #e1e1e1;
+  height: fit-content;
+  padding: 20px;
+  margin-bottom: 30px;
 }
 
-#info-new-flight{
-    z-index: 100000;
-    position: absolute;
-    margin-bottom: 0px;
-    margin-top: 150px;
-
+#info-new-flight {
+  z-index: 100000;
+  position: absolute;
+  margin-bottom: 0px;
+  margin-top: 150px;
 }
 
-.ticket h2{
-    margin-bottom: 5px;
-    font-weight: 500;
-font-size: 16px;
-line-height: 45px;
-color: black;
-margin-bottom: 0px;
-padding-bottom: 0px;
+.ticket h2 {
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 45px;
+  color: black;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
-.ticket h3{
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 30px; 
-    color: black;
+.ticket h3 {
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 30px;
+  color: black;
 }
 
-#price{
-    border-left: 3px dashed #E1E1E1;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+#price {
+  border-left: 3px dashed #e1e1e1;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
-.ticket p{
-    font-weight: 400;
-font-size: 12px;
-line-height: 21px;
+.ticket p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 21px;
 }
 
-#way{
-    color:#E2007A
+#way {
+  color: #e2007a;
 }
 
-#time{
-    color: #0076BD;
+#time {
+  color: #0076bd;
 }
 
-#ticket-plane{
-    text-align: center;
+#ticket-plane {
+  text-align: center;
 }
 
-.col-md-8{
-    text-align: center;
+.col-md-8 {
+  text-align: center;
 }
 
-#from{
-    text-align: right;
+#from {
+  text-align: right;
 }
 
-#cost{
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 36px;
+#cost {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 36px;
 }
 
-#nav-btn{
-    border: 2px solid black;
-    background: none;
-    padding: 0px 15px;
-    font-weight: 600;
-    font-size: 14px;
-    color: black;
-    border-radius: 5px;
+#nav-btn {
+  border: 2px solid black;
+  background: none;
+  padding: 0px 15px;
+  font-weight: 600;
+  font-size: 14px;
+  color: black;
+  border-radius: 5px;
 }
 
 #price #nav-btn {
-    display: inline-block;
-    border: 2px solid #0076BD;
-    color: #0076BD;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    position: relative;
-    -webkit-transition-property: color;
-    transition-property: color;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    margin-top: 50px;
-  }
-  #price #nav-btn:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #0076BD;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transform-origin: 0 50%;
-    transform-origin: 0 50%;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-  }
-  #price #nav-btn:hover, #price  button:focus, #price button:active {
-    color: white;
-  }
-  #price #nav-btn:hover:before, #price button:focus:before, #price button:active:before {
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-    -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-  }
-
-  .flight-search{
-    background-image: url("../../static/backgrounds/home/main-bckgrnd.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-size: auto;
-    height: fit-content;
-    color: white;
-    padding-top: 10%;
+  display: inline-block;
+  border: 2px solid #0076bd;
+  color: #0076bd;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  margin-top: 15px;
+}
+#price #nav-btn:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #0076bd;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+#price #nav-btn:hover,
+#price button:focus,
+#price button:active {
+  color: white;
+}
+#price #nav-btn:hover:before,
+#price button:focus:before,
+#price button:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
 }
 
-.discover-flights .flight-search-card{
-    height: fit-content;
-    padding: 20px;
-    margin-top: 100px;
-    width: 100%;
-    min-height: 100px;
-    text-align: left;
-    background: #FFFFFF;
-    box-shadow: 0px 3px 100px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    border: none;
+.flight-search {
+  background-image: url("../../static/backgrounds/home/main-bckgrnd.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: auto;
+  height: fit-content;
+  color: white;
+  padding-top: 10%;
 }
 
-.discover-flights h1{
-    font-size: 250px;
-    color: rgba(255, 255, 255, 0.7);
-    font-weight: 400;
-    font-family: 'Mrs Sheppards', cursive;
+.discover-flights .flight-search-card {
+  height: fit-content;
+  padding: 20px;
+  margin-top: 100px;
+  width: 100%;
+  min-height: 100px;
+  text-align: left;
+  background: #ffffff;
+  box-shadow: 0px 3px 100px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: none;
 }
 
-h3{
-    font-weight: 500;
-    font-size: 20px;
+.discover-flights h1 {
+  font-size: 250px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+  font-family: "Mrs Sheppards", cursive;
 }
 
-.discover-flights .flight-input{
-    background: none;
-    border-radius: 5px;
-    outline: none;
-    width: 90%;
-    margin-left: 10px;
-    margin-right: 10px;
-    border: 1px solid #bbbbbb;
-    padding: 5px 15px;
-    font-size: 14px;
-    color: black;
+h3 {
+  font-weight: 500;
+  font-size: 20px;
 }
 
-.discover-flights label{
-    font-weight: 500;
-    font-size: 14px;
-    height: 24px;
+.discover-flights .flight-input {
+  background: none;
+  border-radius: 5px;
+  outline: none;
+  width: 90%;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid #bbbbbb;
+  padding: 5px 15px;
+  font-size: 14px;
+  color: black;
 }
 
-.discover-flights #search-btn{
-    background: #E2007A;
-    border-radius: 5px;
-    color: white;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    padding: 5px 15px;
-    font-weight: 600;
-    border: none;
+.discover-flights label {
+  font-weight: 500;
+  font-size: 14px;
+  height: 24px;
 }
 
-.discover-flights #new-btn{
-    background: #0076BD;
-    border-radius: 5px;
-    color: white;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    padding: 5px 15px;
-    font-weight: 600;
-    border: none;
+.discover-flights #search-btn {
+  background: #e2007a;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 5px 15px;
+  font-weight: 600;
+  border: none;
 }
 
-.discover-flights #from_to_icon_col{
-    text-align: center;
-    vertical-align: middle;
-    margin-top: 25px;
+.discover-flights #new-btn {
+  background: #0076bd;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 5px 15px;
+  font-weight: 600;
+  border: none;
 }
 
-.discover-flights .btn-col{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* padding-top: 23px; */
+.discover-flights #from_to_icon_col {
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 25px;
 }
 
-.discover-flights #map{
-    z-index: 1000;
-    right: 200px;
-    top: 400px;
-    border: none;
-    filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.02)) drop-shadow(0px 64.8148px 46.8519px rgba(0, 0, 0, 0.0151852)) drop-shadow(0px 38.5185px 25.4815px rgba(0, 0, 0, 0.0121481)) drop-shadow(0px 20px 13px rgba(0, 0, 0, 0.01)) drop-shadow(0px 8.14815px 6.51852px rgba(0, 0, 0, 0.00785185)) drop-shadow(0px 1.85185px 3.14815px rgba(0, 0, 0, 0.00481481));
-    border-radius: 20px;
-    padding: 50px;
-    left: 200px;
-    height: fit-content;
-    position: absolute;
+.discover-flights .btn-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-top: 23px; */
 }
 
-.discover-flights #map .row{
-    margin-top: 20px
+.discover-flights #map {
+  z-index: 1000;
+  right: 200px;
+  top: 400px;
+  border: none;
+  filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.02))
+    drop-shadow(0px 64.8148px 46.8519px rgba(0, 0, 0, 0.0151852))
+    drop-shadow(0px 38.5185px 25.4815px rgba(0, 0, 0, 0.0121481))
+    drop-shadow(0px 20px 13px rgba(0, 0, 0, 0.01))
+    drop-shadow(0px 8.14815px 6.51852px rgba(0, 0, 0, 0.00785185))
+    drop-shadow(0px 1.85185px 3.14815px rgba(0, 0, 0, 0.00481481));
+  border-radius: 20px;
+  padding: 50px;
+  left: 200px;
+  height: fit-content;
+  position: absolute;
 }
 
-.map-bck{
-    background:rgba(0,0,0,.4);
-    cursor:pointer;
-    /* display:none; */
-    height:fit-content;
-    position:fixed;
-    text-align:center;
-    top:0;
-    left: 0;
-    width:100vw;
-    z-index:10000;
+.discover-flights #map .row {
+  margin-top: 20px;
 }
 
-#flightInfo{
-    min-height: 580px;
+.map-bck {
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  /* display:none; */
+  height: fit-content;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 10000;
 }
 
-#options{
-    margin-top: 10%;
+#flightInfo {
+  min-height: 580px;
+}
+
+#options {
+  margin-top: 10%;
+}
+
+#no-flights-img {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 10%;
+}
+
+#no-flights-div {
+  text-align: center;
+  justify-content: center;
+}
+
+#new-flight-btn {
+  position: absolute;
+  z-index: 1000;
+  top: 850px;
+  left: 540px;
+}
+
+#banner-flights {
+  background-image: url("../../static/backgrounds/home/main-bckgrnd.png");
+  height: 300px;
+  padding: 100px;
+  background-repeat: no-repeat;
+}
+
+.flights .h-banner {
+  font-family: "Poppins", sans-serif;
+  font-size: 80px;
+  color: white;
+  font-weight: 600;
+}
+
+#flight-way {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#plane {
+  padding-top: 40px;
+}
+
+#searching-flights {
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px 20px;
+  border-radius: 10px;
+  height: fit-content;
+  width: 100%;
+  border: none;
+  background-color: white;
+}
+
+#tickets-col {
+  padding-left: 45px;
+}
+
+.ticket h3 {
+  font-size: 14px;
+  font-weight: 500;
 }

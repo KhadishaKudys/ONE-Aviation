@@ -1,196 +1,530 @@
 import React from "react";
-import '../../assets/styles/flight/discover-flights.css'
-import Loading from "../../components/reused/Loading"
-import {Card, Col, Row, Container} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
-import {enGB} from "date-fns/locale";
-import {DateRangePicker, END_DATE, START_DATE} from "react-nice-dates";
-import from_to from "../../assets/static/icons/home/from_to.svg"
-import ticket_plane from "../../assets/static/flights/ticket-plane.svg"
+import "../../assets/styles/flight/discover-flights.css";
+import Loading from "../../components/reused/Loading";
+import { Card, Col, Row, Container, Alert, Modal } from "react-bootstrap";
+import noFlights from "../../assets/static/flights/no-f.png";
+import ticket_plane from "../../assets/static/flights/ticket-plane.svg";
+import FlightSearch from "../main/FlightSearch";
+import from_to from "../../assets/static/icons/home/from_to.svg";
+import Map1 from "../../components/flight/Googlemapsearch";
+import { Link, withRouter } from "react-router-dom";
+import { DatePicker } from "antd";
 
+class DiscoverFlights extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      order_by: "",
+      order_key: 1,
+      limit: 20,
+      page: 1,
+      available_flights: this.props.history.location.state.available_flights,
+      flight: this.props.history.location.state,
+      location_from_latitude: "",
+      location_from_longitude: "",
+      location_to_latitude: "",
+      location_to_longitude: "",
+      date_from: "",
+      date_to: "",
+      passengers: "",
+      map_1_show: false,
+      map_2_show: false,
+      available_ports: {},
+      departure_port: "",
+      destination_port: "",
+      locationError: "",
+      passengerError: "",
+    };
+  }
 
-class DiscoverFlights extends React.Component{
+  componentDidMount() {
+    console.log("ele", this.state);
+    window.scrollTo(0, 0);
+    const timer = setTimeout(() => {
+      this.setState({
+        isLoading: false,
+      });
+    }, 2000);
+    return () => clearTimeout(timer);
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: true,
-            order_by: '',
-            order_key: 1,
-            limit: 20,
-            page: 1,
-            available_flights: this.props.history.location.state.available_flights
+  convertDate = (inputFormat) => {
+    function pad(s) {
+      return s < 10 ? "0" + s : s;
+    }
+    let d = new Date(inputFormat);
+    return [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-");
+  };
+
+  changeFrom() {
+    this.setState({
+      location_from_latitude: localStorage.getItem("from_latitude"),
+    });
+    this.setState({
+      location_from_longitude: localStorage.getItem("from_longitude"),
+    });
+    this.setState({ departure_port: localStorage.getItem("departure_port") });
+    this.setState({ map_1_show: false });
+  }
+
+  changeFrom2() {
+    this.setState({
+      location_to_latitude: localStorage.getItem("to_latitude"),
+    });
+    this.setState({
+      location_to_longitude: localStorage.getItem("to_longitude"),
+    });
+    this.setState({
+      destination_port: localStorage.getItem("destination_port"),
+    });
+    this.setState({ map_2_show: false });
+  }
+
+  fromClicked() {
+    this.setState({ map_1_show: true });
+    localStorage.setItem("location_dir", "from");
+  }
+
+  toClicked() {
+    this.setState({ map_2_show: true });
+    localStorage.setItem("location_dir", "to");
+  }
+
+  closeFromMap() {
+    this.setState({ map_1_show: false });
+  }
+
+  async availableFlights() {
+    console.log(this.state);
+    let flight = {};
+    if (this.state.passengers !== "") {
+      flight.number_of_passengers = parseInt(this.state.passengers);
+    }
+    if (this.state.date_from !== "") {
+      flight.date_from = this.state.date_from;
+    }
+    if (this.state.date_to !== "") {
+      flight.date_to = this.state.date_to;
+    }
+    if (this.state.departure_port !== "") {
+      flight.location_from = {
+        latitude: parseFloat(this.state.location_from_latitude),
+        longitude: parseFloat(this.state.location_from_longitude),
+        name: this.state.departure_port,
+      };
+    }
+    if (this.state.destination_port !== "") {
+      flight.location_to = {
+        latitude: parseFloat(this.state.location_to_latitude),
+        longitude: parseFloat(this.state.location_to_longitude),
+        name: this.state.destination_port,
+      };
+    }
+    await fetch(
+      `https://one-aviation.herokuapp.com/api/v1/order/sharing?limit=&page=&order_by=&order_key=`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(flight),
+      }
+    )
+      .then(async (res) => {
+        const data = await res.json();
+        this.setState({ available_flights: data.flights });
+        this.changeDate();
+        this.props.history.push({
+          pathname: "/discover-flights",
+          state: this.state,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  async changeDate() {
+    for (let flight in this.state.available_flights) {
+      let from_date = new Date(
+        this.state.available_flights[flight].departure_time
+      )
+        .toISOString()
+        .split("T")[0];
+      let from_time = new Date(
+        this.state.available_flights[flight].departure_time
+      )
+        .toISOString()
+        .split("T")[1];
+      let to_date = new Date(this.state.available_flights[flight].arrival_time)
+        .toISOString()
+        .split("T")[0];
+      let to_time = new Date(this.state.available_flights[flight].arrival_time)
+        .toISOString()
+        .split("T")[1];
+      this.state.available_flights[flight].departure_time = from_time;
+      this.state.available_flights[flight].departure_date = from_date;
+      this.state.available_flights[flight].arrival_time = to_time;
+      this.state.available_flights[flight].arrival_date = to_date;
+    }
+    console.log("fomatted", this.state.available_flights);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const isValid = this.validate();
+    if (isValid) {
+      this.availableFlights();
+    }
+  }
+
+  validate = () => {
+    let locationError = "";
+    let passengerError = "";
+    if (this.state.passengers > 8) {
+      passengerError = "⚠️ Maximum passengers number is 8";
+    }
+    if (this.state.departure_port === this.state.destination_port) {
+      locationError = "⚠️ Departure and destination ports must be different";
+    }
+    if (
+      this.state.departure_port === "" &&
+      this.state.destination_port === ""
+    ) {
+      locationError = "";
+    }
+    if (passengerError || locationError) {
+      this.setState({ passengerError, locationError });
+      return false;
+    }
+    if (!passengerError && !locationError) {
+      passengerError = "";
+      locationError = "";
+      this.setState({ passengerError, locationError });
+      return true;
+    }
+  };
+
+  alertDisable() {
+    setTimeout(() => {
+      if (this.state.passengerError !== "") {
+        this.setState({ passengerError: "" });
+      }
+      if (this.state.locationError !== "") {
+        this.setState({ locationError: "" });
+      }
+      if (this.state.passengerError !== "" && this.state.locationError !== "") {
+        this.setState({ locationError: "" });
+        this.setState({ passengerError: "" });
+      }
+    }, 3000);
+  }
+
+  onDDateChange(date) {
+    console.log("not form", date._d);
+    let dateformat = new Date(date._d).toISOString();
+    let formatted_date = dateformat.split("T")[0];
+    var datetime = formatted_date + "T00:00:00Z";
+    console.log("departure", datetime);
+    this.setState({ date_from: datetime });
+  }
+
+  onRDateChange(date) {
+    console.log("not form", date._d);
+    let dateformat = new Date(date._d).toISOString();
+    let formatted_date = dateformat.split("T")[0];
+    console.log("date", formatted_date);
+    var datetime = formatted_date + "T00:00:00Z";
+    console.log("departure", datetime);
+    this.setState({ date_to: datetime });
+  }
+
+  async flightInfo(id) {
+    await fetch(
+      `https://one-aviation.herokuapp.com/api/v1/order/sharing/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then(async (res) => {
+        const data = await res.json();
+        console.log(data);
+        this.setState({ flight_info: data });
+        this.changeDate1();
+        if (res.ok) {
+          console.log("OK");
+          this.props.history.push({
+            pathname: `/about-flight/${id}`,
+            state: this.state.flight_info,
+          });
         }
-    }
+      })
+      .catch((err) => console.log(err));
+  }
 
-    componentDidMount() {
-        console.log('ele', this.state)
-        window.scrollTo(0,0);
-        const timer = setTimeout(() => {
-            this.setState({
-                isLoading: false
-            })
-          }, 2000);
-          return() => clearTimeout(timer);
-    }
+  async changeDate1() {
+    let from_date = new Date(this.state.flight_info.departure_time)
+      .toISOString()
+      .split("T")[0];
+    let from_time = new Date(this.state.flight_info.departure_time)
+      .toISOString()
+      .split("T")[1];
+    let to_date = new Date(this.state.flight_info.arrival_time)
+      .toISOString()
+      .split("T")[0];
+    let to_time = new Date(this.state.flight_info.arrival_time)
+      .toISOString()
+      .split("T")[1];
+    this.state.flight_info.departure_time = from_time;
+    this.state.flight_info.departure_date = from_date;
+    this.state.flight_info.arrival_time = to_time;
+    this.state.flight_info.arrival_date = to_date;
+    console.log("fomatted", this.state.flight_info);
+  }
 
-    async flightInfo(id) {
-        await fetch(`https://one-aviation.herokuapp.com/api/v1/order/sharing/${id}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        }).then(async(res) => {
-            const data = await res.json();
-            console.log(data);
-            this.setState({flight_info:data})
-            if( res.ok ) {
-                console.log('OK');
-                this.props.history.push({
-                    pathname: `/about-flight/${id}`,
-                    state: this.state.flight_info
-                });
-            }
-        })
-            .catch(err => console.log(err));
-    }
-
-    render(){
-        return(
-            <div className="discover-flights">
-            {this.state.isLoading ? <Loading />
-            :
-            <div className="flights">
-                <Container>
-                <Card className="flight-search-card">
-                        <Row>
-                            <Col>
-                            <Row>
-                                <label for="departure">From</label>
-                                <input className="flight-input" value={this.state.departure_port} id="departure" onClick={() => this.fromClicked()}></input>
-                            </Row>
-                            </Col>
-                            <Col md={1} id="from_to_icon_col">
-                                <img src={from_to} alt="from_to"></img>
-                            </Col>
-                            <Col>
-                            <Row>
-                                <label for="destination">To</label>
-                                <input className="flight-input" id="destination" value={this.state.destination_port} onClick={() => this.toClicked()}></input>
-                            </Row>
-                            </Col>
-                            
-                            <Col md={1} className="btn-col">
-                                <button id="search-btn" onClick={() => this.searchFlights()}>Search</button>
-                            </Col>
-                        </Row>
-                        <br/>
-                        <Row>
-                        <Col >
-                            <Row>
-                                <DateRangePicker
-                                        startDate={this.state.date_from}
-                                        endDate={this.state.date_to}
-                                        onStartDateChange={this.setStartDate}
-                                        onEndDateChange={this.setEndDate}
-                                        minimumDate={new Date()}
-                                        minimumLength={1}
-                                        format='yyyy-MM-dd'
-                                        locale={enGB}
-                                    >
-                                        {({ startDateInputProps, endDateInputProps, focus }) => (
-                                            <div className='row date-range'>
-                                                <Col>
-                                                <label for="passengers">Departure date</label>
-                                                <input
-                                                    className={'enter-input' + (focus === START_DATE ? ' -focused' : '')}
-                                                    {...startDateInputProps}
-                                                    onChange={e => this.setState({date_to: e.target.value})}
-                                                />
-                                                </Col><Col>
-                                                <label for="passengers">Return date</label>
-                                                <input
-                                                    className={'enter-input' + (focus === END_DATE ? ' -focused' : '')}
-                                                    {...endDateInputProps}
-                                                    onChange={e => this.setState({date_from: e.target.value})}
-                                                />
-                                                </Col>
-                                            </div>
-                                        )}
-                                </DateRangePicker>
-                            </Row>
-                            </Col>
-                            <Col>
-                            <Row>
-                                <label for="passengers">Passengers</label>
-                                <input className="flight-input" id="passengers" onChange={e => this.setState({passengers: e.target.value})}></input>
-                            </Row>
-                            </Col>
-                            <Col md={1} className="btn-col">
-                                <Link to="/create-flight/flight-information"><button id="new-btn">Create new flight</button></Link>
-                            </Col>
-                        </Row>
-                    </Card>
-                </Container>
-                <Card id="prices">
-                    
-                </Card>
-                <Container id="tickets">
-                    <Row>
-                        <Col>
-                        {this.state.available_flights.map(flight =>
-                            <Card className="ticket">
-                                <Row>
-                                    <Col md='10'>
-                                <Row>
-                                    <Col md="2" id='from'>
-                                        <h2>{Date(flight.departure_time)}</h2>
-                                    </Col>
-                                    <Col md="8">
-                                        <p id="time">1h 50m</p>
-                                    </Col>
-                                    <Col md="2">
-                                        <h2>{Date(flight.arrival_time)}</h2>
-                                    </Col>
-                                    </Row>
-                                    <Row id="ticket-plane">
-                                        <Col md="2">
-                                        </Col>
-                                        <Col md="8">
-                                            <img src={ticket_plane} alt="ticket-plane"/>
-                                        </Col>
-                                        <Col md="2">
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                    <Col md="2" id="from">
-                                        <h3>{flight.from.name}</h3>
-                                    </Col>
-                                    <Col md="8">
-                                        <p id="way">Direct</p>
-                                    </Col>
-                                    <Col md="2">
-                                        <h3>{flight.to.name}</h3>
-                                    </Col>
-                                </Row>
-                                
-                                </Col>
-                                <Col md="2" id="price">
-                                    <h2 id="cost">€ {parseInt(flight.price)}</h2>
-                                    <button id="nav-btn" onClick={() => this.flightInfo(flight.id)}>Select</button>
-                                </Col>
-                                </Row>
-                            </Card>
-                        )}
-                        </Col>
-                    </Row>
-                </Container>
+  render() {
+    return (
+      <div className="discover-flights">
+        {this.state.isLoading ? (
+          <Loading />
+        ) : (
+          <div className="flights">
+            <div id="banner-flights">
+              <Row>
+                <Col md={3}>
+                  {this.state.flight.departure_port ? (
+                    <h1 className="h-banner">
+                      {this.state.flight.departure_port}
+                    </h1>
+                  ) : (
+                    <h1 className="h-banner">Any</h1>
+                  )}
+                </Col>
+                <Col md={6} id="flight-way">
+                  <img src={ticket_plane} alt="ticket-plane" id="plane" />
+                </Col>
+                <Col md={3}>
+                  {this.state.flight.destination_port ? (
+                    <h1 className="h-banner">
+                      {this.state.flight.destination_port}
+                    </h1>
+                  ) : (
+                    <h1 className="h-banner">Any</h1>
+                  )}
+                </Col>
+              </Row>
             </div>
-            }
-            </div>
-        );
-    }
+            <Container id="tickets">
+              <Row>
+                <Col md={3}>
+                  <Modal
+                    id="map"
+                    show={this.state.map_1_show}
+                    onHide={() => this.setState({ map_1_show: false })}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>Select the departure point</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body id="map-modal-body">
+                      <Map1
+                        google={this.props.google}
+                        center={{ lat: 44.573355, lng: 12.156921 }}
+                        height="100px"
+                        onChange={(e) => this.forceUpdate()}
+                      />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <button
+                        onClick={() => this.changeFrom()}
+                        className="map-btn"
+                      >
+                        Select
+                      </button>
+                    </Modal.Footer>
+                  </Modal>
+                  <Modal
+                    id="map"
+                    show={this.state.map_2_show}
+                    onHide={() => this.setState({ map_2_show: false })}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>Select the destination point</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body id="map-modal-body">
+                      <Map1
+                        google={this.props.google}
+                        center={{ lat: 44.573355, lng: 12.156921 }}
+                        height="100px"
+                        onChange={(e) => this.forceUpdate()}
+                      />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <button
+                        onClick={() => this.changeFrom2()}
+                        className="map-btn"
+                      >
+                        Select
+                      </button>
+                    </Modal.Footer>
+                  </Modal>
+                  <Card id="searching-flights">
+                    <h2>Flight Search</h2>
+                    <form onSubmit={(e) => this.handleSubmit(e)}>
+                      <label for="departure">Departure port</label>
+                      <input
+                        className="flight-input"
+                        value={this.state.departure_port}
+                        id="departure"
+                        onClick={() => this.fromClicked()}
+                      ></input>
+                      <label for="destination">Destination port</label>
+                      <input
+                        className="flight-input"
+                        id="destination"
+                        value={this.state.destination_port}
+                        onClick={() => this.toClicked()}
+                      ></input>
+                      <label for="passengers">Passengers</label>
+                      <input
+                        className="flight-input"
+                        id="passengers"
+                        onChange={(e) =>
+                          this.setState({
+                            passengers: e.target.value,
+                          })
+                        }
+                      ></input>
+                      <label for="passengers">Departure date</label>
+                      <DatePicker
+                        className="enter-input"
+                        placeholder="Departure date"
+                        onChange={(e) => this.onDDateChange(e)}
+                      />
+                      <label for="passengers">Destination date</label>
+                      <DatePicker
+                        className="enter-input"
+                        placeholder="Return date"
+                        onChange={(e) => this.onRDateChange(e)}
+                      />
+                      <div style={{ height: "50px" }} />
+                      <button
+                        id="search-btn"
+                        onClick={(e) => this.handleSubmit(e)}
+                      >
+                        Search
+                      </button>
+                    </form>
+                    {this.state.locationError !== "" &&
+                    this.state.passengerError !== "" ? (
+                      <Alert
+                        variant={"danger"}
+                        onChange={this.alertDisable()}
+                        className="search-alert"
+                      >
+                        <Alert.Heading>❌ You got an error!</Alert.Heading>
+                        {this.state.locationError}
+                        {this.state.passengerError}
+                      </Alert>
+                    ) : null}
+                    {this.state.passengerError !== "" ? (
+                      <Alert
+                        variant={"danger"}
+                        onChange={this.alertDisable()}
+                        className="search-alert"
+                      >
+                        <Alert.Heading>❌ You got an error!</Alert.Heading>
+                        {this.state.passengerError}
+                      </Alert>
+                    ) : null}
+                    {this.state.locationError !== "" ? (
+                      <Alert
+                        variant={"danger"}
+                        onChange={this.alertDisable()}
+                        className="search-alert"
+                      >
+                        <Alert.Heading>❌ You got an error!</Alert.Heading>
+                        {this.state.locationError}
+                      </Alert>
+                    ) : null}
+                  </Card>
+                </Col>
+
+                <Col id="tickets-col">
+                  {this.state.available_flights === null ? (
+                    <div id="no-flights-div">
+                      <img
+                        src={noFlights}
+                        id="no-flights-img"
+                        alt="no-flights-img"
+                      ></img>
+                    </div>
+                  ) : (
+                    <div>
+                      {this.state.available_flights?.map((flight) => (
+                        <Card className="ticket">
+                          <Row>
+                            <Col md="10">
+                              <Row>
+                                <Col md="2" id="from">
+                                  <h3>{flight.departure_date}</h3>
+                                </Col>
+                                <Col md="8">
+                                  <p id="time">1h 50m</p>
+                                </Col>
+                                <Col md="2">
+                                  <h3>{flight.arrival_date}</h3>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col md="2" id="from">
+                                  <h4>{flight.from.name}</h4>
+                                </Col>
+                                <Col md="8">
+                                  <img src={ticket_plane} alt="ticket-plane" />
+                                </Col>
+                                <Col md="2">
+                                  <h4>{flight.to.name}</h4>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col md="2" id="from">
+                                  <p>{flight.departure_time}</p>
+                                </Col>
+                                <Col md="8">
+                                  <p id="way">Direct</p>
+                                </Col>
+                                <Col md="2">
+                                  <p>{flight.arrival_time}</p>
+                                </Col>
+                              </Row>
+                            </Col>
+                            <Col md="2" id="price">
+                              <div style={{ height: "33%" }} />
+                              <h2 id="cost">€ {parseInt(flight.price)}</h2>
+                              <button
+                                id="nav-btn"
+                                onClick={() => this.flightInfo(flight.id)}
+                              >
+                                Select
+                              </button>
+                            </Col>
+                          </Row>
+                        </Card>
+                      ))}
+                    </div>
+                  )}
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        )}
+      </div>
+    );
+  }
 }
 
-export default (DiscoverFlights)
+export default DiscoverFlights;

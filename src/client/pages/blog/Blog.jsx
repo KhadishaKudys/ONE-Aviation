@@ -115,15 +115,15 @@ class Blog extends React.Component{
                     <div>
                             <Col className="post-col" >
                             <Card>
-                                <Link to={`/post/${this.state.all_blogs[0].id}`}>
+                                <Link to={`/post/${this.state.all_blogs[0]?.id}`}>
                                     <Row>
                                         <Col md={6}>
-                                            <img src={this.state.all_blogs[0].image} width="100%" alt="blog2"></img>
+                                            <img src={this.state.all_blogs[0]?.image} width="100%" alt="blog2"></img>
                                         </Col>
                                         <Col md={6}>
-                                            <p>{this.state.all_blogs[0].created_at}</p>
-                                            <h2 id="large-post">{this.state.all_blogs[0].title}</h2>
-                                            <p className="post-content">{this.state.all_blogs[0].content}</p>
+                                            <p>{this.state.all_blogs[0]?.created_at}</p>
+                                            <h2 id="large-post">{this.state.all_blogs[0]?.title}</h2>
+                                            <p className="post-content">{this.state.all_blogs[0]?.content}</p>
                                         </Col>
                                     </Row>
                                 </Link>
@@ -131,7 +131,7 @@ class Blog extends React.Component{
                             </Col>
                     </div>
                 <div id="all-blogs">
-                        {this.state.all_blogs.map(pos => 
+                        {this.state.all_blogs?.map(pos => 
                             <Card className="blog_prev">
                                 <Link to={`/post/${pos.id}`}>
                                     <img src={pos.image} width="100%" alt={pos.id} className="blog-img"></img>

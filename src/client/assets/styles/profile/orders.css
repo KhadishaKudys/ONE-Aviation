@@ -1,28 +1,32 @@
-.orders .ticket{
-    background: #FFFFFF;
-    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    border: none;
-    height:fit-content;
-    padding: 20px;
-    margin-top: 20px;
-    width: 74%;
-
+.orders .ticket {
+  background: #ffffff;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: none;
+  height: fit-content;
+  padding: 20px;
+  margin-top: 40px;
+  width: 74%;
 }
 
-.orders .ticket h2{
-    margin-bottom: 5px;
-    font-weight: 500;
-font-size: 16px;
-line-height: 45px;
-color: black;
-margin-bottom: 0px;
-padding-bottom: 0px;
+.orders {
+  padding-top: 60px;
+  padding-bottom: 50px;
 }
 
-.orders .ticket h3{
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 30px; 
-    color: black;
+.orders .ticket h2 {
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 45px;
+  color: black;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.orders .ticket h3 {
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 30px;
+  color: black;
 }

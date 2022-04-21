@@ -1,156 +1,161 @@
-.flight .create-flight{
-    padding-top: 150px;
-    text-align: left;
-    padding-bottom: 200px;
+.flight .create-flight {
+  padding-top: 150px;
+  text-align: left;
+  padding-bottom: 200px;
 }
 
-.create-flight h1{
-    font-weight: 700;
-    font-size: 46px;
-    color: black;
-    margin-bottom: 50px;
-}
-
-.create-flight .card{
-    background-color: white;
-    border-radius: 20px;
-    padding: 50px;
-    border: none;
-    font-size: 14px;
-    border-bottom: 1px solid #bbbb;
-    box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.05);
-}
-
-.create-flight .enter-input:focus{
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #0076BD;
-    
-}
-
-.create-flight .enter-input::placeholder{
-    font-size: 12px;
-    color: #bbbbbb
-}
-
-  .nice-dates-popover {
-    max-width: 400px;
-  }
-
-.nice-dates-grid_container span{
-    height: 20px;
-}
-
-.nice-dates-day_date{
-    font-size: 12px;
-}
-
-.create-flight h2{
-    font-weight: 600;
-}
-
-.create-flight .enter-btn{
-    border: 3px solid #E2007A;
-    border-radius: 5px;
-    color: #E2007A;
-    font-size: 14px;
-    font-weight: 600;
-    background-color: white;
-    padding: 5px 25px;
-    width: 30%;
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
-
-.create-flight .enter-btn {
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    position: relative;
-    -webkit-transition-property: color;
-    transition-property: color;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-  }
-  .create-flight .enter-btn:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #E2007A;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transform-origin: 0 50%;
-    transform-origin: 0 50%;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-  }
-  .create-flight .enter-btn:hover, .create-flight .enter-btn:focus, .create-flight .enter-btn:active {
-    color: white;
-  }
-  .create-flight .enter-btn:hover:before, .create-flight .enter-btn:focus:before, .create-flight .enter-btn:active:before {
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-    -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-  }
-
-  #flight-created-success{
-  }
-
-  #overlapping-card{
-    z-index: 1000;
-    position: absolute;
-    top: 20;
-    height: 90%;
-    width: 90%;
-  }
-
-  .checkbox-input{
-    margin: 20px;
-  }
-
-  .back-btn{
-    color: #bbbbbb;
-    font-weight: 600;
-    border: none;
-    background: none;
-    font-size: 14px;
-    text-decoration: none;
-}
-
-.back-btn:hover, .back-btn:active{
-    color: black;
-}
-
-#title-h{
+.create-flight h1 {
+  font-weight: 700;
+  font-size: 46px;
+  color: black;
   margin-bottom: 50px;
 }
 
-.creditcard{
-  border: 3px solid #F4F4F4;
+.create-flight .card {
+  background-color: white;
+  border-radius: 20px;
+  padding: 50px;
+  border: none;
+  font-size: 14px;
+  border-bottom: 1px solid #bbbb;
+  box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.05);
+}
+
+.create-flight .enter-input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #0076bd;
+}
+
+.create-flight .enter-input::placeholder {
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.nice-dates-popover {
+  max-width: 400px;
+}
+
+.nice-dates-grid_container span {
+  height: 20px;
+}
+
+.nice-dates-day_date {
+  font-size: 12px;
+}
+
+.create-flight h2 {
+  font-weight: 600;
+}
+
+.create-flight .enter-btn {
+  border: 3px solid #e2007a;
+  border-radius: 5px;
+  color: #e2007a;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: white;
+  padding: 5px 25px;
+  width: 30%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.create-flight .enter-btn {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.create-flight .enter-btn:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #e2007a;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.create-flight .enter-btn:hover,
+.create-flight .enter-btn:focus,
+.create-flight .enter-btn:active {
+  color: white;
+}
+.create-flight .enter-btn:hover:before,
+.create-flight .enter-btn:focus:before,
+.create-flight .enter-btn:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+
+#flight-created-success {
+}
+
+#overlapping-card {
+  z-index: 1000;
+  position: absolute;
+  top: 20;
+  height: 90%;
+  width: 90%;
+}
+
+.checkbox-input {
+  margin: 20px;
+}
+
+.back-btn {
+  color: #bbbbbb;
+  font-weight: 600;
+  border: none;
+  background: none;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.back-btn:hover,
+.back-btn:active {
+  color: black;
+}
+
+#title-h {
+  margin-bottom: 50px;
+}
+
+.creditcard {
+  border: 3px solid #f4f4f4;
   border-radius: 10px;
   background: none;
   width: 100%;
   padding: 10px;
-  }
-
-.creditcard :focus, .creditcard :hover{
-  background: rgba(0, 118, 189, 0.1);
-  border: 3px solid #0076BD;
 }
 
-#receipt{
-  background: #FFFFFF;
+.creditcard :focus,
+.creditcard :hover {
+  background: rgba(0, 118, 189, 0.1);
+  border: 3px solid #0076bd;
+}
+
+#receipt {
+  background: #ffffff;
   box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 20px;
@@ -158,39 +163,39 @@
   padding-bottom: 50px;
 }
 
-.details{
+.details {
   margin-top: 50px;
 }
 
-#receipt h5{
+#receipt h5 {
   font-weight: 600;
   font-size: 16px;
   line-height: 21px;
   margin-bottom: 40px;
 }
 
-.titles{
-  color: #BBBBBB;
+.titles {
+  color: #bbbbbb;
 }
 
-#sum{
+#sum {
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 3px dashed #E1E1E1;
+  border-top: 3px dashed #e1e1e1;
   text-align: center;
 }
 
-.pay-btn{
-  border: 3px solid #E2007A;
-    border-radius: 5px;
-    color: #E2007A;
-    font-size: 14px;
-    font-weight: 600;
-    background-color: white;
-    padding: 5px 25px;
-    width: 100%;
-    margin-top: 50px;
-    margin-bottom: 20px;
+.pay-btn {
+  border: 3px solid #e2007a;
+  border-radius: 5px;
+  color: #e2007a;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: white;
+  padding: 5px 25px;
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .create-flight .pay-btn {
@@ -213,7 +218,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #E2007A;
+  background: #e2007a;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
   -webkit-transform-origin: 0 50%;
@@ -225,10 +230,14 @@
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
-.create-flight .pay-btn:hover, .create-flight .pay-btn:focus, .create-flight .pay-btn:active {
+.create-flight .pay-btn:hover,
+.create-flight .pay-btn:focus,
+.create-flight .pay-btn:active {
   color: white;
 }
-.create-flight .pay-btn:hover:before, .create-flight .pay-btn:focus:before, .create-flight .pay-btn:active:before {
+.create-flight .pay-btn:hover:before,
+.create-flight .pay-btn:focus:before,
+.create-flight .pay-btn:active:before {
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);

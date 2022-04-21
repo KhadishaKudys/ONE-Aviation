@@ -1,141 +1,144 @@
-.blog .card{
-    border: none;
-    text-align: left;
-    border-radius: 5px;
-    cursor: pointer;
+.blog .card {
+  border: none;
+  text-align: left;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.blog .card:hover h2{
-    color: #0076BD;
+.blog .card:hover h2 {
+  color: #0076bd;
 }
 
-.blog-page{
-    padding-bottom: 200px;
-    text-align: left;
-    padding-top: 150px;
+.blog-page {
+  padding-bottom: 100px;
+  text-align: left;
+  padding-top: 150px;
 }
 
-.blog h2{
-    font-weight: 600;
-    font-size: 14px;
-    color: black;
-    margin-bottom: 0;
-    margin-top: 10px;
+.blog h2 {
+  font-weight: 600;
+  font-size: 14px;
+  color: black;
+  margin-bottom: 0;
+  margin-top: 10px;
 }
 
-.blog .post-col{
-    margin-right: 50px;
+.blog .post-col {
+  margin-right: 50px;
 }
 
-.blog p{
-    font-size: 10px;
-    color: #bbbbbb;
-    font-weight: 500;
+.blog p {
+  font-size: 10px;
+  color: #bbbbbb;
+  font-weight: 500;
 }
 
-.blog #col-date{
-    text-align: right;
-    padding-top: 5px;
+.blog #col-date {
+  text-align: right;
+  padding-top: 5px;
 }
 
-.blog h1{
-    font-weight: 700;
-    font-size: 46px;
-    margin-bottom: 50px;
-    color: black;
+.blog h1 {
+  font-weight: 700;
+  font-size: 46px;
+  margin-bottom: 50px;
+  color: black;
 }
 
-.blog #content{
-    margin-top: 150px;
+.blog img {
+  border-radius: 8px;
 }
 
-.blog .row{
-    margin-top: 15px;
+.blog #content {
+  margin-top: 150px;
 }
 
-.blog h5{
-    color: #0076BD;
-    font-weight: 600;
-    font-size: 14px;
+.blog .row {
+  margin-top: 15px;
 }
 
-.blog h3{
-    font-size: 24px;
-    line-height: 30px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: #000000;
+.blog h5 {
+  color: #0076bd;
+  font-weight: 600;
+  font-size: 14px;
 }
 
-.blog a{
-    color: #E2007A;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
+.blog h3 {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #000000;
 }
 
-.blog #see-all-col{
-    text-align: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.blog a {
+  color: #e2007a;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
 }
 
-.blog #blog-nav{
-    margin-left: 60px;
+.blog #see-all-col {
+  text-align: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.blog #blog-nav .nav-link{
-    color: #444444;
+.blog #blog-nav {
+  margin-left: 60px;
 }
 
-.blog #blog-nav .nav-link:hover{
-    color: #0076BD;
+.blog #blog-nav .nav-link {
+  color: #444444;
 }
 
-.blog #blog-nav .nav-link.active{
-    color:#E2007A;
-    background: none;
+.blog #blog-nav .nav-link:hover {
+  color: #0076bd;
 }
 
-#large-post{
-    font-size: 32px;
-    font-weight: 700;
-    margin-top: 20px;
+.blog #blog-nav .nav-link.active {
+  color: #e2007a;
+  background: none;
+}
+
+#large-post {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 20px;
 }
 
 .blog .post-content {
-    color: #000000;
-    font-size: 14px;
-    font-weight: 400;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    margin-top: 50px;
-   -webkit-line-clamp: 4; /* number of lines to show */
-           line-clamp: 4; 
-   -webkit-box-orient: vertical;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  margin-top: 50px;
+  -webkit-line-clamp: 4; /* number of lines to show */
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
-.date-post{
-    margin-top: 10px;
-    margin-bottom: 0px;
+.date-post {
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 
-.blog_prev{
-    width: 22.3%;
-    margin-right: 30px;
-    display: inline-flex;
-    margin-bottom: 50px;
-    height: 250px;
+.blog_prev {
+  width: 22.3%;
+  margin-right: 30px;
+  display: inline-flex;
+  height: 250px;
 }
 
-#all-blogs{
-    margin-top: 50px;
-    margin-bottom: 50px;
-    /* display: inline-block; */
+#all-blogs {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  /* display: inline-block; */
 }
 
-.one-post{
-    width: 25%;
+.one-post {
+  width: 25%;
 }

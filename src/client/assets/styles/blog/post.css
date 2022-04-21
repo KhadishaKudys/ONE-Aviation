@@ -1,220 +1,225 @@
-.post .post-page img{
-    /* top: 60px; */
-    margin-bottom: 50px;
+.post .post-page img {
+  margin-bottom: 50px;
+  object-fit: cover;
+  height: 400px;
 }
 
-.post-page{
-    padding-bottom: 100px;
-    text-align: left;
+.post-page {
+  padding-bottom: 100px;
+  text-align: left;
 }
 
-.post-page .container{
-    padding: 0px 100px;
+.post-page .container {
+  padding: 0px 100px;
 }
 
-.post-page .cont{
-    margin-top: -100px;
-    position: absolute;
-    top:40%;
-    color: white;
-    text-align: center;
-    justify-content: center;
-    margin-left: 100px;
-    margin-right: 100px;
+.post-page .cont {
+  margin-top: -100px;
+  position: absolute;
+  top: 40%;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.post-page .cont h1{
-    font-weight: 700;
-    color: white;
+.post-page .cont h1 {
+  font-weight: 700;
+  color: white;
+  margin: 0 auto;
 }
 
-.post .post-page p{
-    font-size: 16px;
+.post .post-page p {
+  font-size: 16px;
 }
 
-#btm-actions{
+#btm-actions {
 }
 
-#like-action{
-    width: 100%;
-    height: 20px;
-    background-color: white;
-    position: sticky;
+#like-action {
+  width: 100%;
+  height: 20px;
+  background-color: white;
+  position: sticky;
   bottom: 1rem;
   align-self: flex-end;
 }
 
-#like{
-    background-color: none;
-    border: none;
-    height: fit-content;
-    width: fit-content;
-    background: none;
-    margin-top: 50px;
+#like {
+  background-color: none;
+  border: none;
+  height: fit-content;
+  width: fit-content;
+  background: none;
+  margin-top: 50px;
 }
 
-#btn-div{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: white;
+#btn-div {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
 }
 
-.back-btn{
-    color: white;
-    font-weight: 600;
-    border: none;
-    background: none;
-    font-size: 14px;
-    text-decoration: none;
-    color: white;
+.back-btn {
+  color: white;
+  font-weight: 600;
+  border: none;
+  background: none;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
 }
 
-.back-btn:hover, .back-btn:active{
-    color: black;
+.back-btn:hover,
+.back-btn:active {
+  color: black;
 }
 
-.heart-btn{
-    position: absolute;
-    top: 200%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.heart-btn {
+  position: absolute;
+  top: 200%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.post .content{
-    border: 2px solid #E2007A;
-    padding: 5px 20px;
-    border-radius: 5px;
-    display: flex;
-    cursor: pointer;
-    background-color: none;
+.post .content {
+  border: 2px solid #e2007a;
+  padding: 5px 20px;
+  border-radius: 5px;
+  display: flex;
+  cursor: pointer;
+  background-color: none;
 }
 
-.content .heart{
-    height: 90px;
-    width: 90px;
-    background: url("../../static/icons/blogs/heart.png") no-repeat;
-    background-position: left;
-    background-size: 2900%;
-    position: absolute;
-    top: 50%;
-    left: 21%;
-    transform: translate(-50%, -50%);
+.content .heart {
+  height: 90px;
+  width: 90px;
+  background: url("../../static/icons/blogs/heart.png") no-repeat;
+  background-position: left;
+  background-size: 2900%;
+  position: absolute;
+  top: 50%;
+  left: 21%;
+  transform: translate(-50%, -50%);
 }
 
-.heart-active{
-    background-position: right;
-    animation: animate .8s steps(28) 1;
+.heart-active {
+  background-position: right;
+  animation: animate 0.8s steps(28) 1;
 }
 
 @keyframes identifier {
-    0%{
-        background-position: left;
-    }
-    100%{
-        background-position: right;
-    }
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
 }
 
-.like{
-    margin-left: 30px;
-    font-size: 18px;
-    color: #E2007A;
-    font-weight: 600;
+.like {
+  margin-left: 30px;
+  font-size: 18px;
+  color: #e2007a;
+  font-weight: 600;
 }
 
-.heart-active{
-    border-color: #E2007A;
-    background: #E2007A;
+.heart-active {
+  border-color: #e2007a;
+  background: #e2007a;
 }
 
-.heart-active{
-    color: white;
+.heart-active {
+  color: white;
 }
 
-.login-form{
-    z-index: 1000;
-    position: absolute;
+.login-form {
+  z-index: 1000;
+  position: absolute;
 }
 
-#auth-modal{
-    margin-top: 5%;
-    width: fit-content;
-    min-width: 400px;
-
+#auth-modal {
+  margin-top: 5%;
+  width: fit-content;
+  min-width: 400px;
 }
 
-#auth-modal-body{
-    padding: 20px;
-    background-color: white;
-    height: 390px;
+#auth-modal-body {
+  padding: 20px;
+  background-color: white;
+  height: 400px;
 }
 
-.mb-3{
-    width: 100%;
-    min-width: 355px;
-    margin-top: 0px;
-    font-size: 14px;
-    margin-bottom: 20px;
+.mb-3 {
+  width: 100%;
+  min-width: 355px;
+  margin-top: 0px;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
-.modal-title{
-    font-weight: 400;
-    font-size: 18px;
-    color: #444444;
-}
-
-#auth-modal .enter-btn{
-    border: 3px solid #EE7F00;
-    border-radius: 5px;
-    color: #EE7F00;
-    font-size: 14px;
-    font-weight: 600;
-    background-color: white;
-    padding: 5px 25px;
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 20px;
+.modal-title {
+  font-weight: 400;
+  font-size: 18px;
+  color: #444444;
 }
 
 #auth-modal .enter-btn {
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    position: relative;
-    -webkit-transition-property: color;
-    transition-property: color;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-  }
-  #auth-modal .enter-btn:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #EE7F00;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transform-origin: 0 50%;
-    transform-origin: 0 50%;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-  }
-  #auth-modal .enter-btn:hover, #auth-modal .enter-btn:focus, #auth-modal .enter-btn:active {
-    color: white;
-  }
-  #auth-modal .enter-btn:hover:before, #auth-modal .enter-btn:focus:before, #auth-modal .enter-btn:active:before {
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-    -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-  }
+  border: 3px solid #ee7f00;
+  border-radius: 5px;
+  color: #ee7f00;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: white;
+  padding: 5px 25px;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+#auth-modal .enter-btn {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+#auth-modal .enter-btn:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ee7f00;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+#auth-modal .enter-btn:hover,
+#auth-modal .enter-btn:focus,
+#auth-modal .enter-btn:active {
+  color: white;
+}
+#auth-modal .enter-btn:hover:before,
+#auth-modal .enter-btn:focus:before,
+#auth-modal .enter-btn:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
