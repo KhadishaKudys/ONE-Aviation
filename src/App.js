@@ -25,6 +25,7 @@ import BookFlightContactInfo from "./client/pages/flight/BookFlightContactInfo";
 import BookFlightPersonalInfo from "./client/pages/flight/BookFlightPersonalInfo";
 import BookFlightPayment from "./client/pages/flight/BookFlightPayment";
 import LikedPosts from "./client/pages/profile/LikedPosts";
+import Orders from "./client/pages/profile/Orders";
 import Settings from "./client/pages/profile/Settings";
 import "./App.css";
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/otp-verification" component={EnterOtp} />
           <Route path="/new-password" component={NewPassword} />
           <Route path="/user/profile" component={Dashboard}></Route>
+          <Route path="/user/profile/orders" component={Orders}></Route>
           <Route path="/user/profile/liked-posts" component={LikedPosts} />
           <Route path="/user/profile/settings" component={Settings} />
           <Route path="/about-flight/:flight_id" component={AboutFlight} />

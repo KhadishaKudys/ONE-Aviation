@@ -23,3 +23,25 @@ h5 {
   font-weight: 600;
   border: none;
 }
+
+#personal-data {
+  margin-top: 50px;
+  width: 80%;
+  text-align: left;
+  padding: 20px 50px;
+  justify-content: left;
+  margin-bottom: 50px;
+  background: #ffffff;
+  box-shadow: 10px 10px 50px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  border: none;
+}
+
+#personal-data .col {
+  text-align: left;
+}
+
+#personal-data h5 {
+  font-size: 15px;
+  margin-top: 20px;
+}

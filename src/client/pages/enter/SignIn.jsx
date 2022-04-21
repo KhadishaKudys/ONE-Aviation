@@ -74,18 +74,35 @@ class SignIn extends React.Component {
     })
       .then(async (res) => {
         const data = await res.json();
-        console.log(data);
+        console.log(data.id);
         if (res.ok) {
           sessionStorage.setItem("access_token", data.access_token);
           sessionStorage.setItem("refresh_token", data.refresh_token);
-          sessionStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("isLoggedIn", true);
           this.props.history.push({
-            pathname: "/user/profile",
+            pathname: `/user/profile/orders`,
             state: data,
           });
         } else {
           this.setState({ show: true });
         }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  async userInfo() {
+    await fetch("https://one-aviation.herokuapp.com/api/v1/profile/my", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("access_token"),
+      },
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        console.log(data);
+        this.setState({ user_info: data });
       })
       .catch((err) => console.log(err));
   }
@@ -169,9 +186,7 @@ class SignIn extends React.Component {
               <Alert.Heading>❌ You got an error!</Alert.Heading>
               Either email or password is incorrect!
             </Alert>
-          ) : (
-            <p></p>
-          )}
+          ) : null}
         </div>
       </div>
     );

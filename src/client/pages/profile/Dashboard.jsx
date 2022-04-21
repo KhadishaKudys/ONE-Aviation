@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "../../assets/styles/profile/dashboard.css";
 import Loading from "../../components/reused/Loading";
-import avatar from "../../assets/static/backgrounds/home/avatar-1.svg";
+import avatar from "../../assets/static/backgrounds/profile/avatar.png";
 import home from "../../assets/static/icons/profile/home-icon.svg";
 import orders from "../../assets/static/icons/profile/orders-icon.svg";
 import settings from "../../assets/static/icons/profile/settings-icon.svg";
@@ -41,7 +41,7 @@ class Dashboard extends React.Component {
     window.location.href = "/sign-in";
   }
 
-  async userInfo(e) {
+  async userInfo() {
     await fetch("https://one-aviation.herokuapp.com/api/v1/profile/my", {
       method: "GET",
       headers: {
@@ -95,7 +95,7 @@ class Dashboard extends React.Component {
                   </Row>
                 </Link>
               </div>
-              <div className="item">
+              <div className="menu">
                 <Link to="/user/profile/liked-posts">
                   <Row className="item">
                     <Col md={3}>
@@ -154,7 +154,7 @@ class Dashboard extends React.Component {
                     <LikedPosts />
                   </Route>
                   <Route path="/user/profile/settings">
-                    <Settings />
+                    <Settings user={this.state.user_info} />
                   </Route>
                 </Switch>
               </div>

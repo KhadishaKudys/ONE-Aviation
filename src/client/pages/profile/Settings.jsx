@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Card } from "react-bootstrap";
 import "../../assets/styles/profile/settings.css";
 import Loading from "../../components/reused/Loading";
 
@@ -13,6 +13,7 @@ class Settings extends React.Component {
       order_history: [],
       email: "sandra@fake.com",
       is_subscribed: true,
+      user: this.props.user,
     };
   }
 
@@ -82,6 +83,29 @@ class Settings extends React.Component {
       <div className="settings">
         <h1>Settings</h1>
         <div>
+          <Card id="personal-data">
+            <h3>Personal information</h3>
+            <Row>
+              <Col>
+                <h5>First name</h5>
+                <h5>Last name</h5>
+                {this.state.user.middle_name !== "" ? (
+                  <h5>Middle name</h5>
+                ) : null}
+                <h5>Phone number</h5>
+                <h5>Email</h5>
+              </Col>
+              <Col>
+                <h5>{this.state.user.first_name}</h5>
+                <h5>{this.state.user.last_name}</h5>
+                {this.state.user.middle_name !== "" ? (
+                  <h5>{this.state.user.middle_name}</h5>
+                ) : null}
+                <h5>{this.state.user.phone_number}</h5>
+                <h5>{this.state.user.email}</h5>
+              </Col>
+            </Row>
+          </Card>
           <br></br>
           <Row>
             <Col md={3}>

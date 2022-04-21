@@ -1,6 +1,16 @@
 import React from "react";
-import { Card, Col, Row, Container, Modal, Form } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Row,
+  Container,
+  Modal,
+  Form,
+  Badge,
+  Alert,
+} from "react-bootstrap";
 import "../../assets/styles/flight/book-flight.css";
+import { Link } from "react-router-dom";
 import Loading from "../../components/reused/Loading";
 
 class BookFlightPersonalInfo extends React.Component {
@@ -21,6 +31,10 @@ class BookFlightPersonalInfo extends React.Component {
       surnameError: "",
       show_login: false,
       promocode: "",
+      validPromo: null,
+      token: sessionStorage.getItem("access_token"),
+      checked: false,
+      show_alert: false,
     };
   }
 
@@ -47,8 +61,37 @@ class BookFlightPersonalInfo extends React.Component {
     window.history.back();
   }
 
+  async validPromoCheck(promocode) {
+    await fetch(
+      `https://one-aviation.herokuapp.com/api/v1/promocode/validate/${promocode}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then(async (res) => {
+        this.setState({ checked: true });
+        if (res.ok) {
+          this.setState({ validPromo: true });
+        } else {
+          this.setState({ validPromo: false });
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  alertDisable() {
+    setTimeout(() => {
+      this.setState({
+        show_alert_1: false,
+      });
+    }, 3000);
+  }
+
   async bookFlight() {
-    const token = sessionStorage.getItem("access_token");
     const booking = {
       document: {
         number: this.state.document,
@@ -71,26 +114,41 @@ class BookFlightPersonalInfo extends React.Component {
         },
       ],
       phone_number: this.state.flight.phone_number,
-      promocode: this.state.promocode,
     };
-    await fetch(`https://one-aviation.herokuapp.com/api/v1/order/join`, {
-      method: "POST",
-      headers: {
+    if (this.state.validPromo === true) {
+      booking.promocode = this.state.promocode;
+    }
+    var fetch_header = {};
+    if (this.state.token === null) {
+      fetch_header = {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+      };
+    } else {
+      fetch_header = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.state.token,
+      };
+    }
+    await fetch(`https://one-aviation.herokuapp.com/api/v1/order/join`, {
+      method: "POST",
+      headers: fetch_header,
       body: JSON.stringify(booking),
     })
       .then(async (res) => {
         const data = await res.json();
         console.log(data);
-        this.setState({ available_flights: data });
         if (res.ok) {
           console.log("OK");
+          this.setState({ price: data.price });
           this.props.history.push({
             pathname: `/book-flight/${this.state.flight_id}/payment`,
+            state: this.state,
           });
+        } else {
+          this.setState({ show_alert_1: true });
+          this.setState({ show_alert: true });
         }
       })
       .catch((err) => console.log(err));
@@ -265,25 +323,64 @@ class BookFlightPersonalInfo extends React.Component {
                     Please, enter promocode if you have it and verify your
                     flight.
                   </p>
-                  <label for="password">Promocode</label>
-                  <input
-                    className="enter-input"
-                    id="password"
-                    onChange={(e) =>
-                      this.setState({ promocode: e.target.value })
-                    }
-                  ></input>
-                  <button
-                    className="enter-btn"
-                    onClick={() => this.bookFlight()}
-                  >
-                    Book this flight
-                  </button>
+                  <Row>
+                    <Col>
+                      <label for="password">Promocode</label>
+                      <input
+                        className="enter-input"
+                        id="password"
+                        onChange={(e) =>
+                          this.setState({ promocode: e.target.value })
+                        }
+                      ></input>
+                    </Col>
+                    <Col>
+                      <button
+                        className="check-btn"
+                        onClick={() =>
+                          this.validPromoCheck(this.state.promocode)
+                        }
+                      >
+                        Check
+                      </button>
+                    </Col>
+                  </Row>
+                  {this.state.checked ? (
+                    <div>
+                      {this.state.validPromo ? (
+                        <p style={{ color: "green" }}>✅ Valid</p>
+                      ) : (
+                        <p style={{ color: "red" }}>❌ Not valid</p>
+                      )}
+                    </div>
+                  ) : null}
+                  <div>
+                    {this.state.show_alert ? (
+                      <Link to="/">
+                        <button className="enter-btn">
+                          Return to home page
+                        </button>
+                      </Link>
+                    ) : (
+                      <button
+                        className="enter-btn"
+                        onClick={() => this.bookFlight()}
+                      >
+                        Book this flight
+                      </button>
+                    )}
+                  </div>
                 </Card>
               ) : null}
             </Container>
           </div>
         )}
+        {this.state.show_alert_1 === true ? (
+          <Alert variant={"danger"} onChange={this.alertDisable()}>
+            <Alert.Heading>❌ You got an error!</Alert.Heading>
+            You are already registered to this flight!
+          </Alert>
+        ) : null}
       </div>
     );
   }

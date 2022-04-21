@@ -68,6 +68,30 @@ class DiscoverFlights extends React.Component {
     this.setState({ map_1_show: false });
   }
 
+  removeFrom() {
+    this.setState({
+      location_from_latitude: "",
+    });
+    this.setState({
+      location_from_longitude: "",
+    });
+    this.setState({ departure_port: "" });
+    this.setState({ map_1_show: false });
+  }
+
+  removeFrom2() {
+    this.setState({
+      location_to_latitude: "",
+    });
+    this.setState({
+      location_to_longitude: "",
+    });
+    this.setState({
+      destination_port: "",
+    });
+    this.setState({ map_2_show: false });
+  }
+
   changeFrom2() {
     this.setState({
       location_to_latitude: localStorage.getItem("to_latitude"),
@@ -339,6 +363,12 @@ class DiscoverFlights extends React.Component {
                     </Modal.Body>
                     <Modal.Footer>
                       <button
+                        onClick={() => this.removeFrom()}
+                        className="map-btn-1"
+                      >
+                        Clear
+                      </button>
+                      <button
                         onClick={() => this.changeFrom()}
                         className="map-btn"
                       >
@@ -363,6 +393,12 @@ class DiscoverFlights extends React.Component {
                       />
                     </Modal.Body>
                     <Modal.Footer>
+                      <button
+                        onClick={() => this.removeFrom2()}
+                        className="map-btn-1"
+                      >
+                        Clear
+                      </button>
                       <button
                         onClick={() => this.changeFrom2()}
                         className="map-btn"
@@ -401,13 +437,13 @@ class DiscoverFlights extends React.Component {
                       <label for="passengers">Departure date</label>
                       <DatePicker
                         className="enter-input"
-                        placeholder="Departure date"
+                        placeholder=""
                         onChange={(e) => this.onDDateChange(e)}
                       />
                       <label for="passengers">Destination date</label>
                       <DatePicker
                         className="enter-input"
-                        placeholder="Return date"
+                        placeholder=""
                         onChange={(e) => this.onRDateChange(e)}
                       />
                       <div style={{ height: "50px" }} />

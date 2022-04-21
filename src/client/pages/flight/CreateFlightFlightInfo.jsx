@@ -87,7 +87,9 @@ class CreateFlightFlightInfo extends React.Component {
   selectedTo() {
     this.setState({ destination_latitude: localStorage.getItem("to_lat") });
     this.setState({ destination_longitude: localStorage.getItem("to_long") });
-    this.setState({ departure_port: localStorage.getItem("destination_port") });
+    this.setState({
+      destination_port: localStorage.getItem("destination_port"),
+    });
     this.setState({ map_show_1: false });
   }
 
