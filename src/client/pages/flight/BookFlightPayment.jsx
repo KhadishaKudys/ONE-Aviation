@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Col, Row, Container, Alert } from "react-bootstrap";
-import "../../assets/styles/flight/create-flight.css";
+import "../../assets/styles/flight/book-flight.css";
 import Loading from "../../components/reused/Loading";
 
 class BookFlightPayment extends React.Component {
@@ -12,21 +12,20 @@ class BookFlightPayment extends React.Component {
       cvv: "",
       month: "",
       year: "",
-      flight: this.props.history.location.state,
-      show_modal: false,
-      numberError: "",
-      cvvError: "",
-      dateError: "",
       name: "",
-      nameError: "",
+      flight: this.props.history.location.state,
       token: sessionStorage.getItem("access_token"),
-      show_error: true,
+      flight_id: this.props.match.params.flight_id,
+      cvvError: "",
+      nameError: "",
+      numberError: "",
+      dateError: "",
       email: localStorage.getItem("email"),
     };
   }
 
   componentDidMount() {
-    console.log(this.state.flight);
+    console.log(this.state.flight.order_id);
     window.scrollTo(0, 0);
     const timer = setTimeout(() => {
       this.setState({
@@ -54,27 +53,25 @@ class BookFlightPayment extends React.Component {
     return false;
   }
 
-  cancelOrder() {
-    this.props.history.push({
-      pathname: "/",
-    });
-  }
-
   cancelPayment() {
     this.props.history.push({
       pathname: "/",
     });
   }
 
-  alertDisable() {
-    setTimeout(() => {
-      this.setState({
-        show_error: false,
-      });
-    }, 3000);
-  }
-
   async payForFlight() {
+    const flight = {
+      credit_card_info: {
+        cvv: this.state.cvv,
+        month: this.state.month,
+        number: this.state.creditcard_number,
+        name: this.state.name,
+        year: this.state.year,
+      },
+      email: [this.state.email],
+      order_id: parseInt(this.state.flight_id),
+    };
+
     var fetch_header = {};
     if (this.state.token === null) {
       fetch_header = {
@@ -88,19 +85,8 @@ class BookFlightPayment extends React.Component {
         Authorization: "Bearer " + this.state.token,
       };
     }
-    const flight = {
-      credit_card_info: {
-        cvv: this.state.cvv,
-        month: this.state.month,
-        number: this.state.creditcard_number,
-        name: this.state.name,
-        year: this.state.year,
-      },
-      order_id: parseInt(this.state.flight.flight_id),
-    };
 
     console.log(flight);
-    const token = sessionStorage.getItem("access_token");
     await fetch("https://one-aviation.herokuapp.com/api/v1/payments/pay", {
       method: "POST",
       headers: fetch_header,
@@ -118,10 +104,6 @@ class BookFlightPayment extends React.Component {
         }
       })
       .catch((err) => console.log(err));
-  }
-
-  handleModalClose() {
-    this.setState({ show_modal: false });
   }
 
   handleSubmit(e) {
@@ -197,7 +179,7 @@ class BookFlightPayment extends React.Component {
         {this.state.isLoading ? (
           <Loading />
         ) : (
-          <div className="book-flight">
+          <div className="create-flight">
             <Container>
               <h1>Payment</h1>
               <br />
@@ -336,7 +318,7 @@ class BookFlightPayment extends React.Component {
                             <h5 className="titles">Order Number</h5>
                           </Col>
                           <Col>
-                            <h5>{this.state.flight.flight_id}</h5>
+                            <h5>{this.state.flight_id}</h5>
                           </Col>
                         </Row>
                         <div id="sum">

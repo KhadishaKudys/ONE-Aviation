@@ -178,18 +178,38 @@ class DiscoverFlights extends React.Component {
       let from_time = new Date(
         this.state.available_flights[flight].departure_time
       )
-        .toISOString()
-        .split("T")[1];
+        .toLocaleTimeString("en", {
+          timeStyle: "short",
+          hour12: false,
+          timeZone: "UTC",
+        })
+        .substring(0, 5);
+      // let from_time = new Date(
+      //   this.state.available_flights[flight].departure_time
+      // )
+      //   .toISOString()
+      //   .split("T")[1];
       let to_date = new Date(this.state.available_flights[flight].arrival_time)
         .toISOString()
         .split("T")[0];
+      // let to_time = new Date(this.state.available_flights[flight].arrival_time)
+      //   .toISOString()
+      //   .split("T")[1];
       let to_time = new Date(this.state.available_flights[flight].arrival_time)
-        .toISOString()
-        .split("T")[1];
+        .toLocaleTimeString("en", {
+          timeStyle: "short",
+          hour12: false,
+          timeZone: "UTC",
+        })
+        .substring(0, 5);
+
+      let travel_time =
+        parseInt(to_time.substring(0, 2)) - parseInt(from_time.substring(0, 2));
       this.state.available_flights[flight].departure_time = from_time;
       this.state.available_flights[flight].departure_date = from_date;
       this.state.available_flights[flight].arrival_time = to_time;
       this.state.available_flights[flight].arrival_date = to_date;
+      this.state.available_flights[flight].travel_time = travel_time;
     }
     console.log("fomatted", this.state.available_flights);
   }
@@ -295,14 +315,22 @@ class DiscoverFlights extends React.Component {
       .toISOString()
       .split("T")[0];
     let from_time = new Date(this.state.flight_info.departure_time)
-      .toISOString()
-      .split("T")[1];
+      .toLocaleTimeString("en", {
+        timeStyle: "short",
+        hour12: false,
+        timeZone: "UTC",
+      })
+      .substring(0, 5);
     let to_date = new Date(this.state.flight_info.arrival_time)
       .toISOString()
       .split("T")[0];
     let to_time = new Date(this.state.flight_info.arrival_time)
-      .toISOString()
-      .split("T")[1];
+      .toLocaleTimeString("en", {
+        timeStyle: "short",
+        hour12: false,
+        timeZone: "UTC",
+      })
+      .substring(0, 5);
     this.state.flight_info.departure_time = from_time;
     this.state.flight_info.departure_date = from_date;
     this.state.flight_info.arrival_time = to_time;
@@ -509,7 +537,7 @@ class DiscoverFlights extends React.Component {
                                   <h3>{flight.departure_date}</h3>
                                 </Col>
                                 <Col md="8">
-                                  <p id="time">1h 50m</p>
+                                  <p id="time">{flight.travel_time}</p>
                                 </Col>
                                 <Col md="2">
                                   <h3>{flight.arrival_date}</h3>
@@ -527,13 +555,17 @@ class DiscoverFlights extends React.Component {
                                 </Col>
                               </Row>
                               <Row>
-                                <Col md="2" id="from">
+                                <Col
+                                  md="2"
+                                  id="from"
+                                  style={{ textAlign: "center" }}
+                                >
                                   <p>{flight.departure_time}</p>
                                 </Col>
                                 <Col md="8">
                                   <p id="way">Direct</p>
                                 </Col>
-                                <Col md="2">
+                                <Col md="2" style={{ textAlign: "center" }}>
                                   <p>{flight.arrival_time}</p>
                                 </Col>
                               </Row>
