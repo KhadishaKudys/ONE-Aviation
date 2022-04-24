@@ -36,6 +36,13 @@ class CreateFlightFlightInfo extends React.Component {
       passengers: "",
       departure_port: localStorage.getItem("departure_port"),
       destination_port: localStorage.getItem("destination_port"),
+      departureError: "",
+      destinationError: "",
+      passengerError: "",
+      ddateError: "",
+      rdateError: "",
+      dtimeError: "",
+      rtimeError: "",
     };
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
   }
@@ -73,8 +80,8 @@ class CreateFlightFlightInfo extends React.Component {
   }
 
   selectedFrom() {
-    this.setState({ departure_latitude: localStorage.getItem("form_lat") });
-    this.setState({ departure_longitude: localStorage.getItem("form_long") });
+    this.setState({ departure_latitude: localStorage.getItem("from_lat") });
+    this.setState({ departure_longitude: localStorage.getItem("from_long") });
     this.setState({ departure_port: localStorage.getItem("departure_port") });
     this.setState({ map_show: false });
   }
@@ -98,6 +105,7 @@ class CreateFlightFlightInfo extends React.Component {
     let dateformat = new Date(date._d).toISOString();
     let formatted_date = dateformat.split("T")[0];
     console.log("date", formatted_date);
+    this.setState({ formatted_d_date: formatted_date });
     if (this.state.formatted_d_time !== "") {
       var datetime = formatted_date + "T" + this.state.formatted_d_time + "Z";
       console.log("time", datetime);
@@ -108,11 +116,119 @@ class CreateFlightFlightInfo extends React.Component {
     }
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const isValid = this.validate();
+    if (isValid) {
+      this.openContactInfo();
+    }
+  }
+
+  validate = () => {
+    let departureError = "";
+    let destinationError = "";
+    let passengerError = "";
+    let ddateError = "";
+    let rdateError = "";
+    let dtimeError = "";
+    let rtimeError = "";
+    if (this.state.passengers === "") {
+      passengerError = "⚠️ Passengers field needs to be filled in";
+    } else {
+      if (this.state.passengers > 8) {
+        passengerError = "⚠️ Maximum passengers number is 8";
+      }
+    }
+    if (this.state.departure_port === "") {
+      departureError = "⚠️ Departure port cannot be empty";
+    } else {
+      departureError = "";
+    }
+    if (this.state.destination_port === "") {
+      destinationError = "⚠️ Destination port cannot be empty";
+    } else {
+      destinationError = "";
+    }
+    if (this.state.departure_port === this.state.destination_port) {
+      departureError = "⚠️ Departure and destination ports must be different";
+    } else {
+      departureError = "";
+    }
+    if (this.state.formatted_d_date === "") {
+      ddateError = "⚠️ Departure date cannot be empty";
+    } else {
+      ddateError = "";
+    }
+    if (this.state.formatted_r_date === "") {
+      rdateError = "⚠️ Return date cannot be empty";
+    } else {
+      rdateError = "";
+    }
+    if (this.state.formatted_d_time === "") {
+      dtimeError = "⚠️ Departure time cannot be empty";
+    } else {
+      dtimeError = "";
+    }
+    if (this.state.formatted_r_time === "") {
+      rtimeError = "⚠️ Return time cannot be empty";
+    } else {
+      rtimeError = "";
+    }
+    if (
+      passengerError ||
+      departureError ||
+      destinationError ||
+      ddateError ||
+      rdateError ||
+      dtimeError ||
+      rtimeError
+    ) {
+      this.setState({
+        passengerError,
+        destinationError,
+        departureError,
+        ddateError,
+        rdateError,
+        dtimeError,
+        rtimeError,
+      });
+      return false;
+    }
+    if (
+      !passengerError &&
+      !departureError &&
+      !destinationError &&
+      !ddateError &&
+      !rdateError &&
+      !dtimeError &&
+      !rtimeError
+    ) {
+      passengerError = "";
+      departureError = "";
+      destinationError = "";
+      ddateError = "";
+      rdateError = "";
+      dtimeError = "";
+      rtimeError = "";
+      this.setState({
+        passengerError,
+        destinationError,
+        departureError,
+        ddateError,
+        rdateError,
+        dtimeError,
+        rtimeError,
+      });
+      return true;
+    }
+  };
+
   onRDateChange(date) {
     console.log("not form", date._d);
     let dateformat = new Date(date._d).toISOString();
     let formatted_date = dateformat.split("T")[0];
     console.log("date", formatted_date);
+    this.setState({ formatted_r_date: formatted_date });
     if (this.state.formatted_r_time !== "") {
       var datetime = formatted_date + "T" + this.state.formatted_r_time + "Z";
       console.log("time", datetime);
@@ -164,6 +280,7 @@ class CreateFlightFlightInfo extends React.Component {
     var min = t.getMinutes();
     min = ("0" + min).slice(-2);
     var formatted_time = hr + ":" + min + ":00";
+    this.setState({ formatted_d_time: formatted_time });
     if (this.state.formatted_d_date !== "") {
       var datetime = this.state.formatted_d_date + "T" + formatted_time + "Z";
       console.log("time", datetime);
@@ -182,6 +299,7 @@ class CreateFlightFlightInfo extends React.Component {
     var min = t.getMinutes();
     min = ("0" + min).slice(-2);
     var formatted_time = hr + ":" + min + ":00";
+    this.setState({ formatted_r_time: formatted_time });
     if (this.state.formatted_r_date !== "") {
       var datetime = this.state.formatted_r_date + "T" + formatted_time + "Z";
       console.log("time", datetime);
@@ -265,11 +383,10 @@ class CreateFlightFlightInfo extends React.Component {
                 </Modal>
                 <div>
                   <h2 id="title-h">Flight information</h2>
-
                   <Row>
                     <Row>
                       <Col>
-                        <label for="email">Location</label>
+                        <label htmlFor="email">Location *</label>
                       </Col>
                     </Row>
                     <Col>
@@ -280,6 +397,9 @@ class CreateFlightFlightInfo extends React.Component {
                         value={this.state.departure_port}
                         onClick={() => this.dirFrom()}
                       ></input>
+                      <div className="form-errors">
+                        {this.state.departureError}
+                      </div>
                     </Col>
                     <Col>
                       <input
@@ -289,9 +409,12 @@ class CreateFlightFlightInfo extends React.Component {
                         value={this.state.destination_port}
                         onClick={() => this.dirTo()}
                       ></input>
+                      <div className="form-errors">
+                        {this.state.destinationError}
+                      </div>
                     </Col>
                   </Row>
-                  <label for="email">Date</label>
+                  <label htmlFor="email">Date *</label>
 
                   <Row>
                     <Col>
@@ -301,6 +424,7 @@ class CreateFlightFlightInfo extends React.Component {
                         placeholder="Departure date"
                         onChange={(e) => this.onDDateChange(e)}
                       />
+                      <div className="form-errors">{this.state.ddateError}</div>
                     </Col>
                     <Col>
                       <br />
@@ -309,10 +433,11 @@ class CreateFlightFlightInfo extends React.Component {
                         placeholder="Return date"
                         onChange={(e) => this.onRDateChange(e)}
                       />
+                      <div className="form-errors">{this.state.rdateError}</div>
                     </Col>
                   </Row>
                   <br />
-                  <label for="password">Time</label>
+                  <label htmlFor="password">Time *</label>
                   <br />
                   <br />
                   <Row>
@@ -327,6 +452,7 @@ class CreateFlightFlightInfo extends React.Component {
                           this.departureTimeSetting(time);
                         }}
                       />
+                      <div className="form-errors">{this.state.dtimeError}</div>
                     </Col>
                     <Col>
                       <TimePicker
@@ -339,12 +465,13 @@ class CreateFlightFlightInfo extends React.Component {
                           this.returnTimeSetting(time);
                         }}
                       />
+                      <div className="form-errors">{this.state.rtimeError}</div>
                     </Col>
                   </Row>
                   <br />
                   <Row>
                     <Col>
-                      <label for="passengers">Number of passenger</label>
+                      <label htmlFor="passengers">Number of passenger *</label>
                       <input
                         className="enter-input"
                         type="number"
@@ -353,10 +480,13 @@ class CreateFlightFlightInfo extends React.Component {
                           this.setState({ passengers: e.target.value })
                         }
                       ></input>
+                      <div className="form-errors">
+                        {this.state.passengerError}
+                      </div>
                     </Col>
                     <Col></Col>
                   </Row>
-                  <label for="email">Make this flight shareable?</label>
+                  <label htmlFor="email">Make this flight shareable?</label>
                   <input
                     className="checkbox-input"
                     type="checkbox"
@@ -367,7 +497,7 @@ class CreateFlightFlightInfo extends React.Component {
                   <br />
                   <button
                     className="enter-btn"
-                    onClick={() => this.openContactInfo()}
+                    onClick={(e) => this.handleSubmit(e)}
                   >
                     Continue
                   </button>

@@ -55,7 +55,7 @@ class Post extends React.Component {
         show_login: true,
       });
     } else {
-      this.likeThePost(id);
+      this.clickLike(id);
     }
   }
 
@@ -84,7 +84,7 @@ class Post extends React.Component {
     e.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      this.signIn();
+      this.signIn(id);
     }
   }
 
@@ -171,7 +171,7 @@ class Post extends React.Component {
     });
   };
 
-  async signIn() {
+  async signIn(id) {
     const user = {
       password: this.state.password,
       email: this.state.email,
@@ -193,11 +193,12 @@ class Post extends React.Component {
           sessionStorage.setItem("refresh_token", data.refresh_token);
           sessionStorage.setItem("isLoggedIn", true);
           this.setState({ show_success: true });
+          this.clickLike(id);
           setTimeout(() => {
             this.setState({
               show_login: false,
             });
-          }, 3000);
+          }, 2000);
         } else {
           this.setState({ show: true });
         }

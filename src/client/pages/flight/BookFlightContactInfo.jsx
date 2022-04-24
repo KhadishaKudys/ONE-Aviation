@@ -104,6 +104,7 @@ class BookFlightContactInfo extends React.Component {
   };
 
   openPersonalInfo() {
+    localStorage.setItem("email", this.state.email);
     this.props.history.push({
       pathname: `/book-flight/${this.state.flight_id}/personal-information`,
       state: this.state,

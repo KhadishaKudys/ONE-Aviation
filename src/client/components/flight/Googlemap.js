@@ -35,6 +35,7 @@ function Map() {
       localStorage.setItem("to_long", port.longitude);
       localStorage.setItem("destination_port", port.name);
     }
+    console.log(localStorage);
     return () => setUpd(true);
   }
 

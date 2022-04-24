@@ -21,6 +21,7 @@ class BookFlightPayment extends React.Component {
       nameError: "",
       token: sessionStorage.getItem("access_token"),
       show_error: true,
+      email: localStorage.getItem("email"),
     };
   }
 
@@ -84,7 +85,7 @@ class BookFlightPayment extends React.Component {
       fetch_header = {
         Accept: "application/json",
         "Content-Type": "application/json",
-        // Authorization: "Bearer " + this.state.token,
+        Authorization: "Bearer " + this.state.token,
       };
     }
     const flight = {
@@ -99,6 +100,7 @@ class BookFlightPayment extends React.Component {
     };
 
     console.log(flight);
+    const token = sessionStorage.getItem("access_token");
     await fetch("https://one-aviation.herokuapp.com/api/v1/payments/pay", {
       method: "POST",
       headers: fetch_header,
@@ -110,15 +112,12 @@ class BookFlightPayment extends React.Component {
         if (res.ok) {
           console.log("OK");
           this.props.history.push({
-            pathname: "/book-flight/success",
+            pathname: "/create-flight/success",
           });
-        } else {
-          this.setState({ show_error: true });
+          localStorage.removeItem("email");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }
 
   handleModalClose() {

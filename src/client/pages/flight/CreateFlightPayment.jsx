@@ -1,39 +1,7 @@
 import React from "react";
-import { Card, Col, Row, Container } from "react-bootstrap";
+import { Card, Col, Row, Container, Alert } from "react-bootstrap";
 import "../../assets/styles/flight/create-flight.css";
 import Loading from "../../components/reused/Loading";
-import { Breadcrumb } from "antd";
-
-// const useScript = url => {
-//     useEffect(() => {
-//         const script = document.createElement('script');
-
-//     script.src = url;
-//     script.async = true;
-
-//     document.body.appendChild(script);
-
-//     return () => {
-//       document.body.removeChild(script);
-//     }
-//   }, [url]);
-// };
-
-// const Payments = props => {
-//     useScript('../../components/payment/payment.js');
-//     <form novalidate autocomplete="on">
-//     <h2>Card number formatting</h2>
-//     <input type="text" class="cc-number" pattern="\d*" x-autocompletetype="cc-number" placeholder="Card number" required/>
-//     <h2>Expiry formatting</h2>
-//     <input type="text" class="cc-exp" pattern="\d*" x-autocompletetype="cc-exp" placeholder="Expires MM/YY" required maxlength="9"/>
-//     <h2>CVC formatting</h2>
-//     <input type="text" class="cc-cvc" pattern="\d*" x-autocompletetype="cc-csc" placeholder="Security code" required  autocomplete="off"/>
-//     <h2>Restrict Numeric</h2>
-//     <input type="text" data-numeric/>
-//     <h2 class="validation"></h2>
-//     <button type="submit">Submit</button>
-//     </form>
-//   }
 
 class CreateFlightPayment extends React.Component {
   constructor(props) {
@@ -45,6 +13,11 @@ class CreateFlightPayment extends React.Component {
       month: "",
       year: "",
       flight: this.props.history.location.state,
+      cvvError: "",
+      nameError: "",
+      numberError: "",
+      dateError: "",
+      email: localStorage.getItem("email"),
     };
   }
 
@@ -77,14 +50,22 @@ class CreateFlightPayment extends React.Component {
     return false;
   }
 
-  async payForFlight(e) {
+  cancelPayment() {
+    this.props.history.push({
+      pathname: "/create-flight/flight-information",
+    });
+  }
+
+  async payForFlight() {
     const flight = {
       credit_card_info: {
         cvv: this.state.cvv,
         month: this.state.month,
         number: this.state.creditcard_number,
+        name: this.state.name,
         year: this.state.year,
       },
+      email: [this.state.email],
       order_id: this.state.flight.order_id,
     };
 
@@ -107,10 +88,78 @@ class CreateFlightPayment extends React.Component {
           this.props.history.push({
             pathname: "/create-flight/success",
           });
+          localStorage.removeItem("email");
         }
       })
       .catch((err) => console.log(err));
   }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const isValid = this.validate();
+    if (isValid) {
+      this.payForFlight();
+    }
+  }
+
+  validate = () => {
+    let cvvError = "";
+    let dateError = "";
+    let numberError = "";
+    let nameError = "";
+    var reg = /^[a-z]+$/i;
+    var reg2 = /^\d+$/;
+    if (this.state.creditcard_number === "") {
+      numberError = "⚠️ Credit card number cannot be empty";
+    } else {
+      if (
+        this.state.creditcard_number.length < 16 ||
+        this.state.creditcard_number.length > 16
+      ) {
+        numberError = "⚠️ Credit card number must consist of 16 digits";
+      }
+      if (!reg2.test(this.state.creditcard_number)) {
+        numberError = "⚠️ Invalid credit card number";
+      }
+    }
+    if (this.state.cvv === "") {
+      cvvError = "⚠️ CVV number cannot be empty";
+    } else {
+      if (this.state.cvv.length < 3 || this.state.cvv.length > 3) {
+        cvvError = "⚠️ CVV number must consist of 3 digits";
+      }
+      if (!reg2.test(this.state.cvv)) {
+        cvvError = "⚠️ Invalid CVV number";
+      }
+    }
+    if (this.state.month === "" || this.state.year === "") {
+      dateError = "⚠️ Date cannot be empty";
+    } else {
+      if (
+        parseInt(this.state.month) < 0 ||
+        parseInt(this.state.month) > 12 ||
+        parseInt(this.state.year) < 22
+      ) {
+        dateError = "⚠️ Invalid date";
+      }
+    }
+    if (this.state.name === "") {
+      nameError = "⚠️ Name cannot be empty";
+    }
+
+    if (numberError || cvvError || dateError || nameError) {
+      this.setState({ numberError, cvvError, dateError, nameError });
+      return false;
+    }
+    if (!numberError && !cvvError && !dateError && !nameError) {
+      numberError = "";
+      cvvError = "";
+      dateError = "";
+      nameError = "";
+      this.setState({ numberError, cvvError, dateError, nameError });
+      return true;
+    }
+  };
 
   render() {
     return (
@@ -120,30 +169,10 @@ class CreateFlightPayment extends React.Component {
         ) : (
           <div className="create-flight">
             <Container>
-              <h1>New flight</h1>
-              <Breadcrumb>
-                <Breadcrumb.Item>
-                  <a href="/create-flight/flight-information">
-                    Flight Information
-                  </a>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                  <a href="/create-flight/contact-information">
-                    Contact Information
-                  </a>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                  <a href="/create-flight/personal-information">
-                    Personal Information
-                  </a>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>Payment</Breadcrumb.Item>
-              </Breadcrumb>
+              <h1>Payment</h1>
               <br />
-              {/* <Payments/> */}
               <Card>
                 <div>
-                  <h3>Remained Time</h3>
                   <Row>
                     <Col md="7">
                       <div className="details">
@@ -151,15 +180,18 @@ class CreateFlightPayment extends React.Component {
                         <label>Enter the 16-digit card number</label>
                         <br></br>
                         <input
-                          type="text"
                           onkeypress="return formats(this,event)"
                           onkeyup="return numberValidation(event)"
                           className="creditcard"
                           id="number"
+                          maxLength={16}
                           onChange={(e) =>
                             this.setState({ creditcard_number: e.target.value })
                           }
                         ></input>
+                        <div className="form-errors">
+                          {this.state.numberError}
+                        </div>
                       </div>
                       <div className="details">
                         <Row>
@@ -171,10 +203,14 @@ class CreateFlightPayment extends React.Component {
                             <input
                               className="creditcard"
                               id="cvv"
+                              maxLength={3}
                               onChange={(e) =>
                                 this.setState({ cvv: e.target.value })
                               }
                             ></input>
+                            <div className="form-errors">
+                              {this.state.cvvError}
+                            </div>
                           </Col>
                         </Row>
                       </div>
@@ -190,10 +226,14 @@ class CreateFlightPayment extends React.Component {
                                 <input
                                   className="creditcard"
                                   id="cvv"
+                                  maxLength={2}
                                   onChange={(e) =>
                                     this.setState({ month: e.target.value })
                                   }
                                 ></input>
+                                <div className="form-errors">
+                                  {this.state.dateError}
+                                </div>
                               </Col>
                               <Col md="2">
                                 <h3>/</h3>
@@ -202,6 +242,7 @@ class CreateFlightPayment extends React.Component {
                                 <input
                                   className="creditcard"
                                   id="cvv"
+                                  maxLength={4}
                                   onChange={(e) =>
                                     this.setState({ year: e.target.value })
                                   }
@@ -211,12 +252,42 @@ class CreateFlightPayment extends React.Component {
                           </Col>
                         </Row>
                       </div>
-                      <button
-                        className="pay-btn"
-                        onClick={() => this.payForFlight()}
-                      >
-                        Pay Now
-                      </button>
+                      <div className="details">
+                        <h3>Cardholder Name</h3>
+                        <label>Enter cardholder's name</label>
+                        <br></br>
+                        <input
+                          type="text"
+                          onkeypress="return formats(this,event)"
+                          onkeyup="return numberValidation(event)"
+                          className="creditcard"
+                          id="number"
+                          onChange={(e) =>
+                            this.setState({ name: e.target.value })
+                          }
+                        ></input>
+                        <div className="form-errors">
+                          {this.state.nameError}
+                        </div>
+                      </div>
+                      <Row>
+                        <Col>
+                          <button
+                            className="pay-btn"
+                            onClick={(e) => this.handleSubmit(e)}
+                          >
+                            Pay Now
+                          </button>
+                        </Col>
+                        <Col>
+                          <button
+                            className="cancel-btn"
+                            onClick={() => this.cancelPayment()}
+                          >
+                            Cancel Order
+                          </button>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col md="1"></Col>
 
@@ -234,16 +305,17 @@ class CreateFlightPayment extends React.Component {
                           <Col>
                             <h5 className="titles">Order Number</h5>
                           </Col>
-                          <Col></Col>
-                        </Row>
-                        <Row>
                           <Col>
-                            <h5 className="titles">Customer Number</h5>
+                            <h5>{this.state.flight.order_id}</h5>
                           </Col>
-                          <Col></Col>
                         </Row>
                         <div id="sum">
-                          <h5 className="titles">You have to pay</h5>
+                          <h5 className="titles" style={{ marginTop: "30px" }}>
+                            You have to pay
+                          </h5>
+                          <h4 style={{ fontWeight: "700" }}>
+                            € {parseInt(this.state.flight.price)}
+                          </h4>
                         </div>
                       </Card>
                     </Col>
@@ -253,6 +325,17 @@ class CreateFlightPayment extends React.Component {
             </Container>
           </div>
         )}
+
+        {this.state.show_error === true ? (
+          <Alert
+            variant={"danger"}
+            onChange={this.alertDisable()}
+            className="alert-payment"
+          >
+            <Alert.Heading>❌ Card number is not valid!</Alert.Heading>
+            Please enter the correct 16-digit number
+          </Alert>
+        ) : null}
       </div>
     );
   }

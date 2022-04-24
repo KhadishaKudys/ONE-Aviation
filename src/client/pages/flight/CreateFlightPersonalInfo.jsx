@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, Col, Row, Container, Modal, Form } from "react-bootstrap";
+import { Card, Col, Row, Container, Modal, Form, Alert } from "react-bootstrap";
 import "../../assets/styles/flight/create-flight.css";
 import Loading from "../../components/reused/Loading";
+import { Link } from "react-router-dom";
 import { Breadcrumb } from "antd";
 
 class CreateFlightPersonalInfo extends React.Component {
@@ -10,7 +11,7 @@ class CreateFlightPersonalInfo extends React.Component {
     this.state = {
       isLoading: true,
       order_id: "",
-      promocode: "DISCOUNTFORSTUDENTS2022",
+      promocode: "",
       show_login: false,
       passengers: [
         {
@@ -41,6 +42,13 @@ class CreateFlightPersonalInfo extends React.Component {
       document_type_1: "",
       direction_1: "",
       flight: this.props.history.location.state,
+      documentError: "",
+      nameError: "",
+      surnameError: "",
+      show_alert: false,
+      checked: false,
+      validPromo: null,
+      price: "",
     };
   }
 
@@ -110,6 +118,17 @@ class CreateFlightPersonalInfo extends React.Component {
               id="password"
               onChange={(e) => this.setState({ document: e.target.value })}
             ></input>
+            <br />
+            <br />
+            <label for="password">Direction</label>
+            <br />
+            <select
+              onChange={(e) => this.setState({ direction: e.target.value })}
+            >
+              <option value="FORWARD">FORWARD</option>
+              <option value="BACKWARD">BACKWARD</option>
+              <option value="FULL">FULL</option>
+            </select>
           </Col>
         </Row>
       </div>;
@@ -158,11 +177,14 @@ class CreateFlightPersonalInfo extends React.Component {
           this.state.flight.flight_info.destination_longitude
         ),
       },
-      departure_time: this.state.flight.flight_info.departure_time,
-      return_time: this.state.flight.flight_info.return_time,
+      departure_time: this.state.flight.flight_info.departure_date,
+      return_time: this.state.flight.flight_info.return_date,
       shareable: this.state.flight.flight_info.shareable,
-      promocode: this.state.promocode,
     };
+
+    if (this.state.validPromo === true) {
+      flight.promocode = this.state.promocode;
+    }
 
     console.log(flight);
     const token = sessionStorage.getItem("access_token");
@@ -179,12 +201,15 @@ class CreateFlightPersonalInfo extends React.Component {
         const data = await res.json();
         console.log(data);
         if (res.ok) {
-          this.setState({ order_id: data.order_id });
+          this.setState({ order_id: data.id });
+          this.setState({ price: data.price });
           this.props.history.push({
             pathname: "/create-flight/payment",
             state: this.state,
           });
           this.handleClose();
+        } else {
+          this.setState({ show_alert: true });
         }
       })
       .catch((err) => console.log(err));
@@ -201,6 +226,84 @@ class CreateFlightPersonalInfo extends React.Component {
       show_login: false,
     });
   };
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const isValid = this.validate();
+    if (isValid) {
+      this.setState({ show_login: true });
+    }
+  }
+
+  validate = () => {
+    let documentError = "";
+    let nameError = "";
+    let surnameError = "";
+    var reg = /^[a-z]+$/i;
+    var reg2 = /^\d+$/;
+    if (this.state.document === "") {
+      documentError = "⚠️ Document number cannot be empty";
+    } else {
+      if (!reg2.test(this.state.document)) {
+        documentError = "⚠️ Invalid document number";
+      }
+    }
+    if (this.state.first_name === "") {
+      nameError = "⚠️ First name cannot be empty";
+    } else {
+      if (!reg.test(this.state.first_name)) {
+        nameError = "⚠️ First name must consist of only letters";
+      }
+    }
+    if (this.state.last_name === "") {
+      surnameError = "⚠️ Last name cannot be empty";
+    } else {
+      if (!reg.test(this.state.last_name)) {
+        surnameError = "⚠️ Last name must consist of only letters";
+      }
+    }
+    if (documentError || nameError || surnameError) {
+      this.setState({ documentError, nameError, surnameError });
+      return false;
+    }
+    if (!documentError && !nameError && !surnameError) {
+      documentError = "";
+      nameError = "";
+      surnameError = "";
+      this.setState({ documentError, nameError, surnameError });
+      return true;
+    }
+  };
+
+  async validPromoCheck(promocode) {
+    await fetch(
+      `https://one-aviation.herokuapp.com/api/v1/promocode/validate/${promocode}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then(async (res) => {
+        this.setState({ checked: true });
+        if (res.ok) {
+          this.setState({ validPromo: true });
+        } else {
+          this.setState({ validPromo: false });
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  alertDisable() {
+    setTimeout(() => {
+      this.setState({
+        show_alert: false,
+      });
+    }, 3000);
+  }
 
   render() {
     return (
@@ -230,7 +333,7 @@ class CreateFlightPersonalInfo extends React.Component {
                 <div className="passengers-info">
                   <Row id="passenger">
                     <Col>
-                      <h5>Passenger #1</h5>
+                      <h4>Passenger #1</h4>
                     </Col>
                   </Row>
                   <Row>
@@ -243,6 +346,7 @@ class CreateFlightPersonalInfo extends React.Component {
                           this.setState({ first_name: e.target.value })
                         }
                       ></input>
+                      <div className="form-errors">{this.state.nameError}</div>
                       <label for="password">Middle name</label>
                       <input
                         className="enter-input"
@@ -259,27 +363,25 @@ class CreateFlightPersonalInfo extends React.Component {
                           this.setState({ last_name: e.target.value })
                         }
                       ></input>
+                      <div className="form-errors">
+                        {this.state.surnameError}
+                      </div>
                     </Col>
                     <Col md="2"></Col>
 
                     <Col md="5">
                       <label for="password">Document *</label>
-                      <br />
-                      <br />
+                      <div style={{ height: "24px" }} />
                       <select
                         onChange={(e) =>
                           this.setState({ document_type: e.target.value })
                         }
                       >
-                        <option selected disabled>
-                          Select document type
-                        </option>
                         <option value="passport">Passport</option>
                         <option value="id">ID</option>
                       </select>
                       <br />
-                      <br />
-                      {/* <input className="enter-input" id="password" onChange={e => this.setState({email: e.target.value})}></input> */}
+
                       <label for="password">Document number *</label>
                       <input
                         className="enter-input"
@@ -288,79 +390,95 @@ class CreateFlightPersonalInfo extends React.Component {
                           this.setState({ document: e.target.value })
                         }
                       ></input>
+                      <div className="form-errors">
+                        {this.state.documentError}
+                      </div>
                       <label for="password">Direction *</label>
-                      <br />
-                      <br />
+                      <div style={{ height: "24px" }} />
                       <select
                         onChange={(e) =>
                           this.setState({ direction: e.target.value })
                         }
                       >
-                        <option selected disabled>
-                          Select flight direction
-                        </option>
                         <option value="FORWARD">Forward</option>
                         <option value="BACKWARD">Backward</option>
                         <option value="FULL">Full</option>
                       </select>
-                      <br />
-                      <br />
                     </Col>
                   </Row>
                 </div>
-                <br />
-                <button className="enter-btn" onClick={() => this.newFlight()}>
-                  Create new flight
+                <button
+                  className="enter-btn"
+                  onClick={(e) => this.handleSubmit(e)}
+                >
+                  Continue
                 </button>
               </Card>
+              {this.state.show_login ? (
+                <Card id="flight-verify-card">
+                  <h2>Flight Verification</h2>
+                  <p>
+                    Please, enter promocode if you have it and verify your
+                    flight.
+                  </p>
+                  <Row>
+                    <Col>
+                      <label for="password">Promocode</label>
+                      <input
+                        className="enter-input"
+                        id="password"
+                        onChange={(e) =>
+                          this.setState({ promocode: e.target.value })
+                        }
+                      ></input>
+                    </Col>
+                    <Col>
+                      <button
+                        className="check-btn"
+                        onClick={() =>
+                          this.validPromoCheck(this.state.promocode)
+                        }
+                      >
+                        Check
+                      </button>
+                    </Col>
+                  </Row>
+                  {this.state.checked ? (
+                    <div>
+                      {this.state.validPromo ? (
+                        <p style={{ color: "green" }}>✅ Valid</p>
+                      ) : (
+                        <p style={{ color: "red" }}>❌ Not valid</p>
+                      )}
+                    </div>
+                  ) : null}
+                  <div>
+                    {this.state.show_alert ? (
+                      <Link to="/">
+                        <button className="enter-btn">
+                          Return to home page
+                        </button>
+                      </Link>
+                    ) : (
+                      <button
+                        className="enter-btn"
+                        onClick={() => this.newFlight()}
+                      >
+                        Create new flight
+                      </button>
+                    )}
+                  </div>
+                </Card>
+              ) : null}
             </Container>
           </div>
         )}
-        <Modal
-          show={this.state.show_login}
-          onHide={this.handleClose}
-          id="auth-modal"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Flight Verification</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body id="auth-modal-body">
-            Please, enter promocode if you have it and verify your flight.
-            <Form className="login-form">
-              <Form.Group
-                className="mb-3"
-                controlId="formBasicEmail"
-                onChange={(e) => this.setState({ promocode: e.target.value })}
-              >
-                <Form.Label>Promocode</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-              <Row>
-                <Col>
-                  <button
-                    variant="primary"
-                    type="submit"
-                    className="enter-btn"
-                    onClick={() => this.newFlight()}
-                  >
-                    Verify
-                  </button>
-                </Col>
-                <Col>
-                  <button
-                    variant="primary"
-                    type="submit"
-                    className="enter-btn"
-                    onClick={() => this.handleClose()}
-                  >
-                    Cancel
-                  </button>
-                </Col>
-              </Row>
-            </Form>
-          </Modal.Body>
-        </Modal>
+        {this.state.show_alert === true ? (
+          <Alert variant={"danger"} onChange={this.alertDisable()}>
+            <Alert.Heading>❌ You got an error!</Alert.Heading>
+            This flight can't be created!
+          </Alert>
+        ) : null}
       </div>
     );
   }

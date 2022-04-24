@@ -13,6 +13,8 @@ class CreateFlightContactInfo extends React.Component {
       email: "",
       phone_number: "",
       flight_info: this.props.history.location.state,
+      emailError: "",
+      phoneError: "",
     };
   }
 
@@ -32,10 +34,52 @@ class CreateFlightContactInfo extends React.Component {
   }
 
   openPersonalInfo() {
+    localStorage.setItem("email", this.state.email);
     this.props.history.push({
       pathname: "/create-flight/personal-information",
       state: this.state,
     });
+  }
+
+  validate = () => {
+    let emailError = "";
+    let phoneError = "";
+    if (this.state.email === "") {
+      emailError = "⚠️ Email cannot be empty";
+    } else {
+      if (!this.state.email.includes("@") || !this.state.email.includes(".")) {
+        emailError = "⚠️ Invalid email";
+      }
+    }
+    var reg2 = /^\d+$/;
+    if (this.state.phone_number === "") {
+      phoneError = "⚠️ Phone number cannot  be empty";
+    } else {
+      if (
+        this.state.phone_number.length < 10 ||
+        !reg2.test(this.state.phone_number)
+      ) {
+        phoneError = "⚠️ Invalid phone number";
+      }
+    }
+    if (emailError || phoneError) {
+      this.setState({ emailError, phoneError });
+      return false;
+    }
+    if (!emailError && !phoneError) {
+      emailError = "";
+      phoneError = "";
+      this.setState({ emailError, phoneError });
+      return true;
+    }
+  };
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const isValid = this.validate();
+    if (isValid) {
+      this.openPersonalInfo();
+    }
   }
 
   render() {
@@ -61,18 +105,18 @@ class CreateFlightContactInfo extends React.Component {
                 <h2 id="title-h">Contact information</h2>
                 <Row>
                   <Col md="5">
-                    <label for="email">Email</label>
-
+                    <label for="email">Email *</label>
                     <input
                       className="enter-input"
                       id="email"
                       value={this.state.email}
                       onChange={(e) => this.setState({ email: e.target.value })}
                     ></input>
+                    <div className="form-errors">{this.state.emailError}</div>
                   </Col>
                   <Col md="2"></Col>
                   <Col md="5">
-                    <label for="phone-number">Phone number</label>
+                    <label for="phone-number">Phone number *</label>
                     <input
                       className="enter-input"
                       id="phone-number"
@@ -81,12 +125,13 @@ class CreateFlightContactInfo extends React.Component {
                         this.setState({ phone_number: e.target.value })
                       }
                     ></input>
+                    <div className="form-errors">{this.state.phoneError}</div>
                   </Col>
                 </Row>
 
                 <button
                   className="enter-btn"
-                  onClick={() => this.openPersonalInfo()}
+                  onClick={(e) => this.handleSubmit(e)}
                 >
                   Continue
                 </button>
