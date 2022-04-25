@@ -49,6 +49,7 @@ class CreateFlightPersonalInfo extends React.Component {
       checked: false,
       validPromo: null,
       price: "",
+      token: sessionStorage.getItem("access_token"),
     };
   }
 
@@ -140,6 +141,19 @@ class CreateFlightPersonalInfo extends React.Component {
   }
 
   async newFlight() {
+    var fetch_header = {};
+    if (this.state.token === null) {
+      fetch_header = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      };
+    } else {
+      fetch_header = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.state.token,
+      };
+    }
     const flight = {
       email: this.state.flight.email,
       document: {
@@ -187,14 +201,9 @@ class CreateFlightPersonalInfo extends React.Component {
     }
 
     console.log(flight);
-    const token = sessionStorage.getItem("access_token");
     await fetch("https://one-aviation.herokuapp.com/api/v1/order", {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+      headers: fetch_header,
       body: JSON.stringify(flight),
     })
       .then(async (res) => {

@@ -335,6 +335,7 @@ class FlightSearch extends React.Component {
                     <input
                       className="flight-input"
                       value={this.state.departure_port}
+                      placeholder="Click to select the departure port"
                       id="departure"
                       onClick={() => this.fromClicked()}
                     ></input>
@@ -348,6 +349,7 @@ class FlightSearch extends React.Component {
                     <label for="destination">To</label>
                     <input
                       className="flight-input"
+                      placeholder="Click to select the destination port"
                       id="destination"
                       value={this.state.destination_port}
                       onClick={() => this.toClicked()}
@@ -392,7 +394,10 @@ class FlightSearch extends React.Component {
                     <label for="passengers">Passengers</label>
                     <input
                       className="flight-input"
+                      type="number"
+                      placeholder="Enter the number of passengers"
                       id="passengers"
+                      maxLength={1}
                       onChange={(e) =>
                         this.setState({ passengers: e.target.value })
                       }
