@@ -98,7 +98,7 @@ class BookFlightPayment extends React.Component {
         if (res.ok) {
           console.log("OK");
           this.props.history.push({
-            pathname: "/create-flight/success",
+            pathname: "/book-flight/success",
           });
           localStorage.removeItem("email");
         }

@@ -335,7 +335,7 @@ class CreateFlightFlightInfo extends React.Component {
                   onHide={() => this.setState({ map_show: false })}
                 >
                   <Modal.Header closeButton>
-                    <Modal.Title>Select the departure point</Modal.Title>
+                    <Modal.Title>Select the departure port</Modal.Title>
                   </Modal.Header>
                   <Modal.Body id="map-modal-body">
                     <Map
@@ -351,7 +351,7 @@ class CreateFlightFlightInfo extends React.Component {
                       onClick={() => this.selectedFrom()}
                       className="map-btn"
                     >
-                      Select
+                      Done
                     </button>
                   </Modal.Footer>
                 </Modal>
@@ -361,7 +361,7 @@ class CreateFlightFlightInfo extends React.Component {
                   onHide={() => this.setState({ map_show_1: false })}
                 >
                   <Modal.Header closeButton>
-                    <Modal.Title>Select the destination point</Modal.Title>
+                    <Modal.Title>Select the destination port</Modal.Title>
                   </Modal.Header>
                   <Modal.Body id="map-modal-body">
                     <Map

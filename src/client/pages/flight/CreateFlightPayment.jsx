@@ -58,6 +58,19 @@ class CreateFlightPayment extends React.Component {
   }
 
   async payForFlight() {
+    const flight = {
+      credit_card_info: {
+        cvv: this.state.cvv,
+        month: this.state.month,
+        number: this.state.creditcard_number,
+        name: this.state.name,
+        year: this.state.year,
+      },
+      email: [this.state.email],
+      order_id: parseInt(this.state.flight.order_id),
+    };
+    console.log(flight);
+
     var fetch_header = {};
     if (this.state.token === null) {
       fetch_header = {
@@ -71,22 +84,12 @@ class CreateFlightPayment extends React.Component {
         Authorization: "Bearer " + this.state.token,
       };
     }
-    const flight = {
-      credit_card_info: {
-        cvv: this.state.cvv,
-        month: this.state.month,
-        number: this.state.creditcard_number,
-        name: this.state.name,
-        year: this.state.year,
-      },
-      email: [this.state.email],
-      order_id: this.state.flight.order_id,
-    };
 
     console.log(flight);
     await fetch("https://one-aviation.herokuapp.com/api/v1/payments/pay", {
       method: "POST",
       headers: fetch_header,
+      body: JSON.stringify(flight),
     })
       .then(async (res) => {
         const data = await res.json();

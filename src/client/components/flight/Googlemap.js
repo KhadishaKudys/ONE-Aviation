@@ -14,8 +14,6 @@ import "../../assets/styles/flight/map.css";
 function Map() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [setUpd] = useState(false);
-  // const [location, setLocation] = useState(loc_dir)
-
   const dispatch = useDispatch();
   const ports = useSelector((state) => state.ports.ports);
 
@@ -45,13 +43,12 @@ function Map() {
         <Marker
           key={port.id}
           position={{ lat: port.latitude, lng: port.longitude }}
+          // onClick={() => {
+          //   setSelectedLocation(port);
+          // }}
           onClick={() => {
             setSelectedLocation(port);
           }}
-          // icon={{
-          //     url: '../../assets/static/icons/flights/seaplane_port.svg',
-          //     scaledSize: new window.google.maps.Size(25, 25)
-          // }}
         />
       ))}
       {selectedLocation && (
@@ -76,7 +73,7 @@ function Map() {
                 })
               }
             >
-              Select
+              Choose
             </button>
           </div>
         </InfoWindow>
