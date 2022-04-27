@@ -1,0 +1,171 @@
+.sign-in {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  min-height: 90vh;
+}
+
+.sign-in h1 {
+  color: #ee7f00;
+  font-weight: 600;
+  font-size: 24px;
+  height: 24px;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 18px;
+  color: #444444;
+  margin-bottom: 50px;
+}
+
+.sign-in .card {
+  background: #ffffff;
+  box-shadow: 10px 10px 50px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  width: 60%;
+  margin: 0;
+  float: none;
+  min-height: fit-content;
+  height: fit-content;
+  text-align: left;
+  border: none;
+  position: absolute;
+  top: 40px;
+}
+
+#enter-card-right {
+  padding: 50px 50px;
+}
+
+.sign-in #enter-card-left {
+  overflow: hidden;
+}
+
+.sign-in .enter-input {
+  border: none;
+  border-bottom: 1px solid #bbbb;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.sign-in .enter-input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #ee7f00;
+}
+
+.sign-in .enter-btn {
+  border: 3px solid #ee7f00;
+  border-radius: 5px;
+  color: #ee7f00;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: white;
+  padding: 5px 25px;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.sign-in .enter-btn:hover,
+.sign-in .enter-btn:active,
+.sign-in .enter-btn:focus {
+  color: white;
+  background-color: #ee7f00;
+}
+
+#overlapping {
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  height: fit-content;
+}
+
+#lrg-txt {
+  font-weight: 700;
+  font-size: 300px;
+  color: rgba(68, 68, 68, 0.3);
+  opacity: 0.1;
+}
+
+.enter-p {
+  color: #444444;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0px;
+}
+
+.pass-a {
+  color: #444444;
+  font-size: 12px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  text-decoration: none;
+}
+
+.pass-a:hover {
+  text-decoration: underline;
+  color: #444444;
+}
+
+.sign-in .enter-a {
+  color: #ee7f00;
+  font-weight: 600;
+  margin: 0%;
+  text-decoration: none;
+}
+
+.sign-in .enter-a:hover {
+  text-decoration: underline;
+}
+
+.sign-in p {
+  margin: 0px;
+}
+
+.enter-img {
+  border-radius: 20px 0px 0px 20px;
+  width: 100%;
+  /* height: 50%; */
+}
+
+.sign-in label {
+  font-size: 10px;
+  color: #bbbbbb;
+  height: normal;
+  margin-top: 30px;
+}
+
+#back {
+  text-align: left;
+  margin: 10px;
+  height: fit-content;
+}
+
+#back button {
+  color: black;
+  font-weight: 600;
+  border: none;
+  background: none;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+#back button:hover,
+#back button:active {
+  color: #ee7f00;
+}
+
+.sign-in .alert {
+  z-index: 1000;
+  border: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 12px;
+}
