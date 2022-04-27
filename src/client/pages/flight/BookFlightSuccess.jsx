@@ -3,6 +3,8 @@ import { Container } from "react-bootstrap";
 import "../../assets/styles/flight/create-flight.css";
 import Loading from "../../components/reused/Loading";
 import "react-nice-dates/build/style.css";
+import { Link } from "react-router-dom";
+import { successFlight } from "../../assets/static/flights/success-flight.jpg";
 
 class BookFlightSuccess extends React.Component {
   constructor(props) {
@@ -64,9 +66,17 @@ class BookFlightSuccess extends React.Component {
         {this.state.isLoading ? (
           <Loading />
         ) : (
-          <div className="create-flight" id="flight-created-success">
-            <Container>
+          <div className="success">
+            <div id="back">
+              <Link to="/">
+                <button>🏠 Main</button>
+              </Link>
+            </div>
+            <Container id="flight-created-success" className="create-flight">
               <h1>Flight is booked!</h1>
+              <Link to="/">
+                <button className="enter-btn">Return to home page</button>
+              </Link>
             </Container>
           </div>
         )}

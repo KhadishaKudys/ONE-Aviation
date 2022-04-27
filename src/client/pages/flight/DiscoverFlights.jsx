@@ -8,7 +8,9 @@ import FlightSearch from "../main/FlightSearch";
 import from_to from "../../assets/static/icons/home/from_to.svg";
 import Map1 from "../../components/flight/Googlemapsearch";
 import { Link, withRouter } from "react-router-dom";
+import * as moment from "moment";
 import { DatePicker } from "antd";
+import { isFriday } from "date-fns/esm";
 
 class DiscoverFlights extends React.Component {
   constructor(props) {
@@ -25,16 +27,17 @@ class DiscoverFlights extends React.Component {
       location_from_longitude: "",
       location_to_latitude: "",
       location_to_longitude: "",
-      date_from: "",
-      date_to: "",
-      passengers: "",
+      date_from: this.props.history.location.state.date_from,
+      date_to: this.props.history.location.state.date_to,
+      passengers: this.props.history.location.state.passengers,
       map_1_show: false,
       map_2_show: false,
       available_ports: {},
-      departure_port: "",
-      destination_port: "",
+      departure_port: this.props.history.location.state.departure_port,
+      destination_port: this.props.history.location.state.destination_port,
       locationError: "",
       passengerError: "",
+      flexible: false,
     };
   }
 
@@ -121,7 +124,9 @@ class DiscoverFlights extends React.Component {
 
   async availableFlights() {
     console.log(this.state);
-    let flight = {};
+    let flight = {
+      flexible: this.state.flexible,
+    };
     if (this.state.passengers !== "") {
       flight.number_of_passengers = parseInt(this.state.passengers);
     }
@@ -173,8 +178,8 @@ class DiscoverFlights extends React.Component {
       let from_date = new Date(
         this.state.available_flights[flight].departure_time
       )
-        .toISOString()
-        .split("T")[0];
+        .toDateString()
+        .substring(4, 10);
       let from_time = new Date(
         this.state.available_flights[flight].departure_time
       )
@@ -190,8 +195,8 @@ class DiscoverFlights extends React.Component {
       //   .toISOString()
       //   .split("T")[1];
       let to_date = new Date(this.state.available_flights[flight].arrival_time)
-        .toISOString()
-        .split("T")[0];
+        .toDateString()
+        .substring(4, 10);
       // let to_time = new Date(this.state.available_flights[flight].arrival_time)
       //   .toISOString()
       //   .split("T")[1];
@@ -203,8 +208,21 @@ class DiscoverFlights extends React.Component {
         })
         .substring(0, 5);
 
-      let travel_time =
+      let travel_hr =
         parseInt(to_time.substring(0, 2)) - parseInt(from_time.substring(0, 2));
+      if (travel_hr < 0) {
+        travel_hr = 24 - -1 * travel_hr;
+      }
+
+      let travel_min =
+        parseInt(to_time.substring(4, 6)) - parseInt(from_time.substring(4, 6));
+      if (travel_min < 0) {
+        travel_min = 60 - -1 * travel_min;
+      }
+
+      let travel_time = travel_hr.toString() + "h ";
+      console.log(travel_hr, travel_min, travel_time);
+
       this.state.available_flights[flight].departure_time = from_time;
       this.state.available_flights[flight].departure_date = from_date;
       this.state.available_flights[flight].arrival_time = to_time;
@@ -310,6 +328,14 @@ class DiscoverFlights extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  flexibleFlights = () => {
+    if (this.state.flexible === true) {
+      this.setState({ flexible: false });
+    } else {
+      this.setState({ flexible: true });
+    }
+  };
+
   async changeDate1() {
     let from_date = new Date(this.state.flight_info.departure_time)
       .toISOString()
@@ -347,7 +373,7 @@ class DiscoverFlights extends React.Component {
           <div className="flights">
             <div id="banner-flights">
               <Row>
-                <Col md={3}>
+                <Col md={3} style={{ textAlign: "left" }}>
                   {this.state.flight.departure_port ? (
                     <h1 className="h-banner">
                       {this.state.flight.departure_port}
@@ -356,10 +382,10 @@ class DiscoverFlights extends React.Component {
                     <h1 className="h-banner">Any</h1>
                   )}
                 </Col>
-                <Col md={6} id="flight-way">
+                <Col md={6} id="flight-way" style={{ textAlign: "center" }}>
                   <img src={ticket_plane} alt="ticket-plane" id="plane" />
                 </Col>
-                <Col md={3}>
+                <Col md={3} style={{ textAlign: "right" }}>
                   {this.state.flight.destination_port ? (
                     <h1 className="h-banner">
                       {this.state.flight.destination_port}
@@ -379,7 +405,7 @@ class DiscoverFlights extends React.Component {
                     onHide={() => this.setState({ map_1_show: false })}
                   >
                     <Modal.Header closeButton>
-                      <Modal.Title>Select the departure point</Modal.Title>
+                      <Modal.Title>Select the departure port</Modal.Title>
                     </Modal.Header>
                     <Modal.Body id="map-modal-body">
                       <Map1
@@ -410,7 +436,7 @@ class DiscoverFlights extends React.Component {
                     onHide={() => this.setState({ map_2_show: false })}
                   >
                     <Modal.Header closeButton>
-                      <Modal.Title>Select the destination point</Modal.Title>
+                      <Modal.Title>Select the destination port</Modal.Title>
                     </Modal.Header>
                     <Modal.Body id="map-modal-body">
                       <Map1
@@ -436,12 +462,15 @@ class DiscoverFlights extends React.Component {
                     </Modal.Footer>
                   </Modal>
                   <Card id="searching-flights">
-                    <h2>Flight Search</h2>
+                    <div style={{ width: "100%", textAlign: "center" }}>
+                      <h2>Flight Search</h2>
+                    </div>
                     <form onSubmit={(e) => this.handleSubmit(e)}>
                       <label for="departure">Departure port</label>
                       <input
                         className="flight-input"
                         value={this.state.departure_port}
+                        placeholder="Click to select location"
                         id="departure"
                         onClick={() => this.fromClicked()}
                       ></input>
@@ -449,12 +478,31 @@ class DiscoverFlights extends React.Component {
                       <input
                         className="flight-input"
                         id="destination"
+                        placeholder="Click to select location"
                         value={this.state.destination_port}
                         onClick={() => this.toClicked()}
                       ></input>
+                      <label for="passengers">Departure date</label>
+                      <DatePicker
+                        className="enter-input"
+                        placeholder=""
+                        onChange={(e) => this.onDDateChange(e)}
+                        value={this.state.from_date}
+                      />
+                      <label for="passengers">Return date</label>
+                      <DatePicker
+                        className="enter-input"
+                        placeholder=""
+                        onChange={(e) => this.onRDateChange(e)}
+                        value={this.state.to_date}
+                      />
+
                       <label for="passengers">Passengers</label>
                       <input
                         className="flight-input"
+                        value={this.state.passengers}
+                        type="number"
+                        placeholder="Enter the number of passengers"
                         id="passengers"
                         onChange={(e) =>
                           this.setState({
@@ -462,25 +510,30 @@ class DiscoverFlights extends React.Component {
                           })
                         }
                       ></input>
-                      <label for="passengers">Departure date</label>
-                      <DatePicker
-                        className="enter-input"
-                        placeholder=""
-                        onChange={(e) => this.onDDateChange(e)}
-                      />
-                      <label for="passengers">Destination date</label>
-                      <DatePicker
-                        className="enter-input"
-                        placeholder=""
-                        onChange={(e) => this.onRDateChange(e)}
-                      />
-                      <div style={{ height: "50px" }} />
-                      <button
-                        id="search-btn"
-                        onClick={(e) => this.handleSubmit(e)}
+                      <input
+                        style={{ marginTop: "5px" }}
+                        className="flex-input"
+                        type="checkbox"
+                        onChange={() => this.flexibleFlights(this)}
+                      ></input>
+                      <label
+                        for="passengers"
+                        style={{
+                          marginLeft: "10px",
+                          padding: "0px",
+                        }}
                       >
-                        Search
-                      </button>
+                        +/- 5 days
+                      </label>
+                      <div style={{ height: "50px" }} />
+                      <div style={{ width: "100%", textAlign: "center" }}>
+                        <button
+                          id="search-btn"
+                          onClick={(e) => this.handleSubmit(e)}
+                        >
+                          Search
+                        </button>
+                      </div>
                     </form>
                     {this.state.locationError !== "" &&
                     this.state.passengerError !== "" ? (
@@ -533,51 +586,58 @@ class DiscoverFlights extends React.Component {
                           <Row>
                             <Col md="10">
                               <Row>
-                                <Col md="2" id="from">
+                                <Col
+                                  md="3"
+                                  id="from"
+                                  style={{ textAlign: "center" }}
+                                >
                                   <h3>{flight.departure_date}</h3>
                                 </Col>
-                                <Col md="8">
+                                <Col md="6" style={{ textAlign: "center" }}>
                                   <p id="time">{flight.travel_time}</p>
                                 </Col>
-                                <Col md="2">
+                                <Col md="3" style={{ textAlign: "center" }}>
                                   <h3>{flight.arrival_date}</h3>
                                 </Col>
                               </Row>
                               <Row>
-                                <Col md="2" id="from">
+                                <Col
+                                  md="3"
+                                  id="from"
+                                  style={{ textAlign: "center" }}
+                                >
                                   <h4>{flight.from.name}</h4>
                                 </Col>
-                                <Col md="8">
+                                <Col md="6">
                                   <img src={ticket_plane} alt="ticket-plane" />
                                 </Col>
-                                <Col md="2">
+                                <Col md="3" style={{ textAlign: "center" }}>
                                   <h4>{flight.to.name}</h4>
                                 </Col>
                               </Row>
                               <Row>
                                 <Col
-                                  md="2"
+                                  md="3"
                                   id="from"
                                   style={{ textAlign: "center" }}
                                 >
                                   <p>{flight.departure_time}</p>
                                 </Col>
-                                <Col md="8">
+                                <Col md="6" style={{ textAlign: "center" }}>
                                   <p id="way">Direct</p>
                                 </Col>
-                                <Col md="2" style={{ textAlign: "center" }}>
+                                <Col md="3" style={{ textAlign: "center" }}>
                                   <p>{flight.arrival_time}</p>
                                 </Col>
                               </Row>
                             </Col>
                             <Col md="2" id="price">
-                              <div style={{ height: "33%" }} />
-                              <h2 id="cost">€ {parseInt(flight.price)}</h2>
+                              {/* <div style={{ height: "20%" }} /> */}
                               <button
                                 id="nav-btn"
                                 onClick={() => this.flightInfo(flight.id)}
                               >
-                                Select
+                                <p id="cost">€ {parseInt(flight.price)}</p>
                               </button>
                             </Col>
                           </Row>

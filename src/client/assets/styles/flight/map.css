@@ -1,14 +1,16 @@
-#map-google button{
-    background: #0076BD;
-    border-radius: 5px;
-    color: white;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    padding: 5px 15px;
-    font-weight: 600;
+#map-google button {
+  background: #0076bd;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 5px 15px;
+  font-weight: 600;
 }
 
-#map-google button:hover, #map-google button:active{
-    background-color: #E2007A;
+#map-google button:hover,
+#map-google button:active,
+#map-google button:focus {
+  background-color: #e2007a;
 }

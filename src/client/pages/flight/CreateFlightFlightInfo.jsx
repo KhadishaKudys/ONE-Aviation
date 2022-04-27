@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Col, Row, Container, Modal } from "react-bootstrap";
+import { Card, Col, Row, Container, Modal, Form } from "react-bootstrap";
 import "../../assets/styles/flight/create-flight.css";
+import * as moment from "moment";
 import Loading from "../../components/reused/Loading";
 import Map from "../../components/flight/Googlemap";
 import CustomMap from "../../components/flight/Map_1";
@@ -8,6 +9,8 @@ import "react-nice-dates/build/style.css";
 import { TimePicker } from "antd";
 import "antd/dist/antd.css";
 import { DatePicker } from "antd";
+import { Switch } from "antd";
+import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
 
 class CreateFlightFlightInfo extends React.Component {
   constructor(props) {
@@ -43,6 +46,7 @@ class CreateFlightFlightInfo extends React.Component {
       rdateError: "",
       dtimeError: "",
       rtimeError: "",
+      trip: "one",
     };
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
   }
@@ -57,6 +61,19 @@ class CreateFlightFlightInfo extends React.Component {
     }, 2000);
     return () => clearTimeout(timer);
   }
+
+  handleSwitch = () => {
+    // if (sessionStorage.getItem("create_shareable") === true) {
+    //   this.setState({ shareable: false });
+    //   sessionStorage.setItem("create_shareable", false);
+    //   console.log(sessionStorage.getItem("create_shareable"));
+    // } else {
+    //   this.setState({ shareable: true });
+    //   console.log(sessionStorage.getItem("create_shareable"));
+    //   sessionStorage.setItem("create_shareable", true);
+    // }
+    console.log("true");
+  };
 
   async upd() {
     this.componentDidMount();
@@ -83,6 +100,10 @@ class CreateFlightFlightInfo extends React.Component {
     this.setState({ departure_latitude: localStorage.getItem("from_lat") });
     this.setState({ departure_longitude: localStorage.getItem("from_long") });
     this.setState({ departure_port: localStorage.getItem("departure_port") });
+    sessionStorage.setItem(
+      "create_dep_port",
+      localStorage.getItem("departure_port")
+    );
     this.setState({ map_show: false });
   }
 
@@ -97,19 +118,24 @@ class CreateFlightFlightInfo extends React.Component {
     this.setState({
       destination_port: localStorage.getItem("destination_port"),
     });
+    sessionStorage.setItem(
+      "create_des_port",
+      localStorage.getItem("destination_port")
+    );
     this.setState({ map_show_1: false });
   }
 
   onDDateChange(date) {
-    console.log("not form", date._d);
     let dateformat = new Date(date._d).toISOString();
     let formatted_date = dateformat.split("T")[0];
     console.log("date", formatted_date);
     this.setState({ formatted_d_date: formatted_date });
+    sessionStorage.setItem("create_dep_date", formatted_date);
     if (this.state.formatted_d_time !== "") {
       var datetime = formatted_date + "T" + this.state.formatted_d_time + "Z";
       console.log("time", datetime);
       this.setState({ departure_date: datetime });
+      sessionStorage.setItem("create_dep_dt", datetime);
       console.log("departure", this.state.departure_date);
     } else {
       this.setState({ formatted_d_date: formatted_date });
@@ -132,47 +158,52 @@ class CreateFlightFlightInfo extends React.Component {
     let rdateError = "";
     let dtimeError = "";
     let rtimeError = "";
-    if (this.state.passengers === "") {
+    if (sessionStorage.getItem("create_pass") === "") {
       passengerError = "⚠️ Passengers field needs to be filled in";
     } else {
-      if (this.state.passengers > 8) {
+      if (sessionStorage.getItem("create_pass") > 8) {
         passengerError = "⚠️ Maximum passengers number is 8";
       }
     }
-    if (this.state.departure_port === "") {
+    if (sessionStorage.getItem("create_dep_port") === "") {
       departureError = "⚠️ Departure port cannot be empty";
     } else {
       departureError = "";
     }
-    if (this.state.destination_port === "") {
+    if (sessionStorage.getItem("create_des_port") === "") {
       destinationError = "⚠️ Destination port cannot be empty";
     } else {
       destinationError = "";
     }
-    if (this.state.departure_port === this.state.destination_port) {
+    if (
+      sessionStorage.getItem("create_dep_port") ===
+      sessionStorage.getItem("create_des_port")
+    ) {
       departureError = "⚠️ Departure and destination ports must be different";
     } else {
       departureError = "";
     }
-    if (this.state.formatted_d_date === "") {
+    if (sessionStorage.getItem("create_dep_date") === "") {
       ddateError = "⚠️ Departure date cannot be empty";
     } else {
       ddateError = "";
     }
-    if (this.state.formatted_r_date === "") {
-      rdateError = "⚠️ Return date cannot be empty";
-    } else {
-      rdateError = "";
+    if (sessionStorage.getItem("create_trip") === "round") {
+      if (sessionStorage.getItem("create_des_date") === "") {
+        rdateError = "⚠️ Return date cannot be empty";
+      } else {
+        rdateError = "";
+      }
+      if (sessionStorage.getItem("create_des_time") === "") {
+        rtimeError = "⚠️ Return time cannot be empty";
+      } else {
+        rtimeError = "";
+      }
     }
-    if (this.state.formatted_d_time === "") {
+    if (sessionStorage.getItem("create_dep_time") === "") {
       dtimeError = "⚠️ Departure time cannot be empty";
     } else {
       dtimeError = "";
-    }
-    if (this.state.formatted_r_time === "") {
-      rtimeError = "⚠️ Return time cannot be empty";
-    } else {
-      rtimeError = "";
     }
     if (
       passengerError ||
@@ -229,10 +260,12 @@ class CreateFlightFlightInfo extends React.Component {
     let formatted_date = dateformat.split("T")[0];
     console.log("date", formatted_date);
     this.setState({ formatted_r_date: formatted_date });
+    sessionStorage.setItem("create_des_date", formatted_date);
     if (this.state.formatted_r_time !== "") {
       var datetime = formatted_date + "T" + this.state.formatted_r_time + "Z";
       console.log("time", datetime);
       this.setState({ return_date: datetime });
+      sessionStorage.setItem("create_des_dt", datetime);
       console.log("return", this.state.return_date);
     } else {
       this.setState({ formatted_r_date: formatted_date });
@@ -274,6 +307,7 @@ class CreateFlightFlightInfo extends React.Component {
   }
 
   departureTimeSetting = (time) => {
+    sessionStorage.setItem("create_dep_time", time);
     var t = new Date(time._d);
     var hr = t.getHours();
     hr = ("0" + hr).slice(-2);
@@ -281,10 +315,12 @@ class CreateFlightFlightInfo extends React.Component {
     min = ("0" + min).slice(-2);
     var formatted_time = hr + ":" + min + ":00";
     this.setState({ formatted_d_time: formatted_time });
+    sessionStorage.setItem("create_dep_time", formatted_time);
     if (this.state.formatted_d_date !== "") {
       var datetime = this.state.formatted_d_date + "T" + formatted_time + "Z";
       console.log("time", datetime);
       this.setState({ departure_date: datetime });
+      sessionStorage.setItem("create_dep_dt", datetime);
     } else {
       this.setState({ formatted_d_time: formatted_time });
     }
@@ -292,6 +328,7 @@ class CreateFlightFlightInfo extends React.Component {
   };
 
   returnTimeSetting = (time) => {
+    console.log("rrr", time._d);
     var t = new Date(time._d);
     console.log(this.state.formatted_r_date);
     var hr = t.getHours();
@@ -300,10 +337,12 @@ class CreateFlightFlightInfo extends React.Component {
     min = ("0" + min).slice(-2);
     var formatted_time = hr + ":" + min + ":00";
     this.setState({ formatted_r_time: formatted_time });
+    sessionStorage.setItem("create_des_time", formatted_time);
     if (this.state.formatted_r_date !== "") {
       var datetime = this.state.formatted_r_date + "T" + formatted_time + "Z";
       console.log("time", datetime);
       this.setState({ return_date: datetime });
+      sessionStorage.setItem("create_des_dt", datetime);
     } else {
       this.setState({ formatted_r_time: formatted_time });
     }
@@ -314,6 +353,11 @@ class CreateFlightFlightInfo extends React.Component {
     this.setState({ map_show: false });
     this.forceUpdateHandler();
   }
+
+  tripChange = (e) => {
+    this.setState({ trip: e.target.value });
+    sessionStorage.setItem("create_trip", e.target.value);
+  };
 
   forceUpdateHandler() {
     this.forceUpdate();
@@ -377,13 +421,91 @@ class CreateFlightFlightInfo extends React.Component {
                       onClick={() => this.selectedTo()}
                       className="map-btn"
                     >
-                      Select
+                      Done
                     </button>
                   </Modal.Footer>
                 </Modal>
                 <div>
                   <h2 id="title-h">Flight information</h2>
+
                   <Row>
+                    <Row>
+                      <Col>
+                        {sessionStorage.getItem("create_trip") === "one" ? (
+                          <div onChange={this.tripChange}>
+                            <label
+                              for="contactChoice1"
+                              style={{
+                                fontSize: "14px",
+                                marginRight: "10px",
+                              }}
+                            >
+                              One-way
+                            </label>
+                            <input
+                              type="radio"
+                              id="contactChoice1"
+                              name="trip"
+                              value="one"
+                              checked
+                            />
+
+                            <label
+                              for="contactChoice2"
+                              style={{
+                                fontSize: "14px",
+                                marginRight: "10px",
+                                marginLeft: "50px",
+                              }}
+                            >
+                              Round-trip
+                            </label>
+                            <input
+                              type="radio"
+                              id="contactChoice2"
+                              name="trip"
+                              value="round"
+                            />
+                          </div>
+                        ) : (
+                          <div onChange={this.tripChange}>
+                            <label
+                              for="contactChoice1"
+                              style={{
+                                fontSize: "14px",
+                                marginRight: "10px",
+                              }}
+                            >
+                              One-way
+                            </label>
+                            <input
+                              type="radio"
+                              id="contactChoice1"
+                              name="trip"
+                              value="one"
+                            />
+
+                            <label
+                              for="contactChoice2"
+                              style={{
+                                fontSize: "14px",
+                                marginRight: "10px",
+                                marginLeft: "50px",
+                              }}
+                            >
+                              Round-trip
+                            </label>
+                            <input
+                              type="radio"
+                              id="contactChoice2"
+                              name="trip"
+                              value="round"
+                              checked
+                            />
+                          </div>
+                        )}
+                      </Col>
+                    </Row>
                     <Row>
                       <Col>
                         <label htmlFor="email">Location *</label>
@@ -394,8 +516,8 @@ class CreateFlightFlightInfo extends React.Component {
                         className="enter-input"
                         id="email"
                         placeholder="Departure port"
-                        value={this.state.departure_port}
                         onClick={() => this.dirFrom()}
+                        value={sessionStorage.getItem("create_dep_port")}
                       ></input>
                       <div className="form-errors">
                         {this.state.departureError}
@@ -406,7 +528,7 @@ class CreateFlightFlightInfo extends React.Component {
                         className="enter-input"
                         id="email"
                         placeholder="Destination port"
-                        value={this.state.destination_port}
+                        value={sessionStorage.getItem("create_des_port")}
                         onClick={() => this.dirTo()}
                       ></input>
                       <div className="form-errors">
@@ -423,18 +545,41 @@ class CreateFlightFlightInfo extends React.Component {
                         className="enter-input"
                         placeholder="Departure date"
                         onChange={(e) => this.onDDateChange(e)}
+                        value={
+                          sessionStorage.getItem("create_dep_date") !== ""
+                            ? moment(
+                                sessionStorage.getItem("create_dep_date"),
+                                "YYYY-MM-DD"
+                              )
+                            : ""
+                        }
                       />
                       <div className="form-errors">{this.state.ddateError}</div>
                     </Col>
-                    <Col>
-                      <br />
-                      <DatePicker
-                        className="enter-input"
-                        placeholder="Return date"
-                        onChange={(e) => this.onRDateChange(e)}
-                      />
-                      <div className="form-errors">{this.state.rdateError}</div>
-                    </Col>
+
+                    {sessionStorage.getItem("create_trip") === "one" ? (
+                      <Col></Col>
+                    ) : (
+                      <Col>
+                        <br />
+                        <DatePicker
+                          className="enter-input"
+                          placeholder="Return date"
+                          onChange={(e) => this.onRDateChange(e)}
+                          value={
+                            sessionStorage.getItem("create_des_date") !== ""
+                              ? moment(
+                                  sessionStorage.getItem("create_des_date"),
+                                  "YYYY-MM-DD"
+                                )
+                              : ""
+                          }
+                        />
+                        <div className="form-errors">
+                          {this.state.rdateError}
+                        </div>
+                      </Col>
+                    )}
                   </Row>
                   <br />
                   <label htmlFor="password">Time *</label>
@@ -451,22 +596,44 @@ class CreateFlightFlightInfo extends React.Component {
                         onOk={(time) => {
                           this.departureTimeSetting(time);
                         }}
+                        value={
+                          sessionStorage.getItem("create_dep_time") !== ""
+                            ? moment(
+                                sessionStorage.getItem("create_dep_time"),
+                                "HH:mm"
+                              )
+                            : ""
+                        }
                       />
                       <div className="form-errors">{this.state.dtimeError}</div>
                     </Col>
-                    <Col>
-                      <TimePicker
-                        className="enter-input"
-                        open={this.state.Ropen}
-                        placeholder="Return time"
-                        onOpenChange={(e) => this.handleROpenChange(e)}
-                        format={"HH:mm"}
-                        onOk={(time) => {
-                          this.returnTimeSetting(time);
-                        }}
-                      />
-                      <div className="form-errors">{this.state.rtimeError}</div>
-                    </Col>
+                    {sessionStorage.getItem("create_trip") === "one" ? (
+                      <Col></Col>
+                    ) : (
+                      <Col>
+                        <TimePicker
+                          className="enter-input"
+                          open={this.state.Ropen}
+                          placeholder="Return time"
+                          onOpenChange={(e) => this.handleROpenChange(e)}
+                          format={"HH:mm"}
+                          onOk={(time) => {
+                            this.returnTimeSetting(time);
+                          }}
+                          value={
+                            sessionStorage.getItem("create_des_time") !== ""
+                              ? moment(
+                                  sessionStorage.getItem("create_des_time"),
+                                  "HH:mm"
+                                )
+                              : ""
+                          }
+                        />
+                        <div className="form-errors">
+                          {this.state.rtimeError}
+                        </div>
+                      </Col>
+                    )}
                   </Row>
                   <br />
                   <Row>
@@ -476,9 +643,11 @@ class CreateFlightFlightInfo extends React.Component {
                         className="enter-input"
                         type="number"
                         id="passengers"
-                        onChange={(e) =>
-                          this.setState({ passengers: e.target.value })
-                        }
+                        onChange={(e) => {
+                          this.setState({ passengers: e.target.value });
+                          sessionStorage.setItem("create_pass", e.target.value);
+                        }}
+                        value={sessionStorage.getItem("create_pass")}
                       ></input>
                       <div className="form-errors">
                         {this.state.passengerError}
@@ -486,14 +655,34 @@ class CreateFlightFlightInfo extends React.Component {
                     </Col>
                     <Col></Col>
                   </Row>
-                  <label htmlFor="email">Make this flight shareable?</label>
-                  <input
-                    className="checkbox-input"
-                    type="checkbox"
-                    id="email"
-                    placeholder="Latitude"
-                    onChange={(e) => this.setState({ shareable: true })}
-                  ></input>
+                  <label
+                    htmlFor="email"
+                    style={{
+                      fontSize: "14px",
+                      marginTop: "50px",
+                      marginBottom: "50px",
+                    }}
+                  >
+                    Make this flight shareable?
+                  </label>
+                  {sessionStorage.getItem("create_shareable") === false ? (
+                    <Switch
+                      style={{ marginLeft: "20px" }}
+                      checkedChildren={<CheckOutlined />}
+                      unCheckedChildren={<CloseOutlined />}
+                      defaultChecked={false}
+                      onChange={() => this.handleSwitch()}
+                    />
+                  ) : (
+                    <Switch
+                      style={{ marginLeft: "20px" }}
+                      checkedChildren={<CheckOutlined />}
+                      unCheckedChildren={<CloseOutlined />}
+                      defaultChecked={true}
+                      onChange={() => this.handleSwitch()}
+                    />
+                  )}
+
                   <br />
                   <button
                     className="enter-btn"

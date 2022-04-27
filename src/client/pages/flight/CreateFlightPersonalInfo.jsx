@@ -50,11 +50,13 @@ class CreateFlightPersonalInfo extends React.Component {
       validPromo: null,
       price: "",
       token: sessionStorage.getItem("access_token"),
+      listOfPass: null,
     };
   }
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.iterateNumber();
     const timer = setTimeout(() => {
       this.setState({
         isLoading: false,
@@ -71,74 +73,26 @@ class CreateFlightPersonalInfo extends React.Component {
     });
   }
 
-  allPassengers() {
-    for (var i = 0; i < 3; i++) {
-      <div className="passengers-info">
-        <Row id="passenger">
-          <Col>
-            <h4>Passenger #1</h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="5">
-            <label for="email">First name</label>
-            <input
-              className="enter-input"
-              id="email"
-              onChange={(e) => this.setState({ first_name: e.target.value })}
-            ></input>
-            <label for="password">Middle name</label>
-            <input
-              className="enter-input"
-              id="password"
-              onChange={(e) => this.setState({ middle_name: e.target.value })}
-            ></input>
-            <label for="email">Last name</label>
-            <input
-              className="enter-input"
-              id="email"
-              onChange={(e) => this.setState({ last_name: e.target.value })}
-            ></input>
-          </Col>
-          <Col md="2"></Col>
-
-          <Col md="5">
-            <label for="password">Document</label>
-            <br />
-            <select
-              onChange={(e) => this.setState({ document_type: e.target.value })}
-            >
-              <option value="passport">Passport</option>
-              <option value="id">ID</option>
-            </select>
-            <br />
-            <br />
-            <label for="password">Document number</label>
-            <input
-              className="enter-input"
-              id="password"
-              onChange={(e) => this.setState({ document: e.target.value })}
-            ></input>
-            <br />
-            <br />
-            <label for="password">Direction</label>
-            <br />
-            <select
-              onChange={(e) => this.setState({ direction: e.target.value })}
-            >
-              <option value="FORWARD">FORWARD</option>
-              <option value="BACKWARD">BACKWARD</option>
-              <option value="FULL">FULL</option>
-            </select>
-          </Col>
-        </Row>
-      </div>;
-    }
-  }
-
   async upd() {
     this.componentDidMount();
   }
+
+  setValues = () => {
+    sessionStorage.setItem("create_dep_port", "");
+    sessionStorage.setItem("create_des_port", "");
+    sessionStorage.setItem("create_dep_date", "");
+    sessionStorage.setItem("create_des_date", "");
+    sessionStorage.setItem("create_dep_time", "");
+    sessionStorage.setItem("create_des_time", "");
+    sessionStorage.setItem("create_dep_dt", "");
+    sessionStorage.setItem("create_des_dt", "");
+    sessionStorage.setItem("create_pass", "");
+    sessionStorage.setItem("create_shareable", false);
+    sessionStorage.setItem("create_email", "");
+    sessionStorage.setItem("create_phone", "");
+    sessionStorage.setItem("create_trip", "one");
+    sessionStorage.setItem("create_shareable", false);
+  };
 
   async newFlight() {
     var fetch_header = {};
@@ -155,49 +109,46 @@ class CreateFlightPersonalInfo extends React.Component {
       };
     }
     const flight = {
-      email: this.state.flight.email,
+      email: sessionStorage.getItem("create_email"),
       document: {
-        number: this.state.document,
-        type: this.state.document_type,
+        number: sessionStorage.getItem("create_doc_num"),
+        type: sessionStorage.getItem("create_doc"),
       },
       passengers: [
         {
-          direction: this.state.direction,
+          direction: sessionStorage.getItem("create_dir"),
           document: {
-            number: this.state.document,
-            type: this.state.document_type,
+            number: sessionStorage.getItem("create_doc_num"),
+            type: sessionStorage.getItem("create_doc"),
           },
-          first_name: this.state.first_name,
+          first_name: sessionStorage.getItem("create_name"),
           middle_name: this.state.middle_name,
-          last_name: this.state.last_name,
-          phone_number: this.state.flight.phone_number,
-          email: this.state.flight.email,
+          last_name: sessionStorage.getItem("create_surname"),
+          phone_number: sessionStorage.getItem("create_phone"),
+          email: sessionStorage.getItem("create_email"),
         },
       ],
-      phone_number: this.state.flight.phone_number,
+      phone_number: sessionStorage.getItem("create_phone"),
       from: {
-        name: this.state.flight.flight_info.departure_port,
-        latitude: parseFloat(this.state.flight.flight_info.departure_latitude),
-        longitude: parseFloat(
-          this.state.flight.flight_info.departure_longitude
-        ),
+        name: sessionStorage.getItem("create_dep_port"),
+        latitude: parseFloat(localStorage.getItem("from_lat")),
+        longitude: parseFloat(localStorage.getItem("from_long")),
       },
       to: {
-        name: this.state.flight.flight_info.destination_port,
-        latitude: parseFloat(
-          this.state.flight.flight_info.destination_latitude
-        ),
-        longitude: parseFloat(
-          this.state.flight.flight_info.destination_longitude
-        ),
+        name: sessionStorage.getItem("create_des_port"),
+        latitude: parseFloat(localStorage.getItem("to_lat")),
+        longitude: parseFloat(localStorage.getItem("from_long")),
       },
-      departure_time: this.state.flight.flight_info.departure_date,
-      return_time: this.state.flight.flight_info.return_date,
-      shareable: this.state.flight.flight_info.shareable,
+      departure_time: sessionStorage.getItem("create_dep_dt"),
+      shareable: JSON.parse(sessionStorage.getItem("create_shareable")),
     };
 
+    if (sessionStorage.getItem("create_trip") === "round") {
+      flight.return_time = sessionStorage.getItem("create_des_dt");
+    }
+
     if (this.state.validPromo === true) {
-      flight.promocode = this.state.promocode;
+      flight.promocode = sessionStorage.getItem("create_promo");
     }
 
     console.log(flight);
@@ -210,6 +161,7 @@ class CreateFlightPersonalInfo extends React.Component {
         const data = await res.json();
         console.log(data);
         if (res.ok) {
+          this.setValues();
           this.setState({ order_id: data.id });
           this.setState({ price: data.price });
           this.props.history.push({
@@ -244,30 +196,39 @@ class CreateFlightPersonalInfo extends React.Component {
     }
   }
 
+  iterateNumber = () => {
+    console.log(sessionStorage);
+    let listOfPass = [];
+    for (
+      let i = 1;
+      i === parseInt(sessionStorage.getItem("create_pass"));
+      i++
+    ) {
+      listOfPass.push(i);
+    }
+    this.setState({ listOfPass: listOfPass });
+    console.log(listOfPass);
+  };
+
   validate = () => {
     let documentError = "";
     let nameError = "";
     let surnameError = "";
     var reg = /^[a-z]+$/i;
-    var reg2 = /^\d+$/;
-    if (this.state.document === "") {
+    if (sessionStorage.getItem("create_doc_num") === "") {
       documentError = "⚠️ Document number cannot be empty";
-    } else {
-      if (!reg2.test(this.state.document)) {
-        documentError = "⚠️ Invalid document number";
-      }
     }
-    if (this.state.first_name === "") {
+    if (sessionStorage.getItem("create_name") === "") {
       nameError = "⚠️ First name cannot be empty";
     } else {
-      if (!reg.test(this.state.first_name)) {
+      if (!reg.test(sessionStorage.getItem("create_name"))) {
         nameError = "⚠️ First name must consist of only letters";
       }
     }
-    if (this.state.last_name === "") {
+    if (sessionStorage.getItem("create_surname") === "") {
       surnameError = "⚠️ Last name cannot be empty";
     } else {
-      if (!reg.test(this.state.last_name)) {
+      if (!reg.test(sessionStorage.getItem("create_surname"))) {
         surnameError = "⚠️ Last name must consist of only letters";
       }
     }
@@ -347,13 +308,17 @@ class CreateFlightPersonalInfo extends React.Component {
                   </Row>
                   <Row>
                     <Col md="5">
-                      <label for="email">First name *</label>
+                      <label for="email" value={sessionStorage.getItem}>
+                        First name *
+                      </label>
                       <input
+                        value={sessionStorage.getItem("create_name")}
                         className="enter-input"
                         id="email"
-                        onChange={(e) =>
-                          this.setState({ first_name: e.target.value })
-                        }
+                        onChange={(e) => {
+                          sessionStorage.setItem("create_name", e.target.value);
+                          this.setState({ first_name: e.target.value });
+                        }}
                       ></input>
                       <div className="form-errors">{this.state.nameError}</div>
                       <label for="password">Middle name</label>
@@ -366,12 +331,18 @@ class CreateFlightPersonalInfo extends React.Component {
                       ></input>
                       <label for="email">Last name *</label>
                       <input
+                        value={sessionStorage.getItem("create_surname")}
                         className="enter-input"
                         id="email"
-                        onChange={(e) =>
-                          this.setState({ last_name: e.target.value })
-                        }
+                        onChange={(e) => {
+                          sessionStorage.setItem(
+                            "create_surname",
+                            e.target.value
+                          );
+                          this.setState({ last_name: e.target.value });
+                        }}
                       ></input>
+
                       <div className="form-errors">
                         {this.state.surnameError}
                       </div>
@@ -382,9 +353,11 @@ class CreateFlightPersonalInfo extends React.Component {
                       <label for="password">Document *</label>
                       <div style={{ height: "24px" }} />
                       <select
-                        onChange={(e) =>
-                          this.setState({ document_type: e.target.value })
-                        }
+                        onChange={(e) => {
+                          sessionStorage.setItem("create_doc", e.target.value);
+                          this.setState({ document_type: e.target.value });
+                        }}
+                        value={sessionStorage.getItem("create_doc")}
                       >
                         <option value="passport">Passport</option>
                         <option value="id">ID</option>
@@ -393,11 +366,16 @@ class CreateFlightPersonalInfo extends React.Component {
 
                       <label for="password">Document number *</label>
                       <input
+                        value={sessionStorage.getItem("create_doc_num")}
                         className="enter-input"
                         id="password"
-                        onChange={(e) =>
-                          this.setState({ document: e.target.value })
-                        }
+                        onChange={(e) => {
+                          sessionStorage.setItem(
+                            "create_doc_num",
+                            e.target.value
+                          );
+                          this.setState({ document: e.target.value });
+                        }}
                       ></input>
                       <div className="form-errors">
                         {this.state.documentError}
@@ -405,13 +383,25 @@ class CreateFlightPersonalInfo extends React.Component {
                       <label for="password">Direction *</label>
                       <div style={{ height: "24px" }} />
                       <select
-                        onChange={(e) =>
-                          this.setState({ direction: e.target.value })
-                        }
+                        value={sessionStorage.getItem("create_dir")}
+                        onChange={(e) => {
+                          sessionStorage.setItem("create_dir", e.target.value);
+                          this.setState({ direction: e.target.value });
+                        }}
                       >
-                        <option value="FORWARD">Forward</option>
-                        <option value="BACKWARD">Backward</option>
-                        <option value="FULL">Full</option>
+                        <option value="FORWARD">
+                          {sessionStorage.getItem("create_dep_port")} →{" "}
+                          {sessionStorage.getItem("create_des_port")}
+                        </option>
+                        {sessionStorage.getItem("create_trip") === "round" ? (
+                          <option value="BACKWARD">
+                            {sessionStorage.getItem("create_des_port")} →{" "}
+                            {sessionStorage.getItem("create_dep_port")}
+                          </option>
+                        ) : null}
+                        {sessionStorage.getItem("create_trip") === "round" ? (
+                          <option value="FULL">Round-trip</option>
+                        ) : null}
                       </select>
                     </Col>
                   </Row>
@@ -436,9 +426,13 @@ class CreateFlightPersonalInfo extends React.Component {
                       <input
                         className="enter-input"
                         id="password"
-                        onChange={(e) =>
-                          this.setState({ promocode: e.target.value })
-                        }
+                        onChange={(e) => {
+                          sessionStorage.setItem(
+                            "create_promo",
+                            e.target.value
+                          );
+                          this.setState({ promocode: e.target.value });
+                        }}
                       ></input>
                     </Col>
                     <Col>

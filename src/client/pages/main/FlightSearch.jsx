@@ -29,6 +29,7 @@ class FlightSearch extends React.Component {
       destination_port: "",
       locationError: "",
       passengerError: "",
+      flexible: false,
     };
   }
 
@@ -113,7 +114,9 @@ class FlightSearch extends React.Component {
 
   async availableFlights() {
     console.log(this.state);
-    let flight = {};
+    let flight = {
+      flexible: this.state.flexible,
+    };
     if (this.state.passengers !== "") {
       flight.number_of_passengers = parseInt(this.state.passengers);
     }
@@ -165,19 +168,28 @@ class FlightSearch extends React.Component {
       let from_date = new Date(
         this.state.available_flights[flight].departure_time
       )
-        .toISOString()
-        .split("T")[0];
+        .toDateString()
+        .substring(4, 10);
       let from_time = new Date(
         this.state.available_flights[flight].departure_time
       )
-        .toISOString()
-        .split("T")[1];
+        .toLocaleTimeString("en", {
+          timeStyle: "short",
+          hour12: false,
+          timeZone: "UTC",
+        })
+        .substring(0, 5);
       let to_date = new Date(this.state.available_flights[flight].arrival_time)
-        .toISOString()
-        .split("T")[0];
+        .toDateString()
+        .substring(4, 10);
       let to_time = new Date(this.state.available_flights[flight].arrival_time)
-        .toISOString()
-        .split("T")[1];
+        .toLocaleTimeString("en", {
+          timeStyle: "short",
+          hour12: false,
+          timeZone: "UTC",
+        })
+        .substring(0, 5);
+      console.log(to_time);
       this.state.available_flights[flight].departure_time = from_time;
       this.state.available_flights[flight].departure_date = from_date;
       this.state.available_flights[flight].arrival_time = to_time;
@@ -236,10 +248,22 @@ class FlightSearch extends React.Component {
     }, 3000);
   }
 
+  flexibleFlights = (e) => {
+    if (this.state.flexible === true) {
+      this.setState({ flexible: false });
+    } else {
+      this.setState({ flexible: true });
+    }
+  };
+
   onDDateChange(date) {
     console.log("not form", date._d);
+
+    this.setState({ date_from_1: date._d.toISOString() });
     let dateformat = new Date(date._d).toISOString();
     let formatted_date = dateformat.split("T")[0];
+    console.log(formatted_date);
+    this.setState({ date_from_1: formatted_date });
     var datetime = formatted_date + "T00:00:00Z";
     console.log("departure", datetime);
     this.setState({ date_from: datetime });
@@ -247,6 +271,7 @@ class FlightSearch extends React.Component {
 
   onRDateChange(date) {
     console.log("not form", date._d);
+    this.setState({ date_to_1: date._d });
     let dateformat = new Date(date._d).toISOString();
     let formatted_date = dateformat.split("T")[0];
     console.log("date", formatted_date);
@@ -282,7 +307,7 @@ class FlightSearch extends React.Component {
             onHide={() => this.setState({ map_1_show: false })}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Select the departure point</Modal.Title>
+              <Modal.Title>Select the departure port</Modal.Title>
             </Modal.Header>
             <Modal.Body id="map-modal-body">
               <Map1
@@ -297,7 +322,7 @@ class FlightSearch extends React.Component {
                 Clear
               </button>
               <button onClick={() => this.changeFrom()} className="map-btn">
-                Select
+                Done
               </button>
             </Modal.Footer>
           </Modal>
@@ -307,7 +332,7 @@ class FlightSearch extends React.Component {
             onHide={() => this.setState({ map_2_show: false })}
           >
             <Modal.Header closeButton>
-              <Modal.Title>Select the destination point</Modal.Title>
+              <Modal.Title>Select the destination port</Modal.Title>
             </Modal.Header>
             <Modal.Body id="map-modal-body">
               <Map1
@@ -322,7 +347,7 @@ class FlightSearch extends React.Component {
                 Clear
               </button>
               <button onClick={() => this.changeFrom2()} className="map-btn">
-                Select
+                Done
               </button>
             </Modal.Footer>
           </Modal>
@@ -341,7 +366,11 @@ class FlightSearch extends React.Component {
                     ></input>
                   </Row>
                 </Col>
-                <Col md={1} id="from_to_icon_col">
+                <Col
+                  md={1}
+                  id="from_to_icon_col"
+                  style={{ textAlign: "center", justifyContext: "center" }}
+                >
                   <img src={from_to} alt="from_to"></img>
                 </Col>
                 <Col>
@@ -389,7 +418,7 @@ class FlightSearch extends React.Component {
                     </Col>
                   </Row>
                 </Col>
-                <Col>
+                <Col md={3}>
                   <Row>
                     <label for="passengers">Passengers</label>
                     <input
@@ -403,6 +432,24 @@ class FlightSearch extends React.Component {
                       }
                     ></input>
                   </Row>
+                </Col>
+                <Col md={2}>
+                  <input
+                    style={{ marginTop: "5px" }}
+                    className="flex-input"
+                    type="checkbox"
+                    value={this.state.flexible}
+                    onChange={() => this.flexibleFlights()}
+                  ></input>
+                  <label
+                    for="passengers"
+                    style={{
+                      marginLeft: "10px",
+                      padding: "0px",
+                    }}
+                  >
+                    +/- 5 days
+                  </label>
                 </Col>
                 <Col md={1} className="btn-col">
                   <Link to="/create-flight/flight-information">

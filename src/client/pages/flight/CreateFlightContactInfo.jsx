@@ -4,6 +4,9 @@ import "../../assets/styles/flight/create-flight.css";
 import Loading from "../../components/reused/Loading";
 import "react-nice-dates/build/style.css";
 import { Breadcrumb } from "antd";
+import InputMask from "react-input-mask";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input/input";
 
 class CreateFlightContactInfo extends React.Component {
   constructor(props) {
@@ -44,21 +47,20 @@ class CreateFlightContactInfo extends React.Component {
   validate = () => {
     let emailError = "";
     let phoneError = "";
-    if (this.state.email === "") {
+    if (sessionStorage.getItem("create_email") === "") {
       emailError = "⚠️ Email cannot be empty";
     } else {
-      if (!this.state.email.includes("@") || !this.state.email.includes(".")) {
+      if (
+        !sessionStorage.getItem("create_email").includes("@") ||
+        !sessionStorage.getItem("create_email").includes(".")
+      ) {
         emailError = "⚠️ Invalid email";
       }
     }
-    var reg2 = /^\d+$/;
-    if (this.state.phone_number === "") {
+    if (sessionStorage.getItem("create_phone") === "") {
       phoneError = "⚠️ Phone number cannot  be empty";
     } else {
-      if (
-        this.state.phone_number.length < 10 ||
-        !reg2.test(this.state.phone_number)
-      ) {
+      if (sessionStorage.getItem("create_phone").length < 8) {
         phoneError = "⚠️ Invalid phone number";
       }
     }
@@ -109,22 +111,25 @@ class CreateFlightContactInfo extends React.Component {
                     <input
                       className="enter-input"
                       id="email"
-                      value={this.state.email}
-                      onChange={(e) => this.setState({ email: e.target.value })}
+                      value={sessionStorage.getItem("create_email")}
+                      onChange={(e) => {
+                        this.setState({ email: e.target.value });
+                        sessionStorage.setItem("create_email", e.target.value);
+                      }}
                     ></input>
                     <div className="form-errors">{this.state.emailError}</div>
                   </Col>
                   <Col md="2"></Col>
                   <Col md="5">
                     <label for="phone-number">Phone number *</label>
-                    <input
+                    <PhoneInput
                       className="enter-input"
-                      id="phone-number"
-                      value={this.state.phone_number}
-                      onChange={(e) =>
-                        this.setState({ phone_number: e.target.value })
-                      }
-                    ></input>
+                      value={sessionStorage.getItem("create_phone")}
+                      onChange={(e) => {
+                        this.setState({ phone_number: e });
+                        sessionStorage.setItem("create_phone", e);
+                      }}
+                    />
                     <div className="form-errors">{this.state.phoneError}</div>
                   </Col>
                 </Row>

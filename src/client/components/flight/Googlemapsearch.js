@@ -75,7 +75,7 @@ function Map() {
                 })
               }
             >
-              Select
+              Choose
             </button>
           </div>
         </InfoWindow>

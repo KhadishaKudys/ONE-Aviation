@@ -124,6 +124,8 @@ h3 {
   text-align: center;
   justify-content: center;
   align-items: center;
+  vertical-align: middle;
+  padding-top: 15px;
 }
 
 .ticket p {
@@ -154,16 +156,16 @@ h3 {
 
 #cost {
   font-weight: 700;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 36px;
+  margin-bottom: 0px;
 }
 
 #nav-btn {
   border: 2px solid black;
   background: none;
-  padding: 0px 15px;
+  padding: 5px 15px;
   font-weight: 600;
-  font-size: 14px;
   color: black;
   border-radius: 5px;
 }
